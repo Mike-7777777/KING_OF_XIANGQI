@@ -12,10 +12,6 @@ namespace KING_OF_XIANGQI
         {
 
         }
-        public void Initialization()
-        {
-
-        }
     }
     class General : Chess
     {
@@ -42,6 +38,26 @@ namespace KING_OF_XIANGQI
 
     }
     class Pawn : Chess
+    {
+
+    }
+    class Controller
+    {
+        public void initilization()
+        {
+
+        }
+        public void Play(string color)
+        {
+
+        }
+        public void CheckWin()
+        {
+
+        }
+
+    }
+    class View
     {
 
     }
