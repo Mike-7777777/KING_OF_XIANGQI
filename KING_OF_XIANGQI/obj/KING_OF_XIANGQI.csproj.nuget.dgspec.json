@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\46790\\OneDrive\\2019.10\\l'université\\C#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {}
+    "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\46790\\OneDrive\\2019.10\\l'université\\C#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {
+    "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\46790\\OneDrive\\2019.10\\l'université\\C#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+        "projectUniqueName": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
         "projectName": "KING_OF_XIANGQI",
-        "projectPath": "C:\\Users\\46790\\OneDrive\\2019.10\\l'université\\C#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
-        "packagesPath": "C:\\Users\\46790\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\46790\\OneDrive\\2019.10\\l'université\\C#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
+        "projectPath": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+        "packagesPath": "C:\\Users\\69042\\.nuget\\packages\\",
+        "outputPath": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\46790\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\69042\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
