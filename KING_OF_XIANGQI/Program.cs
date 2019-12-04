@@ -50,6 +50,7 @@ namespace KING_OF_XIANGQI
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello Bart!");
         }
     }
 }
