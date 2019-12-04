@@ -1,0 +1,16 @@
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.exe
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.deps.json
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.runtimeconfig.json
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.runtimeconfig.dev.json
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.csprojAssemblyReference.cache
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfoInputs.cache
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+D:\Study\c#\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.csprojAssemblyReference.cache
+D:\Study\c#\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfoInputs.cache
+D:\Study\c#\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
+D:\Study\c#\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+D:\Study\c#\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
