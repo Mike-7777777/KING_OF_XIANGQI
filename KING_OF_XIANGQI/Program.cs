@@ -68,6 +68,7 @@ namespace KING_OF_XIANGQI
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello Bart!");
             Console.WriteLine9("Hello TYL!"); 
+            Console.WriteLine9("Hello AilMei!"); 
         }
     }
 }
