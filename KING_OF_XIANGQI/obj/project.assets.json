@@ -8,19 +8,23 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "C:\\Users\\69042\\.nuget\\packages\\": {}
+    "C:\\Users\\46790\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+      "projectUniqueName": "D:\\Onedrive\\2019.10\\l'université\\C#\\teamproject\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
       "projectName": "KING_OF_XIANGQI",
-      "projectPath": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
-      "packagesPath": "C:\\Users\\69042\\.nuget\\packages\\",
-      "outputPath": "D:\\Study\\c#\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
+      "projectPath": "D:\\Onedrive\\2019.10\\l'université\\C#\\teamproject\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+      "packagesPath": "C:\\Users\\46790\\.nuget\\packages\\",
+      "outputPath": "D:\\Onedrive\\2019.10\\l'université\\C#\\teamproject\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\69042\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\46790\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -9,3 +9,8 @@ C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI
 C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
 C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
 C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.csprojAssemblyReference.cache
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfoInputs.cache
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+C:\Users\46790\OneDrive\2019.10\l'université\C#\KING_OF_XIANGQI\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb

@@ -2,73 +2,18 @@
 
 namespace KING_OF_XIANGQI
 {
-    public abstract class Chess
-    {
-        int[,] location;
-        string color;
-        string name;
-        Boolean dead;
-        public void MovingRules()
-        {
-
-        }
-    }
-    class General : Chess
-    {
-
-    }
-    class Rook : Chess
-    {
-
-    }
-    class Horse : Chess
-    {
-
-    }
-    class Elephant : Chess
-    {
-
-    }
-    class Mandarin : Chess
-    {
-
-    }
-    class Cannon : Chess
-    {
-
-    }
-    class Pawn : Chess
-    {
-
-    }
-    class Controller
-    {
-        public void initilization()
-        {
-
-        }
-        public void Play(string color)
-        {
-
-        }
-        public void CheckWin()
-        {
-
-        }
-
-    }
-    class View
-    {
-
-    }
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Hello Bart!");
-            Console.WriteLine9("Hello TYL!"); 
-            Console.WriteLine9("Hello AilMei!"); 
+            Console.WriteLine("Hello TYL!");
+            //你好，红先黑后，请红方选择棋子。
+            //执行play(red),接收坐标。
+                //play由dataTable判断，
+                //如果坐标指向本方棋子，则继续运行，否则报错。
+                //一切正常，则运行Controller.chooseP（）方法
         }
     }
 }
