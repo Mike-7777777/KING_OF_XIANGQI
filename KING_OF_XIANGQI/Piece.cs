@@ -14,6 +14,10 @@ namespace KING_OF_XIANGQI
         {
             this.color = color;
         }
+        public string getColor()
+        {
+            return color;
+        }
     }
     public class General : Piece //children class
     {

@@ -7,10 +7,10 @@ namespace KING_OF_XIANGQI
     class Controller
     {
         private int prop1 = 0;
-        private int myColor;
+        private string myColor;
         private List<int> xlist;
         private List<int> ylist;
-        public void chooseP(int x, int y, Table dataTable, int myColor)
+        public void chooseP(int x, int y, Table dataTable, string myColor)
         //x,y is the location of piece that user chose. 
         //dataTable is a gameboard object.
         //This method is used to active one piece  
