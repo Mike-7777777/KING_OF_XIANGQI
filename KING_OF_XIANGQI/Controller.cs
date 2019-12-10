@@ -215,13 +215,17 @@ namespace KING_OF_XIANGQI
                 }//下马脚
                 possibleMove(xlist, ylist, dataTable);
             }
-            if(chosePiece is Pawn) // bin
+            if(chosePiece is Pawn) // 兵
             {
                 PossibleMove_pawn(x,y,dataTable);
             }
-            if(chosePiece is Cannon)
+            if(chosePiece is Cannon) // 炮
             {
-
+                PossibleMove_Canon(x, y, dataTable);
+            }
+            if (chosePiece is Rook) // 俥
+            {
+                PossibleMove_Rook(x, y, dataTable);
             }
         }
         public void possibleMove(List<int> x, List<int> y, Table dataTable) //用来确认空子+确认不是己方棋子，改变颜色

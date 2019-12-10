@@ -22,7 +22,7 @@ namespace KING_OF_XIANGQI
         {
             return arr[c, d];
         }
-        public void saveChangedColor(int x, int y) //list the coordinate which have changed color.
+        public void tableChangeColorActive(int x, int y) //list the coordinate which have changed color.
         {
             Color[x, y] = 1;
 
