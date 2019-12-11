@@ -4,9 +4,9 @@ namespace KING_OF_XIANGQI
 {
     class Program
     {
-        public void KING_OF_XIANGQI()
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!111");
             Console.WriteLine("Hello Bart!");
             Console.WriteLine("Hello TYL!");
             Table dataTable = new Table();

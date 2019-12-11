@@ -31,7 +31,7 @@ namespace KING_OF_XIANGQI
                                  }; // 棋盘二维数组
 
 
-        static void Main(string[] args)   //for test
+        /*static void Main(string[] args)   //for test
             {
                 View a = new View();
 
@@ -47,6 +47,7 @@ namespace KING_OF_XIANGQI
                //棋子走动的位置改变
                 // a.PositionChangingDisplay(dataTable);
             }
+            */
 
         public void PossibleMovementPoint(Table dataTable)
         {
