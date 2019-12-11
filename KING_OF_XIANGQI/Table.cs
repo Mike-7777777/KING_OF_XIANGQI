@@ -28,7 +28,7 @@ namespace KING_OF_XIANGQI
             Color[x, y] = 1;
 
         }
-        public int[] getColor()
+        public int[,] getColor()
         {
             return Color;
         }
