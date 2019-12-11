@@ -237,25 +237,9 @@ namespace KING_OF_XIANGQI
 
         }
 
-        public void PiecesChooseAndPossibleMovement(Table dataTable)
+        public void PossibleMovementPoint(Table dataTable)
         {
-            //// 选取棋子事件 无用可删
-            View a = new View();
-            Console.WriteLine("please choose the location of x Coordinate system :");
-            String inputx = Console.ReadLine();
-            int x = Convert.ToInt32(inputx);
-
-            Console.WriteLine("please choose the location of y Coordinate system :");
-            String inputy = Console.ReadLine();
-            int y = Convert.ToInt32(inputy);
-
-            string[,] arrForInitialBoard = InitialBoardForUse();
-
-            Console.WriteLine("what you choose is :", arrForInitialBoard[2 * x - 1, 2 * y - 1]);
-            Console.Clear();
-            ///选取棋子事件 无用可删
-
-            
+       
 
             // 获取getcolor 数组
             int[,] b = dataTable.getColor();
@@ -263,18 +247,18 @@ namespace KING_OF_XIANGQI
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)
-                {   // parameter c 获取数组getcolor 数组里面元素为1 的坐标
-                    int Parameterc = b [(i+1)/2 ,(j+1)/2 ] ;
+                {   
+                   
                     
-                    if((Parameterc == 1) )
+                    if((b [(i+1)/2 ,(j+1)/2 ] == 1) )// 获取数组getcolor 数组里面元素为1 的坐标
                    {
                      Console.BackgroundColor = ConsoleColor.DarkYellow;
                      Console.ForegroundColor = ConsoleColor.Red;//可移动路径显示为红色
-                     Console.Write (arrForInitialBoard[2 * i - 1, 2 * j - 1]); 
+                     Console.Write (arrForBoard[i,j]); 
                      Console.ResetColor();
                      }
 
-                    else Console.Write(arrForInitialBoard[i,j]);
+                    else Console.Write(arrForBoard[i,j]);
                     while (j == 17)
                    {
                         Console.WriteLine("");
@@ -284,6 +268,7 @@ namespace KING_OF_XIANGQI
 
 
             }
+            
         }
         /*0 " 1 2 3 4 5 6 7 8 9 1011121314151617
           1 " ┏━┳━┳━┳━┳━┳━┳━┳━┓\n" +
@@ -314,55 +299,39 @@ namespace KING_OF_XIANGQI
             Piece [,] b = dataTable.getArr();
 
 
-            (int,int) PreviousPoint = dataTable.getPreviousPoint();
-
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)
-                {
-                    // parameter c 获取数组getcolor 数组里面元素为1 的坐标
-                    Piece Parameterc = b [(i+1)/2 ,(j+1)/2 ] ;
-                    
+                {                   
+                   
+                   
                     // color 获取color为黑或红的棋子
-                    string color= piece.getColor();
-                    //  Parameterd for getting pervious position
-                    (int, int) Parameterd = dataTable.getPreviousPoint();
-                    int preX = (Parameterd.Item1+1)/2;
-                    int preY = (Parameterd.Item2+1)/2;
-                    if (ParaC[i,j] == 1  )
+                    string color= b[i,j].getColor();
+
+                    if ( b [(i+1)/2 ,(j+1)/2 ] == 1  )//  获取数组getArr() 数组里面元素为1 的坐标
                     {
                         if( color == "Black") // 黑方棋子
                             {
                                 Console.BackgroundColor = ConsoleColor.DarkYellow;
                                 Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write(dataTable[i,j]);
+                                Console.Write(arrForBoard);
                                 Console.ResetColor();
                             }
                         }
-                    if (Parameterd == 1 ) 
+                    if (b [(i+1)/2 ,(j+1)/2 ] == 1 ) 
                         {
                             if( color == "Red") // 红方棋子
                             {
                                 Console.BackgroundColor = ConsoleColor.DarkYellow;
                                 Console.ForegroundColor = ConsoleColor.Black;
-                                Console.Write(dataTable[i,j]);
+                                Console.Write(arrForBoard);
                                 Console.ResetColor();
                             }
                         }
-                    if (Parameterd == 1)
-                    {
-                        
-                        
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            
-                            Console.Write(dataTable[i, j]);
-                            Console.ResetColor();
-                        
-                    }
                     else
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.Write(dataTable[i,j]);
+                            Console.Write(arrForBoard);
                         }
                     
                    
@@ -376,7 +345,8 @@ namespace KING_OF_XIANGQI
                     }
                 }
              }
-              
+           
+            
 
         }
         
@@ -397,18 +367,16 @@ namespace KING_OF_XIANGQI
                 // 展示无棋子棋盘
                 a.DisplayBoard();
 
-                // Ready or not ?  Ready to display gameboard with pieces.
+                // 棋盘开始 输入1开始棋局
                 a.GameReady("1");
 
                 //展示棋盘（带棋子）
-                a.InitialBoardForDisplay();
-                
+                a.InitialBoardForDisplay();               
 
                 //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
-                //Table [,] dataTable = a.InitialBoardForUse();  //"InitialBoardForUse();"为初始棋盘
-                a.PiecesChooseAndPossibleMovement(dataTable);
+                a.PossibleMovementPoint(dataTable);  // datatable 为 table 类型的初始棋盘
 
-               //位置变化
+               //棋子走动的位置改变
                  a.PositionChangingDisplay(dataTable);
             }
         }
