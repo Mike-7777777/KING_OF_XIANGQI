@@ -44,7 +44,21 @@ namespace KING_OF_XIANGQI
                     Console.WriteLine("卒");
                     break;
 
+                    
             }
+            View a = new View();
+
+            // 棋盘开始 输入1开始棋局
+            a.GameReady("1");
+
+            //展示棋盘（带棋子）
+            a.InitialBoardForDisplay();
+
+            //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
+            a.PossibleMovementPoint(dataTable);  // datatable 为 table 类型的初始棋盘
+
+            //棋子走动的位置改变
+            a.PositionChangingDisplay(dataTable);
             Console.WriteLine(type);
             //你好，红先黑后，请红方选择棋子。
             //执行play(red),接收坐标。
