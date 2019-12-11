@@ -9,6 +9,7 @@ namespace KING_OF_XIANGQI
         private Piece[,] arr;
         private ConsoleColor BackgroundColor = ConsoleColor.Yellow;
         private int[,] Color;
+        private (int,int) PrePoint = (0,0); 
 
         public void setArr(int a, int b) // set the length and height of the 2d array.
         {
@@ -26,6 +27,14 @@ namespace KING_OF_XIANGQI
         {
             Color[x, y] = 1;
 
+        }
+        public void setPreviousPoint((int x,int y))
+        {
+            this.PrePoint = (x,y);
+        }
+        public (int,int) getPreviousPoint()
+        {
+            return PrePoint;
         }
     }
 }
