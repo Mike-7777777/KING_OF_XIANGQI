@@ -65,9 +65,7 @@ namespace KING_OF_XIANGQI
                         arrForBoard[i, j] = arrTable[tX, tY].GetType().ToString();
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Red;//可移动路径显示为红色
-                        //Console.Write (arrForBoard[i,j]); 
                         Console.Write (arrForBoard[i,j]); 
-
                         Console.ResetColor();
                     }
                     else Console.Write(arrForBoard[i,j]); 
@@ -106,7 +104,7 @@ namespace KING_OF_XIANGQI
         public void PositionChangingDisplay(Table dataTable)
         {
             // 获取getArr() 数组
-            Piece [,] b = dataTable.getArr();
+            Piece [,] arrTable = dataTable.getArr();
 
             for (int i = 0; i < 20; i++)
             {
@@ -115,9 +113,10 @@ namespace KING_OF_XIANGQI
                     // color 获取color为黑或红的棋子
                     int tempX = (i+1)/2;
                     int tempY = (j+1)/2;
-                    string color= b[tempX,tempY].getColor();
+                    string color= arrTable[tempX,tempY].getColor();
+                    arrForBoard[i, j] = arrTable[tempX, tempY].GetType().ToString();
 
-                    if ( b[tempX ,tempY ] != null && color == "Black" )//  获取数组getArr() 数组里面元素为1 的坐标
+                    if (arrTable[tempX ,tempY ] != null && color == "Black" )//  获取数组getArr() 数组里面元素为1 的坐标
                     {
 
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
@@ -125,7 +124,7 @@ namespace KING_OF_XIANGQI
                             Console.Write(arrForBoard);
                             Console.ResetColor();
                     }
-                    else if( b[tempX ,tempY ] != null && color == "Red") // 红方棋子
+                    else if(arrTable[tempX ,tempY ] != null && color == "Red") // 红方棋子
                     {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.ForegroundColor = ConsoleColor.Black;
