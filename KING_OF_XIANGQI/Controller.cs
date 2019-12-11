@@ -41,7 +41,7 @@ namespace KING_OF_XIANGQI
             chosePiece = dataTable.getPiece(x, y);
             //问题是这里的Piece的类型是什么，本来定义的是Piece，但显然传输过来的应该是子类（具体棋子）。
             //写好Table以后需要再看一下。
-            dataTable.setPreviousPoint((x,y)); // 记录选择的棋子坐标。
+            dataTable.setPreviousPoint(x,y); // 记录选择的棋子坐标。
 
             //分辨棋子类型改变数据库中棋盘的颜色。
             if (chosePiece is General) //如果这个棋子是“将”

@@ -28,7 +28,7 @@ namespace KING_OF_XIANGQI
             Color[x, y] = 1;
 
         }
-        public void setPreviousPoint((int x,int y))
+        public void setPreviousPoint(int x,int y)
         {
             this.PrePoint = (x,y);
         }
