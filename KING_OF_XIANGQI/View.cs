@@ -306,9 +306,11 @@ namespace KING_OF_XIANGQI
                    
                    
                     // color 获取color为黑或红的棋子
-                    string color= b[i,j].getColor();
+                    int tempX = (i+1)/2;
+                    int tempY = (j+1)/2;
+                    string color= b[tempX,tempY].getColor();
 
-                    if ( b [(i+1)/2 ,(j+1)/2 ] == 1  )//  获取数组getArr() 数组里面元素为1 的坐标
+                    if ( b[(i+1)/2 ,(j+1)/2 ] != null  )//  获取数组getArr() 数组里面元素为1 的坐标
                     {
                         if( color == "Black") // 黑方棋子
                             {
@@ -317,10 +319,8 @@ namespace KING_OF_XIANGQI
                                 Console.Write(arrForBoard);
                                 Console.ResetColor();
                             }
-                        }
-                    if (b [(i+1)/2 ,(j+1)/2 ] == 1 ) 
-                        {
-                            if( color == "Red") // 红方棋子
+                        
+                        if( color == "Red") // 红方棋子
                             {
                                 Console.BackgroundColor = ConsoleColor.DarkYellow;
                                 Console.ForegroundColor = ConsoleColor.Black;
