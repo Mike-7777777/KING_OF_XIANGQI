@@ -94,9 +94,5 @@ namespace KING_OF_XIANGQI
         {
             return Color;
         }
-        public void setPreviousPoint(int x,int y)
-        {
-            this.PrePoint = (x,y);
-        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace KING_OF_XIANGQI
@@ -231,8 +232,7 @@ namespace KING_OF_XIANGQI
         }
         public void possibleMove(List<int> x, List<int> y, Table dataTable) //用来确认空子+确认不是己方棋子，改变颜色
         {
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = dataTable.getArr();
+            Piece[,] arrPieces = dataTable.getArr();
             foreach (int i in x)
             {
                 //如果目标点为空，或者为对方棋子，则变色。否则不变色。
@@ -248,6 +248,26 @@ namespace KING_OF_XIANGQI
             List<int> xtempList = new List<int>{ x };
             List<int> ytempList = new List<int> { y };
             possibleMove(xtempList, ytempList, dataTable);
+        }
+        public void possibleMove(List<int> x, int y, Table dataTable) //如果只有一个y
+        {
+            int i = x.Count();
+            List<int> ytempList = new List<int>();
+            for(int j=0; j<i; j++)
+            {
+                ytempList.Add(y);
+            }
+            possibleMove(x, ytempList, dataTable);
+        }
+        public void possibleMove(int x, List<int> y, Table dataTable) //如果只有一个x
+        {
+            int i = y.Count();
+            List<int> xtempList = new List<int>();
+            for (int j = 0; j < i; j++)
+            {
+                xtempList.Add(x);
+            }
+            possibleMove(xtempList, y, dataTable);
         }
         public void removeBan(int objective,string mode)
         {
@@ -351,7 +371,7 @@ namespace KING_OF_XIANGQI
 
         }
 
-        public static void PossibleMoveBan_canon(List<int> xlist, List<int> blist, int x, int y, Table dataTable)
+        public void PossibleMoveBan_canon(List<int> xlist, List<int> blist, int x, int y, Table dataTable)
         {
             List<int> xtemplistleft = new List<int> { };
             List<int> xtemplistright = new List<int> { };
@@ -415,10 +435,10 @@ namespace KING_OF_XIANGQI
                 btemplistright.RemoveRange(1, btemplistright.ToArray().Length - 1);
 
             }
-            dataTable.tableChangeColorActive(xtemplistleft, y);
-            dataTable.tableChangeColorActive(xtemplistright, y);
-            dataTable.tableChangeColorActive(x,btemplistleft);
-            dataTable.tableChangeColorActive(x,btemplistright);
+            possibleMove(xtemplistleft, y,dataTable);
+            possibleMove(xtemplistright, y, dataTable);
+            possibleMove(x,btemplistleft, dataTable);
+            possibleMove(x,btemplistright, dataTable);
         }
 
         public List<int> PossibleMoveBanx(List<int> xlist, int x, int y, Piece[,] arrPieces)
