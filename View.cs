@@ -237,7 +237,7 @@ namespace KING_OF_XIANGQI
 
         }
 
-        public void PiecesChooseAndPossibleMovement(Table[,] dataTable)
+        public void PiecesChooseAndPossibleMovement(Table dataTable)
         {
             //// 选取棋子事件 无用可删
             View a = new View();
@@ -254,11 +254,11 @@ namespace KING_OF_XIANGQI
             Console.WriteLine("what you choose is :", arrForInitialBoard[2 * x - 1, 2 * y - 1]);
             Console.Clear();
             ///选取棋子事件 无用可删
+
             
-            //生成table对象
-            Table ObjectForTable = new Table();
+
             // 获取getcolor 数组
-            int[,] b = ObjectForTable.getColor();
+            int[,] b = dataTable.getColor();
             // 重新打印带有possible movement 的棋盘
             for (int i = 0; i < 20; i++)
             {
@@ -305,24 +305,31 @@ namespace KING_OF_XIANGQI
           17" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
           18" ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
           19" ┗━┻━┻━┻━┻━┻━┻━┻━┛\n");*/
-        public void PositionChangingDisplay(Table [,]dataTable , Piece piece)
+       
+        public void PositionChangingDisplay(Table dataTable,Piece piece)
         {
-             //生成table对象
-            Table ObjectForTable = new Table();
+             
+            
             // 获取getArr() 数组
-            int[,] b = ObjectForTable.getArr();
-            
-            
+            Piece [,] b = dataTable.getArr();
+
+
+            (int,int) PreviousPoint = dataTable.getPreviousPoint();
 
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)
                 {
                     // parameter c 获取数组getcolor 数组里面元素为1 的坐标
-                     int Parameterc = b [(i+1)/2 ,(j+1)/2 ] ;
+                    Piece Parameterc = b [(i+1)/2 ,(j+1)/2 ] ;
+                    
                     // color 获取color为黑或红的棋子
-                    string color=dataTable.Piece[(i+1)/2 ,(j+1)/2].getColor();
-                    if (Parameterc == 1  )
+                    string color= piece.getColor();
+                    //  Parameterd for getting pervious position
+                    (int, int) Parameterd = dataTable.getPreviousPoint();
+                    int preX = (Parameterd.Item1+1)/2;
+                    int preY = (Parameterd.Item2+1)/2;
+                    if (ParaC[i,j] == 1  )
                     {
                         if( color == "Black") // 黑方棋子
                             {
@@ -332,7 +339,7 @@ namespace KING_OF_XIANGQI
                                 Console.ResetColor();
                             }
                         }
-                    if (Parameterc == 1 ) 
+                    if (Parameterd == 1 ) 
                         {
                             if( color == "Red") // 红方棋子
                             {
@@ -342,6 +349,16 @@ namespace KING_OF_XIANGQI
                                 Console.ResetColor();
                             }
                         }
+                    if (Parameterd == 1)
+                    {
+                        
+                        
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            
+                            Console.Write(dataTable[i, j]);
+                            Console.ResetColor();
+                        
+                    }
                     else
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
