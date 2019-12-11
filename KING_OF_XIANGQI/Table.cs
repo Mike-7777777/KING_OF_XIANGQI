@@ -6,7 +6,7 @@ namespace KING_OF_XIANGQI
 {
     public class Table
     {
-        private Piece[,] arr;
+        private Piece[,] arr = new Piece[9,10];
         private int[,] Color;
 
         public void setArr(int a, int b) // set the length and height of the 2d array.
@@ -47,34 +47,34 @@ namespace KING_OF_XIANGQI
             Pawn pawn8 = new Pawn("Red");
             Pawn pawn9 = new Pawn("Red");
             Pawn pawn10 = new Pawn("Red");
-            arr[1, 5] = general1;
-            arr[10, 5] = general2;
-            arr[1, 1] = rook1;
-            arr[1, 9] = rook2;
-            arr[10, 1] = rook3;
-            arr[10, 9] = rook4;
-            arr[1, 2] = horse1;
-            arr[1, 8] = horse2;
-            arr[10, 2] = horse3;
-            arr[10, 8] = horse4;
-            arr[1, 3] = elephant1;
-            arr[1, 7] = elephant2;
-            arr[10, 3] = elephant3;
-            arr[10, 7] = elephant4;
-            arr[1, 4] = mandarin1;
-            arr[1, 6] = mandarin2;
-            arr[10, 4] = mandarin3;
-            arr[10, 6] = mandarin4;
-            arr[4, 1] = pawn1;
-            arr[4, 3] = pawn2;
-            arr[4, 5] = pawn3;
-            arr[4, 7] = pawn4;
-            arr[4, 9] = pawn5;
-            arr[3, 1] = pawn6;
-            arr[3, 3] = pawn7;
-            arr[3, 5] = pawn8;
-            arr[3, 7] = pawn9;
-            arr[3, 9] = pawn10;
+            arr[4, 0] = general1;
+            arr[4, 8] = general2;
+            arr[0, 9] = rook1;
+            arr[8, 9] = rook2;
+            arr[0, 0] = rook3;
+            arr[8, 0] = rook4;
+            arr[1, 9] = horse1;
+            arr[7, 9] = horse2;
+            arr[1, 0] = horse3;
+            arr[7, 0] = horse4;
+            arr[2, 9] = elephant1;
+            arr[6, 9] = elephant2;
+            arr[2, 0] = elephant3;
+            arr[6, 0] = elephant4;
+            arr[3, 9] = mandarin1;
+            arr[5, 9] = mandarin2;
+            arr[3, 0] = mandarin3;
+            arr[5, 0] = mandarin4;
+            arr[0, 6] = pawn1;
+            arr[2, 6] = pawn2;
+            arr[4, 6] = pawn3;
+            arr[6, 6] = pawn4;
+            arr[8, 6] = pawn5;
+            arr[0, 3] = pawn6;
+            arr[2, 3] = pawn7;
+            arr[4, 3] = pawn8;
+            arr[6, 3] = pawn9;
+            arr[8, 3] = pawn10;
 
         }
         public Piece[,] getArr() //get the 2d array of the chessboard.
