@@ -60,7 +60,7 @@ namespace KING_OF_XIANGQI
                 {   
                     int tX = (i + 1) / 2;
                     int tY = (j + 1) / 2;
-                    if(colorTable[(i+1)/2, (j+1)/2] == 1)// 获取数组getcolor 数组里面元素为1 的坐标
+                    if(colorTable[(i+1)/2, (j+1)/2] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
                     {
                         arrForBoard[i, j] = arrTable[tX, tY].GetType().ToString();
                         Console.BackgroundColor = ConsoleColor.DarkYellow;

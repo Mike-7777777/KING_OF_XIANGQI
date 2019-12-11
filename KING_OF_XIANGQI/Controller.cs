@@ -327,7 +327,7 @@ namespace KING_OF_XIANGQI
 
             xlist.Remove(x);//去除炮自己所在的位置
             blist.Remove(y);
-            PossibleMoveBan_canon(xlist, blist, x, y, arrPieces);
+            PossibleMoveBan_canon(xlist, blist, x, y, Table);
 
             xlist = PossibleMoveBanx(xlist, x, y, arrPieces);//返回炮可能在x轴的位置
             blist = PossibleMoveBany(blist, x, y, arrPieces);//返回炮可能在y轴的位置
