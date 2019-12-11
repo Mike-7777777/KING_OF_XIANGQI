@@ -4,30 +4,32 @@ using System.Text;
 
 namespace KING_OF_XIANGQI
 {
-    public class View 
+    using System;
+    public class View
     {
         private string[] arrForPieces = new string[7] { "车", "马", "象", "士", "将", "炮", "兵" }; //储存棋子的一维数组
         private string[,] arrForBoard = {
-                                    {"  ","一 ","   ","二 ","   ","三 ","   ","四 ","   ","五 ","   ","六 ","   ","七 ","   ","八 ","   ","九"},//0
-                                    {"1 ","┏ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┓ "},//1
+
+                                    {"10 ","┏ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┓ "},//1
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "  ╲  ", "┃", "  ╱  ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//2
-                                    {"2 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//3
+                                    {"9 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//3
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "  ╱  ", "┃", "  ╲  ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//4
-                                    {"3 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//5
+                                    {"8 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//5
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "     ", "┃", "     ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//6
-                                    {"4 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//7
+                                    {"7 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//7
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "     ", "┃", "     ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//8
-                                    {"5 ","┣ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┫ "},//9
+                                    {"6 ","┣ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┫ "},//9
                                     { "  ","┃ ","  ", "   ", "  ", "楚河  ", "  ", "    ", "   ", "┃", "     ", " ", "   ", "   ", "漢界  ", "   ", "  ", "┃ " },//10
-                                    {"6 ","┣ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┫ "},//11
+                                    {"5 ","┣ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┳ "," ━  ","┫ "},//11
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "     ", "┃", "     ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//12
-                                    {"7 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//13
+                                    {"4 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//13
                                     { "  ","┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "     ", "┃", "     ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//14
-                                    {"8 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//15
+                                    {"3 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//15
                                     {"  ", "┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "  ╲  ", "┃", "  ╱  ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//16
-                                    {"9 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//17
+                                    {"2 ","┣ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","╋ "," ━  ","┫ "},//17
                                     {"  ", "┃ ","  ", "  ┃", "  ", "   ┃", "  ", "   ┃", "  ╱  ", "┃", "  ╲  ", "┃", "   ", "  ┃", "  ", "   ┃", "   ", "  ┃ " },//18
-                                    {"10","┗ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┛ "},//19
+                                    {"1 ","┗ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┻ "," ━  ","┛ "},//19
+                                    {"  ","一 ","   ","二 ","   ","三 ","   ","四 ","   ","五 ","   ","六 ","   ","七 ","   ","八 ","   ","九"},//0
                                  }; // 棋盘二维数组
 
 
@@ -55,82 +57,83 @@ namespace KING_OF_XIANGQI
             int[,] colorTable = dataTable.getColor();
             Piece[,] arrTable = dataTable.getArr();
             // 重新打印带有possible movement 的棋盘
-            for (int i = 0; i < 20; i++)
+            for (int i = 17; i > 0; i--)
             {
-                for (int j = 0; j < 18; j++)
-                {   
+                for (int j = 20; j > 0; j--)
+                {
                     int tX = (i + 1) / 2;
                     int tY = (j + 1) / 2;
-                    if(colorTable[(i+1)/2, (j+1)/2] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
+                    if (colorTable[(i + 1) / 2, (j + 1) / 2] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
                     {
                         arrForBoard[i, j] = arrTable[tX, tY].GetType().ToString();
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Red;//可移动路径显示为红色
-                        Console.Write (arrForBoard[i,j]); 
+                        Console.Write(arrForBoard[i, j]);
                         Console.ResetColor();
                     }
-                    else Console.Write(arrForBoard[i,j]); 
+                    else Console.Write(arrForBoard[i, j]);
 
                     while (j == 17)
                     {
                         Console.WriteLine("");
-                       break;
+                        break;
                     }
                 }
             }
-            
+
         }
-        
-        /*0 " 1 2 3 4 5 6 7 8 9 1011121314151617
-          1 " ┏━┳━┳━┳━┳━┳━┳━┳━┓\n" +
-          2 " ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
-          3 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          4 " ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
-          5 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          6 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          7 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          8 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          9 " ┣━┻━┻━┻━┻━┻━┻━┻━┫\n" +
-          10" ┃              ┃              ┃\n" +
-          11" ┣━┳━┳━┳━┳━┳━┳━┳━┫\n" +
-          12" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          13" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          14" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          15" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          16" ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
-          17" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          18" ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
-          19" ┗━┻━┻━┻━┻━┻━┻━┻━┛\n");*/
-       
+
+        /*初始棋盘示意(代码坐标参考系）
+        19" ┏━┳━┳━┳━┳━┳━┳━┳━┓\n" +
+        18" ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
+        17" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        16" ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
+        15" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        14" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+        13" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        12" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+        11" ┣━┻━┻━┻━┻━┻━┻━┻━┫\n" +
+        10" ┃              ┃              ┃\n" +
+        9 " ┣━┳━┳━┳━┳━┳━┳━┳━┫\n" +
+        8 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+        7 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        6 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+        5 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        4 " ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
+        3 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+        2 " ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
+        1 " ┗━┻━┻━┻━┻━┻━┻━┻━┛\n"
+        0 " 1 2 3 4 5 6 7 8 9 1011121314151617);*/
+
         public void PositionChangingDisplay(Table dataTable)
         {
             // 获取getArr() 数组
-            Piece [,] arrTable = dataTable.getArr();
+            Piece[,] arrTable = dataTable.getArr();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 17; i > 0; i--)
             {
-                for (int j = 0; j < 18; j++)
-                {                   
+                for (int j = 20; j > 0; j--)
+                {
                     // color 获取color为黑或红的棋子
-                    int tempX = (i+1)/2;
-                    int tempY = (j+1)/2;
-                    string color= arrTable[tempX,tempY].getColor();
+                    int tempX = (i + 1) / 2;
+                    int tempY = (j + 1) / 2;
+                    string color = arrTable[tempX, tempY].getColor();
                     arrForBoard[i, j] = arrTable[tempX, tempY].GetType().ToString();
 
-                    if (arrTable[tempX ,tempY ] != null && color == "Black" )//  获取数组getArr() 数组里面元素为1 的坐标
+                    if (arrTable[tempX, tempY] != null && color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
                     {
 
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(arrForBoard);
-                            Console.ResetColor();
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.Write(arrForBoard);
+                        Console.ResetColor();
                     }
-                    else if(arrTable[tempX ,tempY ] != null && color == "Red") // 红方棋子
+                    else if (arrTable[tempX, tempY] != null && color == "Red") // 红方棋子
                     {
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(arrForBoard);
-                            Console.ResetColor();
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(arrForBoard);
+                        Console.ResetColor();
                     }
                     else
                     {
@@ -167,34 +170,33 @@ namespace KING_OF_XIANGQI
         }
 
         /*初始棋盘示意(代码坐标参考系）
-          0 " 1 2 3 4 5 6 7 8 9 1011121314151617
-          1 " ┏━┳━┳━┳━┳━┳━┳━┳━┓\n" +
-          2 " ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
-          3 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          4 " ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
-          5 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          6 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          7 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          8 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          9 " ┣━┻━┻━┻━┻━┻━┻━┻━┫\n" +
-          10" ┃              ┃              ┃\n" +
-          11" ┣━┳━┳━┳━┳━┳━┳━┳━┫\n" +
-          12" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          13" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          14" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
-          15" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          16" ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
+          19" ┏━┳━┳━┳━┳━┳━┳━┳━┓\n" +
+          18" ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
           17" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
-          18" ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
-          19" ┗━┻━┻━┻━┻━┻━┻━┻━┛\n");*/
-
+          16" ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
+          15" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+          14" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+          13" ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+          12" ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+          11" ┣━┻━┻━┻━┻━┻━┻━┻━┫\n" +
+          10" ┃              ┃              ┃\n" +
+          9 " ┣━┳━┳━┳━┳━┳━┳━┳━┫\n" +
+          8 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+          7 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+          6 " ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃\n" +
+          5 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+          4 " ┃  ┃  ┃  ┃╲┃╱┃  ┃  ┃  ┃\n" +
+          3 " ┣━╋━╋━╋━╋━╋━╋━╋━┫\n" +
+          2 " ┃  ┃  ┃  ┃╱┃╲┃  ┃  ┃  ┃\n" +
+          1 " ┗━┻━┻━┻━┻━┻━┻━┻━┛\n"
+          0 " 1 2 3 4 5 6 7 8 9 1011121314151617);*/
         // 初始棋盘 （有棋子）展示
         public void InitialBoardForDisplay()
         {
 
-            for (int i = 0; i < 20; i++)
-            {   
-                for (int j = 0; j < 18; j++)
+            for (int i = 17; i > 0; i--)
+            {
+                for (int j = 20; j > 0; j--)
                 {
                     if ((i == 1 && j == 1) || (i == 1 && j == 17)) // 蓝方车
                         arrForBoard[i, j] = arrForPieces[0];
@@ -226,13 +228,30 @@ namespace KING_OF_XIANGQI
                         arrForBoard[i, j] = arrForPieces[4];
                 }
             }
-            for (int i = 0; i < 20; i++)
+            for (int i = 17; i > 0; i--)
             {
-                for (int j = 0; j < 18; j++)
+                for (int j = 20; j > 0; j--)
                 {
-                    
+
 
                     if (i <= 10)
+                    {
+                        if (arrForBoard[i, j] == arrForPieces[0] || arrForBoard[i, j] == arrForPieces[1] ||
+                            arrForBoard[i, j] == arrForPieces[2] || arrForBoard[i, j] == arrForPieces[3] ||
+                            arrForBoard[i, j] == arrForPieces[4] || arrForBoard[i, j] == arrForPieces[5] || arrForBoard[i, j] == arrForPieces[6])
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(arrForBoard[i, j]);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow;
+                            Console.Write(arrForBoard[i, j]);
+                        }
+                    }
+                    else
                     {
                         if (arrForBoard[i, j] == arrForPieces[0] || arrForBoard[i, j] == arrForPieces[1] ||
                             arrForBoard[i, j] == arrForPieces[2] || arrForBoard[i, j] == arrForPieces[3] ||
@@ -247,23 +266,6 @@ namespace KING_OF_XIANGQI
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.Write(arrForBoard[i, j]);
-                        }
-                        }
-                    else
-                    {
-                        if (arrForBoard[i, j] == arrForPieces[0] || arrForBoard[i, j] == arrForPieces[1] ||
-                            arrForBoard[i, j] == arrForPieces[2] || arrForBoard[i, j] == arrForPieces[3] ||
-                            arrForBoard[i, j] == arrForPieces[4] || arrForBoard[i, j] == arrForPieces[5] || arrForBoard[i, j] == arrForPieces[6])
-                        {
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.Red;                       
-                            Console.Write(arrForBoard[i, j]);
-                            Console.ResetColor();
-                        }
-                        else
-                        {
-                            Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.Write(arrForBoard[i, j]);                          
                             Console.ResetColor();
                         }
                     }
@@ -280,3 +282,6 @@ namespace KING_OF_XIANGQI
         }
     }
 }
+
+
+
