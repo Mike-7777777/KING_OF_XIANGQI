@@ -20,7 +20,7 @@ namespace KING_OF_XIANGQI
             {
                 for (int j = 0; j < Color.GetLength(1); j++)
                 {
-                    Console.WriteLine(Color[i, j]);
+                    Color[i, j] = 0;
                 }
             }
             General general1 = new General("Black"); //jiang
@@ -56,7 +56,7 @@ namespace KING_OF_XIANGQI
             Pawn pawn9 = new Pawn("Red");
             Pawn pawn10 = new Pawn("Red");
             arr[4, 0] = general1;
-            arr[4, 8] = general2;
+            arr[4, 9] = general2;
             arr[0, 9] = rook1;
             arr[8, 9] = rook2;
             arr[0, 0] = rook3;

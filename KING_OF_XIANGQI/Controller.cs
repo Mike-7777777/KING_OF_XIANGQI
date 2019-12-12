@@ -9,8 +9,8 @@ namespace KING_OF_XIANGQI
     {
         private int prop1 = 0;
         private string myColor;
-        private List<int> xlist;
-        private List<int> ylist;
+        private List<int> xlist = new List<int>();
+        private List<int> ylist = new List<int>();
         public void chooseP(int x, int y, Table dataTable, string myColor)
         //x,y is the location of piece that user chose. 
         //dataTable is a gameboard object.
@@ -28,9 +28,6 @@ namespace KING_OF_XIANGQI
             int[] xarr = new int[n];//x坐标数组
             int[] yarr = new int[n];//y坐标数组
 
-            List<int> xlist = new List<int>(); //x坐标list
-            List<int> ylist = new List<int>(); //y坐标list
-
             List<int> xTemplist = new List<int>(); //x坐标list 临时
             List<int> yTemplist = new List<int>(); //y坐标list 临时
 
@@ -43,8 +40,9 @@ namespace KING_OF_XIANGQI
             //问题是这里的Piece的类型是什么，本来定义的是Piece，但显然传输过来的应该是子类（具体棋子）。
             //写好Table以后需要再看一下。
             //分辨棋子类型改变数据库中棋盘的颜色。
-            if (chosePiece is General) //如果这个棋子是“将”
+            if (chosePiece.GetType() == typeof(General)) //如果这个棋子是“将”
             {
+                Console.WriteLine("this is general");
                 //1. 找到相应的位置
                 //2. 将对应位置改变属性，再用View令其变色。
 
@@ -62,16 +60,28 @@ namespace KING_OF_XIANGQI
 
                 }
                 //上下走
-                if (y == 0 || y == 2 || y == 9 || y == 7)
+                if (y == 0 || y == 2)
                 {
                     //如果坐标为3或5，只能去4
                     possibleMove(x, 1, dataTable);
                 }
-                else if (y == 1 || y == 8)
+                else if (y == 9 || y == 7)
+                {
+                    //如果坐标为3或5，只能去4
+                    possibleMove(x, 8, dataTable);
+                }
+                else if (y == 1)
                 {
                     //如果坐标为4，35都能去
                     possibleMove(x, 0, dataTable);
                     possibleMove(x, 2, dataTable);
+
+                }
+                else if (y == 8)
+                {
+                    //如果坐标为4，35都能去
+                    possibleMove(x, 9, dataTable);
+                    possibleMove(x, 7, dataTable);
 
                 }
 
@@ -178,41 +188,61 @@ namespace KING_OF_XIANGQI
             //马
             if (chosePiece is Horse)
             {
+                Console.WriteLine("in horse");
                 xTemplist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1 };
                 yTemplist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2 };
                 //以上初始化两个临时List，使其符合马的行走方式。
                 //以下删减List中的元素，使其符合马的行走限制。
-                ylist = yTemplist.FindAll(
-                    delegate (int i)
-                    {
-                        return (i >= 0 && i <= 8);
-                    }
-                    );
-                xlist = xTemplist.FindAll(
-                    delegate (int i)
-                    {
-                        return (i >= 0 && i <= 8);
-                    }
-                    );
-                //把超出棋盘的坐标删掉
-                this.xlist = xlist; //写入类属性，使得后面的removeBan函数使用更方便
-                this.ylist = ylist;
+                this.xlist = xTemplist;
+                this.ylist = yTemplist;
+                removeOut();//把超出棋盘的坐标删掉
+                foreach (int i in xlist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
                 if (arrPieces[x - 1, y] != null)
                 {
                     removeBan(x - 2,"x");
                 }//左边马脚
+                foreach (int i in xlist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
                 if (arrPieces[x + 1, y] != null)
                 {
                     removeBan(x + 2,"x");
                 }//右边马脚
-                if (arrPieces[x, y + 1] != null)
+                foreach (int i in xlist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
+                if (y + 1 < 10 && arrPieces[x, y + 1] != null)
                 {
                     removeBan(y + 2, "y");
                 }//上马脚
+                foreach (int i in xlist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
                 if (arrPieces[x, y - 1] != null)
                 {
                     removeBan(y - 2, "y");
                 }//下马脚
+
+                foreach (int i in xlist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
+                foreach (int i in ylist)
+                {
+                    Console.Write(i + ",");
+                }
+                Console.WriteLine();
                 possibleMove(xlist, ylist, dataTable);
             }
             if(chosePiece is Pawn) // 兵
@@ -231,11 +261,15 @@ namespace KING_OF_XIANGQI
         public void possibleMove(List<int> x, List<int> y, Table dataTable) //用来确认空子+确认不是己方棋子，改变颜色
         {
             Piece[,] arrPieces = dataTable.getArr();
-            foreach (int i in x)
+            Console.WriteLine("in possible move");
+            for (int i = 0; i <= x.Count(); i++)
             {
                 //如果目标点为空，或者为对方棋子，则变色。否则不变色。
+                Console.WriteLine(x[i]);
+                Console.WriteLine(y[i]);
+                if (arrPieces[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
                 if (arrPieces[x[i], y[i]] == null 
-                    || arrPieces[x[i], y[i]].getColor() != myColor)
+                    || arrPieces[x[i], y[i]].getColor() == myColor)//原来是!= 但是改了就对了,不知道为什么
                 {
                     dataTable.tableChangeColorActive(x[i], y[i]);
                 }
@@ -266,6 +300,32 @@ namespace KING_OF_XIANGQI
                 xtempList.Add(x);
             }
             possibleMove(xtempList, y, dataTable);
+        }
+        public void removeOut()
+        {
+            //
+            int xindex = 0;
+            Predicate<int> matchOutX = xi =>
+            {
+                return xi < 0 || xi > 8;
+            };
+            Predicate<int> matchOutY = yi =>
+            {
+                return yi < 0 || yi > 9;
+            };
+            do
+            {
+                xindex = this.xlist.FindIndex(matchOutX);
+                this.xlist.RemoveAt(xindex);
+                this.ylist.RemoveAt(xindex);
+            }while ((this.xlist.FindIndex(matchOutX) != -1));
+            do
+            {
+                xindex = this.ylist.FindIndex(matchOutX);
+                this.xlist.RemoveAt(xindex);
+                this.ylist.RemoveAt(xindex);
+            } while ((this.ylist.FindIndex(matchOutX) != -1));
+
         }
         public void removeBan(int objective,string mode)
         {

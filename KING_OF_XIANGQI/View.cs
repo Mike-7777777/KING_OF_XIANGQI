@@ -61,20 +61,32 @@ namespace KING_OF_XIANGQI
             {
                 for (int j = 0; j < 18; j++)
                 {
-                    int tX = (j - 1) / 2;
-                    int bX = (j - 1) % 2; 
-                    int tY = (19 - i) / 2;
-                    int bY = (19 - i) % 2;
-                    if (bX == 0 && bY == 0 && colorTable[tX, tY] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
+                    int tX, bX, tY, bY = 0;
+                    tX = (j + 1) / 2 - 1;// (j - 1) / 2;
+                    bX = (j + 1) % 2; //(j - 1) % 2; 
+                    tY = 9 - (i - 1) / 2; //(19 - i) / 2;
+                    bY = (i - 1) % 2; //(19 - i) % 2;
+                    /*string t1 = Convert.ToString(tX);
+                    string t2 = Convert.ToString(tY);
+                    string b1 = Convert.ToString(bX);
+                    string b2 = Convert.ToString(bY);
+                    Console.WriteLine(t1);
+                    Console.WriteLine(t2);
+                    */
+                    if (bX == 0 && bY == 0 && tX>0 && tY>0 && colorTable[tX, tY] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
                     {
-                        arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
+                        //arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Red;//可移动路径显示为红色
                         Console.Write(arrForBoard[i, j]);
                         Console.ResetColor();
                     }
-                    else Console.Write(arrForBoard[i, j]);
-
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(arrForBoard[i, j]);
+                        Console.ResetColor();
+                    }
                     while (j == 17)
                     {
                         Console.WriteLine("");
@@ -138,11 +150,10 @@ namespace KING_OF_XIANGQI
             {
                 for (int j = 0; j < 18; j++)
                 {
-                    int tX = (j - 1) / 2;
-                    int bX = (j - 1) % 2;
-                    int tY = (19 - i) / 2;
-                    int bY = (19 - i) % 2;
-                    // color 获取color为黑或红的棋子
+                    int tX = (j + 1) / 2 - 1;// (j - 1) / 2;
+                    int bX = (j + 1) % 2; //(j - 1) % 2; 
+                    int tY = 9 - (i - 1) / 2; //(19 - i) / 2;
+                    int bY = (i - 1) % 2; //(19 - i) % 2                    // color 获取color为黑或红的棋子
                     if (bX == 0 && bY == 0 && arrTable[tX, tY] != null)
                     {
                         string color;
@@ -154,21 +165,22 @@ namespace KING_OF_XIANGQI
 
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.ForegroundColor = ConsoleColor.Black;
-                            Console.Write(arrForBoard);
+                            Console.Write(arrForBoard[i,j]);
                             Console.ResetColor();
                         }
                         else if (color == "Red") // 红方棋子
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write(arrForBoard);
+                            Console.Write(arrForBoard[i,j]);
                             Console.ResetColor();
                         }
                     }
                     else
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.Write(arrForBoard);
+                        Console.Write(arrForBoard[i,j]);
+                        Console.ResetColor();
                     }
                     while (j == 17)
                     {
