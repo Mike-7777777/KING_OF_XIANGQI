@@ -262,7 +262,7 @@ namespace KING_OF_XIANGQI
         {
             Piece[,] arrPieces = dataTable.getArr();
             Console.WriteLine("in possible move");
-            for (int i = 0; i <= x.Count(); i++)
+            for (int i = 0; i < x.Count(); i++)
             {
                 //如果目标点为空，或者为对方棋子，则变色。否则不变色。
                 Console.WriteLine(x[i]);
