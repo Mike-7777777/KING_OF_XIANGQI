@@ -5,23 +5,23 @@ namespace KING_OF_XIANGQI
     class Program
     {
         public static void Main()
-        {   
-            while(true)
+        {
+            string red = "Red";
+
+            View a = new View();
+            Table dataTable = new Table();
+            Controller control = new Controller();
+            //Console.WriteLine("111展示棋盘（带棋子）");
+            a.InitialBoardForDisplay();
+
+            //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
+            // datatable 为 table 类型的初始棋盘
+
+            //棋子走动的位置改变
+
+            dataTable.initArr();
+            while (true)
             {
-                string red = "Red";
-
-                View a = new View();
-                Table dataTable = new Table();
-                Controller control = new Controller();
-                //Console.WriteLine("111展示棋盘（带棋子）");
-                a.InitialBoardForDisplay();
-
-                //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
-                // datatable 为 table 类型的初始棋盘
-
-                //棋子走动的位置改变
-
-                dataTable.initArr();
 
                 Console.WriteLine("Red first. Please Choose a piece in coordinate");   //你好，红先黑后，请红方选择棋子。
                 int redx = Convert.ToInt32(Console.ReadLine());
