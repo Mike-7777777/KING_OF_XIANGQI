@@ -55,8 +55,8 @@ namespace KING_OF_XIANGQI
             Pawn pawn8 = new Pawn("Red");
             Pawn pawn9 = new Pawn("Red");
             Pawn pawn10 = new Pawn("Red");
-            arr[4, 0] = general1;
-            arr[4, 9] = general2;
+            arr[4, 9] = general1;
+            arr[4, 0] = general2;
             arr[0, 9] = rook1;
             arr[8, 9] = rook2;
             arr[0, 0] = rook3;
@@ -83,7 +83,10 @@ namespace KING_OF_XIANGQI
             arr[4, 3] = pawn8;
             arr[6, 3] = pawn9;
             arr[8, 3] = pawn10;
-
+            arr[1, 7] = cannon1;
+            arr[7, 7] = cannon2;
+            arr[1, 2] = cannon3;
+            arr[7, 2] = cannon4;
         }
         public Piece[,] getArr() //get the 2d array of the chessboard.
         {

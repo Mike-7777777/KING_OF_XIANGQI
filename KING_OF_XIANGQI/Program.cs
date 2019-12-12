@@ -14,13 +14,13 @@ namespace KING_OF_XIANGQI
             //Console.WriteLine("111展示棋盘（带棋子）");
             a.InitialBoardForDisplay();
 
-
             //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
             // datatable 为 table 类型的初始棋盘
 
             //棋子走动的位置改变
 
             dataTable.initArr();
+
             Console.WriteLine("Red first. Please Choose a piece in coordinate");   //你好，红先黑后，请红方选择棋子。
             int redx = Convert.ToInt32(Console.ReadLine());
             int redy = Convert.ToInt32(Console.ReadLine());
@@ -42,7 +42,28 @@ namespace KING_OF_XIANGQI
             var red2 = new Tuple<int, int>(redx1, redy1);//接收棋子目的地的坐标
             control.MoveP(red1, red2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
             a.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
-            //刷新View的刷新方法
+                                                 //刷新View的刷新方法
+            Console.WriteLine("Black now. Please Choose a piece in coordinate");   //你好，红先黑后，请红方选择棋子。
+            int blackx = Convert.ToInt32(Console.ReadLine());
+            int blacky = Convert.ToInt32(Console.ReadLine());
+            var black1 = new Tuple<int, int>(redx, redy);
+            //接收坐标。
+            Console.WriteLine(redx + redy);//test
+            control.chooseP(redx, redy, dataTable, red); //运行Controller.chooseP（）方法 
+            int[,] intbalckarr = dataTable.getColor();
+            foreach (int i in intbalckarr)
+            {
+                Console.Write(i);
+            }
+            Console.WriteLine();
+            a.PossibleMovementPoint(dataTable);//Console.WriteLine("222选择棋子 以 及 展示可以行走的棋子的possible movement（变色）");
+
+            Console.WriteLine("Please enter the coordinate that you want to go");
+            int blackx1 = Convert.ToInt32(Console.ReadLine());
+            int blacky1 = Convert.ToInt32(Console.ReadLine());
+            var black2 = new Tuple<int, int>(blackx1, blacky1);//接收棋子目的地的坐标
+            control.MoveP(black1, black2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
+            a.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
         }
     }
 }

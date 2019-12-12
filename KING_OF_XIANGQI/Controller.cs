@@ -95,7 +95,7 @@ namespace KING_OF_XIANGQI
                     //n = 4; 
                     xarr = new int[4] { 3, 3, 5, 5 };
                     xlist.AddRange(xarr);
-                    if (y != 1)
+                    if (y > 1)
                     {
                         yarr = new int[4] { 7, 9, 7, 9 };
                         ylist.AddRange(yarr);
@@ -109,7 +109,7 @@ namespace KING_OF_XIANGQI
                 }
                 else
                 {
-                    if(y != 1)
+                    if(y > 1)
                     {
                         possibleMove(4, 8, dataTable);
                     }
@@ -124,48 +124,34 @@ namespace KING_OF_XIANGQI
             //象
             if (chosePiece is Elephant)
             {
+                Console.WriteLine("in Elephant");
                 // 右上、右下、左上、左下。
-                xTemplist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
-                yTemplist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
+                this.xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
+                this.ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
                 List<int> xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
                 List<int> yBan = new List<int> { y + 1, y + 1, y - 1, y - 1 };
                 //以上初始化两个临时List，使其符合象的行走方式。
                 //以下删减List中的元素，使其符合象的行走限制。
                 if (x == 4)
                 {
-                    possibleMove(xlist, ylist, dataTable);
+                    Console.WriteLine("in elephant x == 4");
+                    possibleMove(this.xlist, this.ylist, dataTable);
                 }
                 else if (y < 5) //在下半边
                 {
+                    Console.WriteLine("in elephant y<5");
                     //将符合条件（y坐标在0-4中）的坐标存入新ylist
-                    ylist = yTemplist.FindAll(
-                        delegate(int i)
-                        {
-                            //限制X坐标范围在0-4之间。
-                            return (i>=0 && i<=4);
-                        }
-                        );
+                    //将符合条件（y坐标在0-8中）的坐标存入新xlist
+                    removeOut(2);
                 }
-                else //在上半边
+                else if (y > 4) //在上半边
                 {
+                    Console.WriteLine("in elephant y>4");
                     //将符合条件（x坐标在5-9中）的坐标存入新ylist
-                    ylist = yTemplist.FindAll(
-                        delegate (int i)
-                        {
-                            //限制X坐标范围在0-4之间。
-                            return (i >= 5 && i <= 8);
-                        }
-                        );
+                    //将符合条件（y坐标在0-8中）的坐标存入新xlist
+                    removeOut(1);
                 }
-                //将符合条件（y坐标在0-8中）的坐标存入新xlist
-                //(由于对于y是否大于5，x的有效范围都不变所以写在if外)
-                xlist = xTemplist.FindAll(
-                    delegate (int i)
-                    {
-                            //限制X坐标范围在0-4之间。
-                            return (i >= 0 && i <= 8);
-                    }
-                    );
+                
                 if (y + 1 < 10 && x - 1 >= 0 && arrPieces[x - 1, y + 1] != null)
                 {
                     removeBan(y + 1, "y");
@@ -195,7 +181,7 @@ namespace KING_OF_XIANGQI
                 //以下删减List中的元素，使其符合马的行走限制。
                 this.xlist = xTemplist;
                 this.ylist = yTemplist;
-                removeOut();//把超出棋盘的坐标删掉
+                removeOut(1);//把超出棋盘的坐标删掉
 
                 if (x - 1 >= 0 && arrPieces[x - 1, y] != null)
                 {
@@ -242,7 +228,7 @@ namespace KING_OF_XIANGQI
                 Console.WriteLine(y[i]);
                 if (arrPieces[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
                 if (arrPieces[x[i], y[i]] == null 
-                    || arrPieces[x[i], y[i]].getColor() == myColor)//原来是!= 但是改了就对了,不知道为什么
+                    || arrPieces[x[i], y[i]].getColor() != myColor)//原来是!= 但是改了就对了,不知道为什么
                 {
                     dataTable.tableChangeColorActive(x[i], y[i]);
                 }
@@ -274,9 +260,8 @@ namespace KING_OF_XIANGQI
             }
             possibleMove(xtempList, y, dataTable);
         }
-        public void removeOut()
+        public void removeOut(int mode)
         {
-            //
             int xindex = 0;
             Predicate<int> matchOutX = xi =>
             {
@@ -286,19 +271,53 @@ namespace KING_OF_XIANGQI
             {
                 return yi < 0 || yi > 9;
             };
-            do
+            Predicate<int> matchOutYDown = yi =>
             {
-                xindex = this.xlist.FindIndex(matchOutX);
-                this.xlist.RemoveAt(xindex);
-                this.ylist.RemoveAt(xindex);
-            }while ((this.xlist.FindIndex(matchOutX) != -1));
-            do
+                return yi < 0 || yi > 5;
+            };
+            Predicate<int> matchOutYUp = yi =>
             {
-                xindex = this.ylist.FindIndex(matchOutX);
-                this.xlist.RemoveAt(xindex);
-                this.ylist.RemoveAt(xindex);
-            } while ((this.ylist.FindIndex(matchOutX) != -1));
+                return yi < 10 || yi > 4;
+            };
+            switch (mode)
+            {// 1 default, 2 elephant up, 3 ele down(y<5)
+             //
+                case 1:
+                    while ((this.xlist.FindIndex(matchOutX) != -1))
+                    {
+                        xindex = this.xlist.FindIndex(matchOutX);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    while ((this.ylist.FindIndex(matchOutY) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(matchOutY);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
 
+                case 2:
+                    removeOut(1);
+                    while ((this.ylist.FindIndex(matchOutYUp) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(matchOutYUp);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
+
+                case 3:
+                    removeOut(1);
+                    while ((this.ylist.FindIndex(matchOutYDown) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(matchOutYDown);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
+
+            }
         }
         public void removeBan(int objective,string mode)
         {
@@ -578,7 +597,7 @@ namespace KING_OF_XIANGQI
         public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move, Piece[,] arrPieces)
         {
             arrPieces[location_move.Item1, location_move.Item2] = arrPieces[location_select.Item1, location_select.Item2];
-            arrPieces[location_move.Item1, location_move.Item2] = null;//空棋子或者空
+            arrPieces[location_select.Item1, location_select.Item2] = null;//空棋子或者空
             return arrPieces;
         }//移动棋子
     }
