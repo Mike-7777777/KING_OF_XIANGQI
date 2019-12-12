@@ -73,7 +73,7 @@ namespace KING_OF_XIANGQI
                     Console.WriteLine(t1);
                     Console.WriteLine(t2);
                     */
-                    if (bX == 0 && bY == 0 && tX>0 && tY>0 && colorTable[tX, tY] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
+                    if (bX == 0 && bY == 0 && tX>=0 && tY>=0 && colorTable[tX, tY] == 1) // 获取数组getcolor 数组里面元素为1 的坐标
                     {
                         //arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;

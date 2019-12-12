@@ -166,19 +166,19 @@ namespace KING_OF_XIANGQI
                             return (i >= 0 && i <= 8);
                     }
                     );
-                if (arrPieces[x - 1, y + 1] != null)
+                if (y + 1 < 10 && x - 1 >= 0 && arrPieces[x - 1, y + 1] != null)
                 {
                     removeBan(y + 1, "y");
                 }//左上象腿
-                if (arrPieces[x - 1, y - 1] != null)
+                if (y - 1 >= 0 && x - 1 >= 0 && arrPieces[x - 1, y - 1] != null)
                 {
                     removeBan(y - 1, "y");
                 }//左下象腿
-                if (arrPieces[x + 1, y + 1] != null)
+                if (y + 1 < 10 && x + 1 < 10 && arrPieces[x + 1, y + 1] != null)
                 {
                     removeBan(y + 1, "y");
                 }//左上象腿
-                if (arrPieces[x + 1, y - 1] != null)
+                if (x + 1 < 10 && y - 1 >= 0 && arrPieces[x + 1, y - 1] != null)
                 {
                     removeBan(y - 1, "y");
                 }//左上象腿
@@ -196,53 +196,26 @@ namespace KING_OF_XIANGQI
                 this.xlist = xTemplist;
                 this.ylist = yTemplist;
                 removeOut();//把超出棋盘的坐标删掉
-                foreach (int i in xlist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
-                if (arrPieces[x - 1, y] != null)
+
+                if (x - 1 >= 0 && arrPieces[x - 1, y] != null)
                 {
                     removeBan(x - 2,"x");
                 }//左边马脚
-                foreach (int i in xlist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
-                if (arrPieces[x + 1, y] != null)
+
+                if (x + 1 < 10 && arrPieces[x + 1, y] != null)
                 {
                     removeBan(x + 2,"x");
                 }//右边马脚
-                foreach (int i in xlist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
+
                 if (y + 1 < 10 && arrPieces[x, y + 1] != null)
                 {
                     removeBan(y + 2, "y");
                 }//上马脚
-                foreach (int i in xlist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
-                if (arrPieces[x, y - 1] != null)
+                
+                if (y - 1 >= 0 && arrPieces[x, y - 1] != null)
                 {
                     removeBan(y - 2, "y");
                 }//下马脚
-
-                foreach (int i in xlist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
-                foreach (int i in ylist)
-                {
-                    Console.Write(i + ",");
-                }
-                Console.WriteLine();
                 possibleMove(xlist, ylist, dataTable);
             }
             if(chosePiece is Pawn) // 兵
