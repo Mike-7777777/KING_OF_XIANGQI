@@ -7,7 +7,8 @@ namespace KING_OF_XIANGQI
     public class Table
     {
         private Piece[,] arr = new Piece[9,10];
-        private int[,] Color;
+        private int[,] Color = new int[9, 10];
+
 
         public void setArr(int a, int b) // set the length and height of the 2d array.
         {
@@ -15,6 +16,13 @@ namespace KING_OF_XIANGQI
         }
         public void initArr()
         {
+            for (int i = 0; i < Color.GetLength(0); i++)
+            {
+                for (int j = 0; j < Color.GetLength(1); j++)
+                {
+                    Console.WriteLine(Color[i, j]);
+                }
+            }
             General general1 = new General("Black"); //jiang
             General general2 = new General("Red");
             Rook rook1 = new Rook("Black"); //che
