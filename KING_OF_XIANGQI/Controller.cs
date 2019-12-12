@@ -465,30 +465,34 @@ namespace KING_OF_XIANGQI
 
                 xtemplistleft.RemoveRange(0, xtemplistleft.ToArray().Length - 2);
                 xtemplistleft.RemoveRange(1, 1);
+                possibleMove(xtemplistleft, y, dataTable);
             }
             if (xtemplistright.ToArray().Length >= 2)
             {
 
                 xtemplistright.RemoveRange(0, 1);
                 xtemplistright.RemoveRange(1, xtemplistright.ToArray().Length - 1);
+                possibleMove(xtemplistright, y, dataTable);
             }
             if (btemplistleft.ToArray().Length >= 2)
             {
 
                 btemplistleft.RemoveRange(0, btemplistleft.ToArray().Length - 2);
                 btemplistleft.RemoveRange(1, 1);
+                possibleMove(x, btemplistleft, dataTable);
             }
             if (btemplistright.ToArray().Length >= 2)
             {
 
                 btemplistright.RemoveRange(0, 1);
                 btemplistright.RemoveRange(1, btemplistright.ToArray().Length - 1);
+                possibleMove(x, btemplistright, dataTable);
 
             }
-            possibleMove(xtemplistleft, y,dataTable);
-            possibleMove(xtemplistright, y, dataTable);
-            possibleMove(x,btemplistleft, dataTable);
-            possibleMove(x,btemplistright, dataTable);
+            
+            
+            
+           
         }
 
         public List<int> PossibleMoveBanx(List<int> xlist, int x, int y, Piece[,] arrPieces)
