@@ -63,6 +63,7 @@ namespace KING_OF_XIANGQI
                 if (y == 0 || y == 2)
                 {
                     //如果坐标为3或5，只能去4
+                    Console.WriteLine("in if y == 0 or 2");
                     possibleMove(x, 1, dataTable);
                 }
                 else if (y == 9 || y == 7)

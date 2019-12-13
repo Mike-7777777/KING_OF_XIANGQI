@@ -100,7 +100,7 @@ namespace KING_OF_XIANGQI
                     {
                         //arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.ForegroundColor = ConsoleColor.Red;//可移动路径显示为红色
+                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为红色
                         Console.Write(arrForBoard[i, j]);
                         Console.ResetColor();                    
                     }
@@ -191,7 +191,6 @@ namespace KING_OF_XIANGQI
         {
             // 获取getArr() 数组
             Piece[,] arrTable = dataTable.getArr();
-            Console.WriteLine(arrForBoard[19,9]);
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)

@@ -16,13 +16,6 @@ namespace KING_OF_XIANGQI
         }
         public void initArr()
         {
-            for (int i = 0; i < Color.GetLength(0); i++)
-            {
-                for (int j = 0; j < Color.GetLength(1); j++)
-                {
-                    Color[i, j] = 0;
-                }
-            }
             General general1 = new General("Black"); //jiang
             General general2 = new General("Red");
             Rook rook1 = new Rook("Black"); //che
@@ -104,6 +97,16 @@ namespace KING_OF_XIANGQI
         public int[,] getColor()
         {
             return Color;
+        }
+        public void initColor()
+        {
+            for (int i = 0; i < Color.GetLength(0); i++)
+            {
+                for (int j = 0; j < Color.GetLength(1); j++)
+                {
+                    Color[i, j] = 0;
+                }
+            }
         }
     }
 }
