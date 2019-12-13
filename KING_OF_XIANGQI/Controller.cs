@@ -586,5 +586,10 @@ namespace KING_OF_XIANGQI
             arrPieces[location_select.Item1, location_select.Item2] = null;//空棋子或者空
             return arrPieces;
         }//移动棋子
+        public void moveandCheckWin()
+        {
+
+
+        }
     }
 }
