@@ -91,18 +91,22 @@ namespace KING_OF_XIANGQI
             //士 3~5，0~2
             if (chosePiece is Mandarin)
             {
+                
                 if (x == 4)
                 {
                     //n = 4; 
+                    Console.WriteLine("in if == 4");
                     xarr = new int[4] { 3, 3, 5, 5 };
                     xlist.AddRange(xarr);
-                    if (y > 1)
+                    if (y > 2)
                     {
+                        Console.WriteLine("in if y > 2");
                         yarr = new int[4] { 7, 9, 7, 9 };
                         ylist.AddRange(yarr);
                     }
                     else
                     {
+                        Console.WriteLine("in if y !> 2 else");
                         yarr = new int[4] { 2, 0, 2, 0 };
                         ylist.AddRange(yarr);
                     }
@@ -144,6 +148,16 @@ namespace KING_OF_XIANGQI
                     //将符合条件（y坐标在0-4中）的坐标存入新ylist
                     //将符合条件（y坐标在0-8中）的坐标存入新xlist
                     removeOut(2);
+                    foreach(int i in xlist)
+                    {
+                        Console.Write(i);
+                    }
+                    Console.WriteLine();
+                    foreach (int i in ylist)
+                    {
+                        Console.Write(i);
+                    }
+                    Console.WriteLine();
                 }
                 else if (y > 4) //在上半边
                 {
@@ -234,6 +248,8 @@ namespace KING_OF_XIANGQI
                     dataTable.tableChangeColorActive(x[i], y[i]);
                 }
             }
+            xlist.Clear();
+            ylist.Clear();
         }
         public void possibleMove(int x, int y, Table dataTable) //如果只有一个数
         {
@@ -274,11 +290,11 @@ namespace KING_OF_XIANGQI
             };
             Predicate<int> matchOutYDown = yi =>
             {
-                return yi < 0 || yi > 5;
+                return yi > 5;
             };
             Predicate<int> matchOutYUp = yi =>
             {
-                return yi < 10 || yi > 4;
+                return yi > 4;
             };
             switch (mode)
             {// 1 default, 2 elephant up, 3 ele down(y<5)
