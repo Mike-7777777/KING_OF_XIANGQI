@@ -561,26 +561,7 @@ namespace KING_OF_XIANGQI
             blist = PossibleMoveBany(blist, x, y, arrPieces);
 
 
-            if (xlist[xlist.ToArray().Length - 1] + 1 == y)
-            {
-                xlist.Add(xlist[xlist.ToArray().Length - 1] + 2);
-            }
-            else
-            {
-                xlist.Add(xlist[xlist.ToArray().Length - 1] + 1);
-            }
 
-            xlist.Add(xlist[0] - 1);
-
-            if (blist[blist.ToArray().Length - 1] + 1 == y)
-            {
-                blist.Add(blist[blist.ToArray().Length - 1] + 2);
-            }
-            else
-            {
-                blist.Add(blist[blist.ToArray().Length - 1] + 1);
-            }
-            blist.Add(blist[0] - 1);
 
             List<int> ylist = new List<int> { };
             for (int i = 0; i < xlist.ToArray().Length; i++)
