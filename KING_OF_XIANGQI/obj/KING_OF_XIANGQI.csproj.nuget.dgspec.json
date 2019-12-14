@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Administrator\\Desktop\\新建文件夹 (4)\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {}
+    "C:\\Users\\benben\\source\\repos\\VERSION3\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Administrator\\Desktop\\新建文件夹 (4)\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {
+    "C:\\Users\\benben\\source\\repos\\VERSION3\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (4)\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+        "projectUniqueName": "C:\\Users\\benben\\source\\repos\\VERSION3\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
         "projectName": "KING_OF_XIANGQI",
-        "projectPath": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (4)\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (4)\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
+        "projectPath": "C:\\Users\\benben\\source\\repos\\VERSION3\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+        "packagesPath": "C:\\Users\\benben\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\benben\\source\\repos\\VERSION3\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\benben\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

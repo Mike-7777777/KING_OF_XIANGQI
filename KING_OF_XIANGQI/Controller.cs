@@ -40,6 +40,9 @@ namespace KING_OF_XIANGQI
             //问题是这里的Piece的类型是什么，本来定义的是Piece，但显然传输过来的应该是子类（具体棋子）。
             //写好Table以后需要再看一下。
             //分辨棋子类型改变数据库中棋盘的颜色。
+            ////版本改动(view1)
+            dataTable.setChosePiece(x, y);
+            ////版本改动(view1)
             if (chosePiece.GetType() == typeof(General)) //如果这个棋子是“将”
             {
                 Console.WriteLine("this is general");

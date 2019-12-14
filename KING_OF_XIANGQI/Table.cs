@@ -8,8 +8,20 @@ namespace KING_OF_XIANGQI
     {
         private Piece[,] arr = new Piece[9,10];
         private int[,] Color = new int[9, 10];
+        ////版本改动(view1)
+        private int[] chosePiece = new int[2];
 
+        public void setChosePiece(int x, int y)
+        {
+            chosePiece[0] = x;
+            chosePiece[1] = y;
 
+        }
+        public int[] getChosePiece()
+        {
+            return chosePiece;
+        }
+        ////版本改动(view1)
         public void setArr(int a, int b) // set the length and height of the 2d array.
         {
             this.arr = new Piece[a, b];

@@ -58,3 +58,14 @@ C:\Users\69042\Source\Repos\Mike-7777777\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Deb
 C:\Users\69042\Source\Repos\Mike-7777777\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
 C:\Users\69042\Source\Repos\Mike-7777777\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
 C:\Users\69042\Source\Repos\Mike-7777777\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.exe
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.deps.json
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.runtimeconfig.json
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.runtimeconfig.dev.json
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.dll
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\bin\Debug\netcoreapp3.0\KING_OF_XIANGQI.pdb
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.csprojAssemblyReference.cache
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfoInputs.cache
+C:\Users\benben\source\repos\VERSION3\KING_OF_XIANGQI\KING_OF_XIANGQI\obj\Debug\netcoreapp3.0\KING_OF_XIANGQI.AssemblyInfo.cs
