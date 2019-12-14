@@ -365,35 +365,86 @@ namespace KING_OF_XIANGQI
             
         }
 
-        public void PossibleMove_pawn(int x, int y, Table dataTable)//小兵的可移动方式
+        public void PossibleMove_pawn(int x, int y, Table Table)//小兵的可移动方式
         {
-
-            List<int> xlist = new List<int> { x + 1, x - 1, x };//小兵所有可能移动的位置
-            List<int> ylist = new List<int> { y, y, y + 1 };
-            List<int> xlimitlist = xlist.FindAll(
-                delegate (int i)
-                {
-                    return (i >= 0 && i <= 2);
-                });
-            List<int> ylimitlist = ylist.FindAll(
-                delegate (int i)
-                {
-                    return (i >= 0 && i <= 2);
-                });
-
-            if (y <= 1)//如果小兵没有超过楚河汉界
+            Piece[,] arrPieces = new Piece[9, 10];
+            arrPieces = Table.getArr();
+            List<int> xlist = new List<int> { x + 1, x - 1, x, x };
+            List<int> ylist = new List<int> { y, y, y + 1, y - 1 };
+            switch (arrPieces[x, y].getColor())
             {
-                xlimitlist.RemoveRange(0, 2);//去除左右可能移动的位置
-                xlist = xlimitlist;
-                ylimitlist.RemoveRange(0, 2);
-                ylist = ylimitlist;
-                possibleMove(xlist, ylist, dataTable);
+                case "Red":
+                    xlist.RemoveAt(3);
+                    ylist.RemoveAt(3);
 
+                    if (y <= 4)
+                    {
+
+                        xlist.RemoveRange(0, 2);
+                        ylist.RemoveRange(0, 2);
+
+                    }
+                    else if (y >= 5 && (x == 8 || x == 0))
+                    {
+                        ylist.RemoveAt(0);
+                    }
+                    xlist = xlist.FindAll(
+
+                            delegate (int i)
+                            {
+                                return (i >= 0 && i <= 8);
+                            }
+                            );
+                    ylist = ylist.FindAll(
+
+                            delegate (int i)
+                            {
+                                return (i >= 0 && i <= 9);
+                            }
+                            );
+                    possibleMove(xlist, ylist, Table);
+                    break;
+
+                case "Black":
+                    xlist.RemoveAt(2);
+                    ylist.RemoveAt(2);
+                    if (y >= 5)
+                    {
+                        xlist.RemoveRange(0, 2);
+                        ylist.RemoveRange(0, 2);
+                    }
+                    else if (y <= 4 && (x == 8 || x == 0))
+                    {
+                        ylist.RemoveAt(0);
+                    }
+
+                    xlist = xlist.FindAll(
+
+                            delegate (int i)
+                            {
+                                return (i >= 0 && i <= 8);
+                            }
+                            );
+                    ylist = ylist.FindAll(
+
+                             delegate (int i)
+                             {
+                                 return (i >= 0 && i <= 9);
+                             }
+                             );
+                    for (int i = 0; i < ylist.Count; i++)
+                    {
+
+                        Console.WriteLine("y:" + ylist[i]);
+                    }
+                    for (int i = 0; i < xlist.Count; i++)
+                    {
+                        Console.WriteLine("x:" + xlist[i]);
+                    }
+                    possibleMove(xlist, ylist, Table);
+                    break;
             }
-            else //如过小兵超过了楚河汉界
-            {
-                possibleMove(xlist, ylist, dataTable);
-            }
+
         }
 
         public void PossibleMove_Canon(int x, int y, Table Table)//炮的可移动方式
