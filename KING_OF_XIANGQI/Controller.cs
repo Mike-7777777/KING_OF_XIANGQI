@@ -53,11 +53,13 @@ namespace KING_OF_XIANGQI
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
                     ylist = new List<int> { y + 1, y + 1, y + 0, y + 0 };
                     removeOut(4); //remove all points out of small 9 space.
+                    possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
                     xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
                     ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     removeOut(4); //remove all points out of small 9 space.
+                    possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Elephant":
                     Console.WriteLine("in Elephant");
@@ -79,7 +81,7 @@ namespace KING_OF_XIANGQI
                     {
                         removeOut(3);// ... out of the lower half of board.
                     }
-                    Ban(xBan,yBan,"ele");
+                    Ban(xBan,yBan);
                     possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Horse":
@@ -88,12 +90,25 @@ namespace KING_OF_XIANGQI
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1 };
                     ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2 };
                     //init two list, make it adapt it to the way the elephant walks.
-                    xBan = new List<int> { x + 1, x + 1, x    , x    };
+                    xBan = new List<int> { x + 1, x - 1, x    , x    };
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
                     removeOut(1);   // delete the points out of board.
-                    Ban(xBan, yBan, "horse");
+                    if (x + 1 < 10 && refArrTable[x + 1, y] != null)
+                    {
+                        removeBan(x + 2, "x");
+                    }//右边马脚
+
+                    if (y + 1 < 10 && refArrTable[x, y + 1] != null)
+                    {
+                        removeBan(y + 2, "y");
+                    }//上马脚
+
+                    if (y - 1 >= 0 && refArrTable[x, y - 1] != null)
+                    {
+                        removeBan(y - 2, "y");
+                    }//下马脚
                     possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
@@ -107,30 +122,20 @@ namespace KING_OF_XIANGQI
                     break;
             }
         }
-        public void Ban(List<int> xBan, List<int> yBan,string mode)
+        public void Ban(List<int> xBan, List<int> yBan)
         {
             int k = 0;
+            Console.WriteLine("in ban");
             for (int i = 0; i < 4; i++)//remove the points that cannot reach by piece elephant.
             {
-                Boolean inRange = xBan[i] < 10 && xBan[i] > 0 && yBan[i] < 10 && yBan[i] > 0;
+                Boolean inRange = (xBan[i] < 10 && xBan[i] >= 0 && yBan[i] < 10 && yBan[i] >= 0);
+                Console.WriteLine("in 1 for " + k+inRange);
                 if (inRange && refArrTable[xBan[i], yBan[i]] != null)
                 {
-                    if(mode == "ele")
-                    {
+                    Console.WriteLine("in 1 if");
+                        Console.WriteLine("in ele if");
                         xlist.RemoveAt(k);// four round: ↗, ↘, ↙, ↖.
                         ylist.RemoveAt(k);
-                    }
-                    else if (mode == "horse")
-                    {
-                        //
-                        xlist.RemoveAt(2 * k - 1);
-                        ylist.RemoveAt(2 * k - 1);
-                        xlist.RemoveAt(2 * k);
-                        ylist.RemoveAt(2 * k);
-                        k++;
-                        
-                    }
-                   
                 }
                 else
                 {
@@ -199,13 +204,13 @@ namespace KING_OF_XIANGQI
             };
             Predicate<int> topHalfBoard = yi => //y-axis out of the top half-board.
             {
-                return yi > 4;
+                return yi < 4;
             };
-            Predicate<int> xInTNight = xi => //x-axis out of the Jiugongge(T9).
+            Predicate<int> xInTNine = xi => //x-axis out of the Jiugongge(T9).
             {
                 return xi < 3 || xi > 5;
             };
-            Predicate<int> yInTNight = yi => //y-axis out of the Jiugongge(T9).
+            Predicate<int> yInTNine = yi => //y-axis out of the Jiugongge(T9).
             {
                 return yi > 2;
             };
@@ -219,11 +224,12 @@ namespace KING_OF_XIANGQI
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
-                    while ((this.ylist.FindIndex(yInBoard) != -1))
+                    Console.WriteLine(ylist.FindIndex(yInBoard));
+                    while ((ylist.FindIndex(yInBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(yInBoard);
-                        this.xlist.RemoveAt(xindex);
-                        this.ylist.RemoveAt(xindex);
+                        xindex = ylist.FindIndex(yInBoard);
+                        xlist.RemoveAt(xindex);
+                        ylist.RemoveAt(xindex);
                     }
                     break;
 
@@ -247,21 +253,48 @@ namespace KING_OF_XIANGQI
                     }
                     break;
                 case 4:
-                    while ((this.ylist.FindIndex(yInTNight) != -1))
+                    while ((this.ylist.FindIndex(yInTNine) != -1))
                     {
-                        xindex = this.ylist.FindIndex(yInTNight);
+                        xindex = this.ylist.FindIndex(yInTNine);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
-                    while ((this.xlist.FindIndex(xInTNight) != -1))
+                    while ((this.xlist.FindIndex(xInTNine) != -1))
                     {
-                        xindex = this.xlist.FindIndex(xInTNight);
+                        xindex = this.xlist.FindIndex(xInTNine);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
                     break;
 
             }
+        }
+        public void removeBan(int objective, string mode)
+        {
+            int xindex = 0;
+            Predicate<int> match = xi =>
+            {
+                return xi == objective;
+            };
+            if (mode == "x")
+            {
+                while (xlist.Contains(objective))
+                {
+                    xindex = xlist.FindIndex(match);
+                    xlist.RemoveAt(xindex);
+                    ylist.RemoveAt(xindex);
+                }
+            }
+            else
+            {
+                while (ylist.Contains(objective))
+                {
+                    xindex = ylist.FindIndex(match);
+                    xlist.RemoveAt(xindex);
+                    ylist.RemoveAt(xindex);
+                }
+            }
+
         }
         public void PossibleMove_pawn(int x, int y)//小兵的可移动方式
         {
