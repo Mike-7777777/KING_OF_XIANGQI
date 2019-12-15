@@ -50,109 +50,92 @@ namespace KING_OF_XIANGQI
             {
                 case "KING_OF_XIANGQI.General":
                     Console.WriteLine("In switch general"); //test
-                    this.xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
-                    this.ylist = new List<int> { y + 1, y + 1, y + 0, y + 0 };
+                    xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
+                    ylist = new List<int> { y + 1, y + 1, y + 0, y + 0 };
                     removeOut(4); //remove all points out of small 9 space.
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
-                    this.xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
-                    this.ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
+                    xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
+                    ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     removeOut(4); //remove all points out of small 9 space.
                     break;
                 case "KING_OF_XIANGQI.Elephant":
-
-                case ""
-                case ""
-                case ""
-                case ""
+                    Console.WriteLine("in Elephant");
+                    // ↗, ↘, ↙, ↖.
+                    //init two list, make it adapt it to the way the elephant walks.
+                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
+                    ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
+                    //init two ban list used later to deletes the non-compliantelements.
+                    xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
+                    yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
+                    //The following deletes the elements in the List 
+                    //to meet the walking restrictions of the elephant.
+                    if (y > 5)
+                    {
+                        removeOut(2);   // delete (make it null) 
+                                        //the elements out of the upper half of board.
+                    }
+                    else
+                    {
+                        removeOut(3);// ... out of the lower half of board.
+                    }
+                    Ban(xBan,yBan,"ele");
+                    possibleMove(xlist, ylist);
+                    break;
+                case "KING_OF_XIANGQI.Horse":
+                    Console.WriteLine("in horse");
+                    //y↗ y↗ y↖ y↙, Y↗ Y↗ Y↖ Y↙
+                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1 };
+                    ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2 };
+                    //init two list, make it adapt it to the way the elephant walks.
+                    xBan = new List<int> { x + 1, x + 1, x    , x    };
+                    yBan = new List<int> { y    , y    , y + 1, y - 1 };
+                    //The following deletes the elements in the List 
+                    //to meet the walking restrictions of the elephant.
+                    removeOut(1);   // delete the points out of board.
+                    Ban(xBan, yBan, "horse");
+                    possibleMove(xlist, ylist);
+                    break;
+                case "KING_OF_XIANGQI.Pawn":
+                    PossibleMove_pawn(x, y);
+                    break;
+                case "KING_OF_XIANGQI.Cannon":
+                    PossibleMove_Canon(x, y);
+                    break;
+                case "KING_OF_XIANGQI.Rook":
+                    PossibleMove_Rook(x, y);
+                    break;
             }
-
-            //象
-            if (chosePiece is Elephant)
+        }
+        public void Ban(List<int> xBan, List<int> yBan,string mode)
+        {
+            int k = 0;
+            for (int i = 0; i < 4; i++)//remove the points that cannot reach by piece elephant.
             {
-                Console.WriteLine("in Elephant");
-                // ↗, ↘, ↙, ↖.
-                //init two list, make it adapt it to the way the elephant walks.
-                this.xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
-                this.ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
-                //init two ban list used later to deletes the non-compliantelements.
-                xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
-                yBan = new List<int> { y + 1, y + 1, y - 1, y - 1 };
-                //The following deletes the elements in the List 
-                //to meet the walking restrictions of the elephant.
-                switch(y > 5)
+                Boolean inRange = xBan[i] < 10 && xBan[i] > 0 && yBan[i] < 10 && yBan[i] > 0;
+                if (inRange && refArrTable[xBan[i], yBan[i]] != null)
                 {
-                    case true: // in the upper half of board.
-                        removeOut(2);
-                        break;
-                    case false: // in the lower half of board.
-                        removeOut(3);
-                        break;
+                    if(mode == "ele")
+                    {
+                        xlist.RemoveAt(k);// four round: ↗, ↘, ↙, ↖.
+                        ylist.RemoveAt(k);
+                    }
+                    else if (mode == "horse")
+                    {
+                        //
+                        xlist.RemoveAt(2 * k - 1);
+                        ylist.RemoveAt(2 * k - 1);
+                        xlist.RemoveAt(2 * k);
+                        ylist.RemoveAt(2 * k);
+                        k++;
+                        
+                    }
+                   
                 }
-                
-                if (y + 1 < 10 && x - 1 >= 0 && refArrTable[x - 1, y + 1] != null)
+                else
                 {
-                    removeBan(y + 1, "y");
-                }//左上象腿
-                if (y - 1 >= 0 && x - 1 >= 0 && refArrTable[x - 1, y - 1] != null)
-                {
-                    removeBan(y - 1, "y");
-                }//左下象腿
-                if (y + 1 < 10 && x + 1 < 10 && refArrTable[x + 1, y + 1] != null)
-                {
-                    removeBan(y + 1, "y");
-                }//左上象腿
-                if (x + 1 < 10 && y - 1 >= 0 && refArrTable[x + 1, y - 1] != null)
-                {
-                    removeBan(y - 1, "y");
-                }//左上象腿
-                possibleMove(xlist, ylist);
-            }
-            
-            //马
-            if (chosePiece is Horse)
-            {
-                Console.WriteLine("in horse");
-                xTemplist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1 };
-                yTemplist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2 };
-                //以上初始化两个临时List，使其符合马的行走方式。
-                //以下删减List中的元素，使其符合马的行走限制。
-                this.xlist = xTemplist;
-                this.ylist = yTemplist;
-                removeOut(1);//把超出棋盘的坐标删掉
-
-                if (x - 1 >= 0 && refArrTable[x - 1, y] != null)
-                {
-                    removeBan(x - 2,"x");
-                }//左边马脚
-
-                if (x + 1 < 10 && refArrTable[x + 1, y] != null)
-                {
-                    removeBan(x + 2,"x");
-                }//右边马脚
-
-                if (y + 1 < 10 && refArrTable[x, y + 1] != null)
-                {
-                    removeBan(y + 2, "y");
-                }//上马脚
-                
-                if (y - 1 >= 0 && refArrTable[x, y - 1] != null)
-                {
-                    removeBan(y - 2, "y");
-                }//下马脚
-                possibleMove(xlist, ylist);
-            }
-            if(chosePiece is Pawn) // 兵
-            {
-                PossibleMove_pawn(x,y);
-            }
-            if(chosePiece is Cannon) // 炮
-            {
-                PossibleMove_Canon(x, y);
-            }
-            if (chosePiece is Rook) // 俥
-            {
-                PossibleMove_Rook(x, y);
+                    k++;
+                }
             }
         }
         public void possibleMove(List<int> x, List<int> y) //用来确认空子+确认不是己方棋子，改变颜色
@@ -280,35 +263,6 @@ namespace KING_OF_XIANGQI
 
             }
         }
-        public void removeBan(int objective,string mode)
-        {
-            int xindex = 0;
-            Predicate<int> match = xi =>
-            {
-                return xi == objective;
-            };
-            if (mode == "x")
-            {
-                while (this.xlist.Contains(objective))
-                {
-                    xindex = this.xlist.FindIndex(match);
-                    this.xlist.RemoveAt(xindex);
-                    this.ylist.RemoveAt(xindex);
-                }
-            }
-            else
-            {
-                while (this.ylist.Contains(objective))
-                {
-                    xindex = this.ylist.FindIndex(match);
-                    this.ylist.RemoveAt(xindex);
-                    this.xlist.RemoveAt(xindex);
-                }
-            }
-            
-            
-        }
-
         public void PossibleMove_pawn(int x, int y)//小兵的可移动方式
         {
             List<int> xlist = new List<int> { x + 1, x - 1, x, x };
