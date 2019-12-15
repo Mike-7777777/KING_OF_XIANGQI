@@ -449,206 +449,145 @@ namespace KING_OF_XIANGQI
             }
 
         }
-
-        public void PossibleMove_Canon(int x, int y, Table Table)//炮的可移动方式
+        public void PossibleMoveBan_Rook(List<int> xlist, List<int> ylist, int judge, int x, int y, Piece[,] arrPieces, Table Table)
         {
-            List<int> xlist = new List<int> { };
-            List<int> blist = new List<int> { };
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = Table.getArr();
 
-            for (int i = 0; i < 9; i++)//炮可能所在的x轴位置
+            List<int> templist = new List<int> { };
+            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
+            for (int i = judge - 1; i > -1; i--)
             {
-                xlist.Add(i);
+                if (arrPieces[xlist[i], ylist[i]] != null)
+                {
+                    if (arrPieces[x, y].GetType() == typeof(Cannon))
+                    {
+                        ylist.RemoveRange(0, i + 1);
+                        xlist.RemoveRange(0, i + 1);
+                    }
+                    else
+                    {
+                        ylist.RemoveRange(0, i);
+                        xlist.RemoveRange(0, i);
+                    }
+                    break;
+                }
             }
-            for (int i = 0; i < 10; i++)//炮可能所在的y轴位置
+            Predicate<int> match = xi =>
             {
-                blist.Add(i);
-            }
-
-            xlist.Remove(x);//去除炮自己所在的位置
-            blist.Remove(y);
-            PossibleMoveBan_canon(xlist, blist, x, y, Table);
-
-            xlist = PossibleMoveBanx(xlist, x, y, arrPieces);//返回炮可能在x轴的位置
-            blist = PossibleMoveBany(blist, x, y, arrPieces);//返回炮可能在y轴的位置
-
-            List<int> ylist = new List<int> { };
-            for (int i = 0; i < xlist.ToArray().Length; i++)
+                return xi == judge;
+            };
+            int j;
+            int k;
+            j = xlist.FindIndex(match);
+            k = ylist.FindIndex(match);
+            if (templist.Count == 1)
             {
-                ylist.Add(y);
+                k = j;
             }
-
-            List<int> alist = new List<int> { };
-            for (int i = 0; i < blist.ToArray().Length; i++)
+            for (int i = k + 1; i < xlist.Count; i++)
             {
-                alist.Add(x);
+                if (arrPieces[xlist[i], ylist[i]] != null)
+                {
+                    if (arrPieces[x, y].GetType() == typeof(Cannon))
+                    {
+                        ylist.RemoveRange(i, ylist.Count - i);
+                        xlist.RemoveRange(i, xlist.Count - i);
+                    }
+                    else
+                    {
+                        ylist.RemoveRange(i + 1, ylist.Count - i - 1);
+                        xlist.RemoveRange(i + 1, xlist.Count - i - 1);
+                    }
+                    break;
+                }
             }
-
             possibleMove(xlist, ylist, Table);
-            possibleMove(alist, blist, Table);
-
-
-
-        }
-
-        public void PossibleMoveBan_canon(List<int> xlist, List<int> blist, int x, int y, Table dataTable)
-        {
-            List<int> xtemplistleft = new List<int> { };
-            List<int> xtemplistright = new List<int> { };
-            List<int> btemplistleft = new List<int> { };
-            List<int> btemplistright = new List<int> { };
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = dataTable.getArr();
-            for (int i = 0; i < xlist.ToArray().Length; i++)
-            {
-
-                if (arrPieces[xlist[i], y] != null && xlist[i] < x)
-                {
-
-                    xtemplistleft.Add(xlist[i]);
-                }
-
-                if (arrPieces[xlist[i], y] != null && xlist[i] > x)
-                {
-
-                    xtemplistright.Add(xlist[i]);
-                }
-            }
-
-            for (int i = 0; i < blist.ToArray().Length; i++)
-            {
-
-                if (arrPieces[x, blist[i]] != null && blist[i] < y)
-                {
-
-                    btemplistleft.Add(blist[i]);
-                }
-
-                if (arrPieces[x, blist[i]] != null && blist[i] > y)
-                {
-
-                    btemplistright.Add(blist[i]);
-                }
-            }
-            if (xtemplistleft.ToArray().Length >= 2)
-            {
-
-                xtemplistleft.RemoveRange(0, xtemplistleft.ToArray().Length - 2);
-                xtemplistleft.RemoveRange(1, 1);
-                possibleMove(xtemplistleft, y, dataTable);
-            }
-            if (xtemplistright.ToArray().Length >= 2)
-            {
-
-                xtemplistright.RemoveRange(0, 1);
-                xtemplistright.RemoveRange(1, xtemplistright.ToArray().Length - 1);
-                possibleMove(xtemplistright, y, dataTable);
-            }
-            if (btemplistleft.ToArray().Length >= 2)
-            {
-
-                btemplistleft.RemoveRange(0, btemplistleft.ToArray().Length - 2);
-                btemplistleft.RemoveRange(1, 1);
-                possibleMove(x, btemplistleft, dataTable);
-            }
-            if (btemplistright.ToArray().Length >= 2)
-            {
-
-                btemplistright.RemoveRange(0, 1);
-                btemplistright.RemoveRange(1, btemplistright.ToArray().Length - 1);
-                possibleMove(x, btemplistright, dataTable);
-
-            }
-            
-            
-            
-           
-        }
-
-        public List<int> PossibleMoveBanx(List<int> xlist, int x, int y, Piece[,] arrPieces)
+        }//车和炮的行走规则
+        public void PossibleMoveBan_canon(List<int> xlist, List<int> ylist, int judge, int x, int y, Piece[,] arrPieces, Table Table)
         {
 
-            for (int i = 0; i < xlist.ToArray().Length; i++)//检验棋子x轴左边，将有其他棋子阻挡的后面的路径删除
+            List<int> templist = new List<int> { };
+            List<int> xtemplist = new List<int> { };
+            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
+            for (int i = judge - 1; i > -1; i--)
             {
-                if (arrPieces[xlist[i], y] != null && xlist[i] < x)
+                if (arrPieces[xlist[i], ylist[i]] != null)
                 {
-                    xlist.RemoveRange(0, i + 1);
-                    PossibleMoveBanx(xlist, x, y, arrPieces);
-
-                }
-                else if (arrPieces[xlist[i], y] != null && xlist[i] > x)//检验棋子x轴右边，将有其他棋子阻挡的后面的路径删除
-                {
-                    xlist.RemoveRange(i, xlist.ToArray().Length - i);
-                    PossibleMoveBanx(xlist, x, y, arrPieces);
+                    for (int j = i - 1; j > -1; j--)
+                    {
+                        if (arrPieces[xlist[j], ylist[j]] != null)
+                        {
+                            possibleMove(xlist[j], ylist[j], Table);
+                            break;
+                        }
+                    }
+                    break;
                 }
 
             }
-            return xlist;
-
-        }//删除车和炮x轴不可到达的路径
-
-        public List<int> PossibleMoveBany(List<int> blist, int x, int y, Piece[,] arrPieces)
-        {
-            for (int i = 0; i < blist.ToArray().Length; i++)
+            for (int i = judge + 1; i < xlist.Count; i++)
             {
-                if (arrPieces[x, blist[i]] != null && blist[i] < y)//检验棋子y轴上边，将有其他棋子阻挡的后面的路径删除
+                if (arrPieces[xlist[i], ylist[i]] != null)
                 {
-                    blist.RemoveRange(0, i + 1);
-                    PossibleMoveBany(blist, x, y, arrPieces);
-
-                }
-                else if (arrPieces[x, blist[i]] != null && blist[i] > y)//检验棋子y轴下边，将有其他棋子阻挡的后面的路径删除
-                {
-                    blist.RemoveRange(i, blist.ToArray().Length - i);
-                    PossibleMoveBany(blist, x, y, arrPieces);
+                    for (int j = i + 1; j < xlist.Count; j++)
+                    {
+                        if (arrPieces[xlist[j], ylist[j]] != null)
+                        {
+                            possibleMove(xlist[j], ylist[j], Table);
+                            break;
+                        }
+                    }
+                    break;
                 }
 
             }
-            return blist;
-        }//删除车和炮y轴不可到达的路径
-
-        public void PossibleMove_Rook(int x, int y,Table Table)//车的可移动方式
+        }//如何打炮
+        public void PossibleMove_Rook(int x, int y, Table Table)//车的可移动方式
         {
             List<int> xlist = new List<int> { };
             List<int> blist = new List<int> { };
+            List<int> ylist = new List<int> { };
+            List<int> alist = new List<int> { };
             Piece[,] arrPieces = new Piece[9, 10];
             arrPieces = Table.getArr();
 
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
                 xlist.Add(i);
+                ylist.Add(y);
 
             }
             for (int i = 0; i < 10; i++)//车可能所在的y轴位置
             {
+                alist.Add(x);
                 blist.Add(i);
+
             }
-
-            xlist.Remove(x);//去除车自己所在的位置
-            blist.Remove(y);
-            xlist = PossibleMoveBanx(xlist, x, y, arrPieces);
-            blist = PossibleMoveBany(blist, x, y, arrPieces);
-
-
-
-
+            PossibleMoveBan_Rook(xlist, ylist, x, x, y, arrPieces, Table);
+            PossibleMoveBan_Rook(alist, blist, y, x, y, arrPieces, Table);
+        }
+        public void PossibleMove_Canon(int x, int y, Table Table)//炮的可移动方式
+        {
+            List<int> xlist = new List<int> { };
+            List<int> blist = new List<int> { };
             List<int> ylist = new List<int> { };
-            for (int i = 0; i < xlist.ToArray().Length; i++)
-            {
-                ylist.Add(y);
-                Console.WriteLine("x" + xlist[i]);
-            }
-
             List<int> alist = new List<int> { };
-            for (int i = 0; i < blist.ToArray().Length; i++)
+            Piece[,] arrPieces = new Piece[9, 10];
+            arrPieces = Table.getArr();
+
+            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
+            {
+                xlist.Add(i);
+                ylist.Add(y);
+
+            }
+            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
             {
                 alist.Add(x);
-                Console.WriteLine("y" + blist[i]);
-            }
+                blist.Add(i);
 
-            possibleMove(xlist, ylist, Table);
-            possibleMove(alist, blist, Table);
+            }
+            PossibleMoveBan_canon(xlist, ylist, x, x, y, arrPieces, Table);
+            PossibleMoveBan_canon(alist, blist, y, x, y, arrPieces, Table);
         }
         public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move, Piece[,] arrPieces)
         {
