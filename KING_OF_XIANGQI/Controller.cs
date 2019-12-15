@@ -7,186 +7,106 @@ namespace KING_OF_XIANGQI
 {
     class Controller
     {
-        private int prop1 = 0;
-        private string myColor;
-        private List<int> xlist = new List<int>();
-        private List<int> ylist = new List<int>();
-        public void chooseP(int x, int y, Table dataTable, string myColor)
-        //x,y is the location of piece that user chose. 
-        //dataTable is a gameboard object.
-        //This method is used to active one piece  
-        //and predict the point it could get.
-        //颜色string为了定义本局行走的颜色。1是黑色，0是红色。
+        private string myColor; //define the player this round.
+        private List<int> xlist;
+        private List<int> ylist;
+        private Table refDataTable;   //To get the reference of input variable 'dataTable', 
+                                        //so that other methods can use it without input it everytime.
+        private Piece[,] refArrTable; //To get the reference of the property(the array made by pieces) 
+                                        //of input variable 'dataTable', 
+                                        //so that other methods can use it without input it everytime.
+
+        public Controller(Table dataTable)
         {
-            //储存本次操作的颜色。
+            this.refDataTable = dataTable;  //recieve the data of board.
+            this.refArrTable = dataTable.getArr();  //recieve the arrObject from database.
+            this.xlist = new List<int>();
+            this.ylist = new List<int>();
+        }
+        public void chooseP(int x, int y, string myColor)   //x,y is the location of piece that user chose. 
+                                                            //This method is used to active one piece  
+                                                            //and predict the point it could get.
+                                                            //myColor string defined the rounding color, black & red.
+        {
+            //Store the player;
             this.myColor = myColor;
-            //new a piece array that save the array got from database.
-            Piece[,] arrPieces = new Piece[9, 10];//如果最后不需要可以删掉
             //define a Piece object chosePiece to store the Piece pass by database.
             Piece chosePiece;
-            int n = 0; //数组大小
-            int[] xarr = new int[n];//x坐标数组
-            int[] yarr = new int[n];//y坐标数组
+            int[] xarr;
+            int[] yarr;
 
             List<int> xTemplist = new List<int>(); //x坐标list 临时
             List<int> yTemplist = new List<int>(); //y坐标list 临时
+            List<int> xBan;
+            List<int> yBan;
 
-            //recieve the arrObject from database.
-            arrPieces = dataTable.getArr(); //如果最后不需要可以删掉
             //use getPiece method and pass two variables as     
             //the location to get the object we need.
-            //使用getPiece方法，传入两个表示坐标的变量，收到对象棋子。
-            chosePiece = dataTable.getPiece(x, y);
-            //问题是这里的Piece的类型是什么，本来定义的是Piece，但显然传输过来的应该是子类（具体棋子）。
-            //写好Table以后需要再看一下。
-            //分辨棋子类型改变数据库中棋盘的颜色。
-            ////版本改动(view1)
-            dataTable.setChosePiece(x, y);
-            ////版本改动(view1)
-            if (chosePiece.GetType() == typeof(General)) //如果这个棋子是“将”
+            chosePiece = refDataTable.getPiece(x, y);
+            //Distinguish pieces types
+            refDataTable.setChosePiece(x, y);
+
+            switch(chosePiece.GetType().ToString())
             {
-                Console.WriteLine("this is general");
-                //1. 找到相应的位置
-                //2. 将对应位置改变属性，再用View令其变色。
+                case "KING_OF_XIANGQI.General":
+                    Console.WriteLine("In switch general"); //test
+                    this.xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
+                    this.ylist = new List<int> { y + 1, y + 1, y + 0, y + 0 };
+                    removeOut(4); //remove all points out of small 9 space.
+                    break;
+                case "KING_OF_XIANGQI.Mandarin":
+                    this.xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
+                    this.ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
+                    removeOut(4); //remove all points out of small 9 space.
+                    break;
+                case "KING_OF_XIANGQI.Elephant":
 
-                //左右走
-                if (x == 3 || x == 5)
-                {
-                    //如果坐标为3或5，只能去4，且需要4为空
-                    possibleMove(4, y,dataTable);
-                }
-                else if (x == 4) 
-                {
-                    //如果坐标为4，35如果为空，则能去
-                    possibleMove(3, y, dataTable);
-                    possibleMove(5, y, dataTable);
-
-                }
-                //上下走
-                if (y == 0 || y == 2)
-                {
-                    //如果坐标为3或5，只能去4
-                    Console.WriteLine("in if y == 0 or 2");
-                    possibleMove(x, 1, dataTable);
-                }
-                else if (y == 9 || y == 7)
-                {
-                    //如果坐标为3或5，只能去4
-                    possibleMove(x, 8, dataTable);
-                }
-                else if (y == 1)
-                {
-                    //如果坐标为4，35都能去
-                    possibleMove(x, 0, dataTable);
-                    possibleMove(x, 2, dataTable);
-
-                }
-                else if (y == 8)
-                {
-                    //如果坐标为4，35都能去
-                    possibleMove(x, 9, dataTable);
-                    possibleMove(x, 7, dataTable);
-
-                }
-
-
-            }
-            //士 3~5，0~2
-            if (chosePiece is Mandarin)
-            {
-                
-                if (x == 4)
-                {
-                    //n = 4; 
-                    Console.WriteLine("in if == 4");
-                    xarr = new int[4] { 3, 3, 5, 5 };
-                    xlist.AddRange(xarr);
-                    if (y > 2)
-                    {
-                        Console.WriteLine("in if y > 2");
-                        yarr = new int[4] { 7, 9, 7, 9 };
-                        ylist.AddRange(yarr);
-                    }
-                    else
-                    {
-                        Console.WriteLine("in if y !> 2 else");
-                        yarr = new int[4] { 2, 0, 2, 0 };
-                        ylist.AddRange(yarr);
-                    }
-                    possibleMove(xlist, ylist, dataTable);
-                }
-                else
-                {
-                    if(y > 1)
-                    {
-                        possibleMove(4, 8, dataTable);
-                    }
-                    else
-                    {
-                        possibleMove(4, 1, dataTable);
-
-                    }
-                }
+                case ""
+                case ""
+                case ""
+                case ""
             }
 
             //象
             if (chosePiece is Elephant)
             {
                 Console.WriteLine("in Elephant");
-                // 右上、右下、左上、左下。
+                // ↗, ↘, ↙, ↖.
+                //init two list, make it adapt it to the way the elephant walks.
                 this.xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
                 this.ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
-                List<int> xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
-                List<int> yBan = new List<int> { y + 1, y + 1, y - 1, y - 1 };
-                //以上初始化两个临时List，使其符合象的行走方式。
-                //以下删减List中的元素，使其符合象的行走限制。
-                if (x == 4)
+                //init two ban list used later to deletes the non-compliantelements.
+                xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
+                yBan = new List<int> { y + 1, y + 1, y - 1, y - 1 };
+                //The following deletes the elements in the List 
+                //to meet the walking restrictions of the elephant.
+                switch(y > 5)
                 {
-                    Console.WriteLine("in elephant x == 4");
-                    possibleMove(this.xlist, this.ylist, dataTable);
-                }
-                else if (y < 5) //在下半边
-                {
-                    Console.WriteLine("in elephant y<5");
-                    //将符合条件（y坐标在0-4中）的坐标存入新ylist
-                    //将符合条件（y坐标在0-8中）的坐标存入新xlist
-                    removeOut(2);
-                    foreach(int i in xlist)
-                    {
-                        Console.Write(i);
-                    }
-                    Console.WriteLine();
-                    foreach (int i in ylist)
-                    {
-                        Console.Write(i);
-                    }
-                    Console.WriteLine();
-                }
-                else if (y > 4) //在上半边
-                {
-                    Console.WriteLine("in elephant y>4");
-                    //将符合条件（x坐标在5-9中）的坐标存入新ylist
-                    //将符合条件（y坐标在0-8中）的坐标存入新xlist
-                    removeOut(1);
+                    case true: // in the upper half of board.
+                        removeOut(2);
+                        break;
+                    case false: // in the lower half of board.
+                        removeOut(3);
+                        break;
                 }
                 
-                if (y + 1 < 10 && x - 1 >= 0 && arrPieces[x - 1, y + 1] != null)
+                if (y + 1 < 10 && x - 1 >= 0 && refArrTable[x - 1, y + 1] != null)
                 {
                     removeBan(y + 1, "y");
                 }//左上象腿
-                if (y - 1 >= 0 && x - 1 >= 0 && arrPieces[x - 1, y - 1] != null)
+                if (y - 1 >= 0 && x - 1 >= 0 && refArrTable[x - 1, y - 1] != null)
                 {
                     removeBan(y - 1, "y");
                 }//左下象腿
-                if (y + 1 < 10 && x + 1 < 10 && arrPieces[x + 1, y + 1] != null)
+                if (y + 1 < 10 && x + 1 < 10 && refArrTable[x + 1, y + 1] != null)
                 {
                     removeBan(y + 1, "y");
                 }//左上象腿
-                if (x + 1 < 10 && y - 1 >= 0 && arrPieces[x + 1, y - 1] != null)
+                if (x + 1 < 10 && y - 1 >= 0 && refArrTable[x + 1, y - 1] != null)
                 {
                     removeBan(y - 1, "y");
                 }//左上象腿
-                possibleMove(xlist, ylist, dataTable);
+                possibleMove(xlist, ylist);
             }
             
             //马
@@ -201,66 +121,65 @@ namespace KING_OF_XIANGQI
                 this.ylist = yTemplist;
                 removeOut(1);//把超出棋盘的坐标删掉
 
-                if (x - 1 >= 0 && arrPieces[x - 1, y] != null)
+                if (x - 1 >= 0 && refArrTable[x - 1, y] != null)
                 {
                     removeBan(x - 2,"x");
                 }//左边马脚
 
-                if (x + 1 < 10 && arrPieces[x + 1, y] != null)
+                if (x + 1 < 10 && refArrTable[x + 1, y] != null)
                 {
                     removeBan(x + 2,"x");
                 }//右边马脚
 
-                if (y + 1 < 10 && arrPieces[x, y + 1] != null)
+                if (y + 1 < 10 && refArrTable[x, y + 1] != null)
                 {
                     removeBan(y + 2, "y");
                 }//上马脚
                 
-                if (y - 1 >= 0 && arrPieces[x, y - 1] != null)
+                if (y - 1 >= 0 && refArrTable[x, y - 1] != null)
                 {
                     removeBan(y - 2, "y");
                 }//下马脚
-                possibleMove(xlist, ylist, dataTable);
+                possibleMove(xlist, ylist);
             }
             if(chosePiece is Pawn) // 兵
             {
-                PossibleMove_pawn(x,y,dataTable);
+                PossibleMove_pawn(x,y);
             }
             if(chosePiece is Cannon) // 炮
             {
-                PossibleMove_Canon(x, y, dataTable);
+                PossibleMove_Canon(x, y);
             }
             if (chosePiece is Rook) // 俥
             {
-                PossibleMove_Rook(x, y, dataTable);
+                PossibleMove_Rook(x, y);
             }
         }
-        public void possibleMove(List<int> x, List<int> y, Table dataTable) //用来确认空子+确认不是己方棋子，改变颜色
+        public void possibleMove(List<int> x, List<int> y) //用来确认空子+确认不是己方棋子，改变颜色
         {
-            Piece[,] arrPieces = dataTable.getArr();
             Console.WriteLine("in possible move");
             for (int i = 0; i < x.Count(); i++)
             {
                 //如果目标点为空，或者为对方棋子，则变色。否则不变色。
                 Console.WriteLine(x[i]);
                 Console.WriteLine(y[i]);
-                if (arrPieces[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
-                if (arrPieces[x[i], y[i]] == null 
-                    || arrPieces[x[i], y[i]].getColor() != myColor)//原来是!= 但是改了就对了,不知道为什么
+                if (refArrTable[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
+                if (refArrTable[x[i], y[i]] == null 
+                    || refArrTable[x[i], y[i]].getColor() != myColor)//原来是!= 但是改了就对了,不知道为什么
                 {
-                    dataTable.tableChangeColorActive(x[i], y[i]);
+                    refDataTable.tableChangeColorActive(x[i], y[i]);
                 }
             }
             xlist.Clear();
             ylist.Clear();
         }
-        public void possibleMove(int x, int y, Table dataTable) //如果只有一个数
+        public void possibleMove(int x, int y) //如果只有一个数
         {
             List<int> xtempList = new List<int>{ x };
             List<int> ytempList = new List<int> { y };
-            possibleMove(xtempList, ytempList, dataTable);
+            possibleMove(xtempList, ytempList);
         }
-        public void possibleMove(List<int> x, int y, Table dataTable) //如果只有一个y
+        public void possibleMove(List<int> x, int y) //如果只有一个y
         {
             int i = x.Count();
             List<int> ytempList = new List<int>();
@@ -268,9 +187,9 @@ namespace KING_OF_XIANGQI
             {
                 ytempList.Add(y);
             }
-            possibleMove(x, ytempList, dataTable);
+            possibleMove(x, ytempList);
         }
-        public void possibleMove(int x, List<int> y, Table dataTable) //如果只有一个x
+        public void possibleMove(int x, List<int> y) //如果只有一个x
         {
             int i = y.Count();
             List<int> xtempList = new List<int>();
@@ -278,40 +197,48 @@ namespace KING_OF_XIANGQI
             {
                 xtempList.Add(x);
             }
-            possibleMove(xtempList, y, dataTable);
+            possibleMove(xtempList, y);
         }
         public void removeOut(int mode)
         {
             int xindex = 0;
-            Predicate<int> matchOutX = xi =>
+            Predicate<int> xInBoard = xi => //x-axis out of the board.
             {
                 return xi < 0 || xi > 8;
             };
-            Predicate<int> matchOutY = yi =>
+            Predicate<int> yInBoard = yi => //y-axis out of the board.
             {
                 return yi < 0 || yi > 9;
             };
-            Predicate<int> matchOutYDown = yi =>
+            Predicate<int> bottomHalfBoard = yi => //y-axis out of the bottom half-board.
             {
                 return yi > 5;
             };
-            Predicate<int> matchOutYUp = yi =>
+            Predicate<int> topHalfBoard = yi => //y-axis out of the top half-board.
             {
                 return yi > 4;
             };
+            Predicate<int> xInTNight = xi => //x-axis out of the Jiugongge(T9).
+            {
+                return xi < 3 || xi > 5;
+            };
+            Predicate<int> yInTNight = yi => //y-axis out of the Jiugongge(T9).
+            {
+                return yi > 2;
+            };
             switch (mode)
-            {// 1 default, 2 elephant up, 3 ele down(y<5)
+            {// 1 default, 2 elephant up, 3 ele down(y<5, 4 general & mandarin 9 space)
              //
                 case 1:
-                    while ((this.xlist.FindIndex(matchOutX) != -1))
+                    while ((this.xlist.FindIndex(xInBoard) != -1))
                     {
-                        xindex = this.xlist.FindIndex(matchOutX);
+                        xindex = this.xlist.FindIndex(xInBoard);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
-                    while ((this.ylist.FindIndex(matchOutY) != -1))
+                    while ((this.ylist.FindIndex(yInBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(matchOutY);
+                        xindex = this.ylist.FindIndex(yInBoard);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
@@ -319,9 +246,9 @@ namespace KING_OF_XIANGQI
 
                 case 2:
                     removeOut(1);
-                    while ((this.ylist.FindIndex(matchOutYUp) != -1))
+                    while ((this.ylist.FindIndex(topHalfBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(matchOutYUp);
+                        xindex = this.ylist.FindIndex(topHalfBoard);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
@@ -329,9 +256,23 @@ namespace KING_OF_XIANGQI
 
                 case 3:
                     removeOut(1);
-                    while ((this.ylist.FindIndex(matchOutYDown) != -1))
+                    while ((this.ylist.FindIndex(bottomHalfBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(matchOutYDown);
+                        xindex = this.ylist.FindIndex(bottomHalfBoard);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
+                case 4:
+                    while ((this.ylist.FindIndex(yInTNight) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(yInTNight);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    while ((this.xlist.FindIndex(xInTNight) != -1))
+                    {
+                        xindex = this.xlist.FindIndex(xInTNight);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
@@ -368,13 +309,11 @@ namespace KING_OF_XIANGQI
             
         }
 
-        public void PossibleMove_pawn(int x, int y, Table Table)//小兵的可移动方式
+        public void PossibleMove_pawn(int x, int y)//小兵的可移动方式
         {
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = Table.getArr();
             List<int> xlist = new List<int> { x + 1, x - 1, x, x };
             List<int> ylist = new List<int> { y, y, y + 1, y - 1 };
-            switch (arrPieces[x, y].getColor())
+            switch (refArrTable[x, y].getColor())
             {
                 case "Red":
                     xlist.RemoveAt(3);
@@ -405,7 +344,7 @@ namespace KING_OF_XIANGQI
                                 return (i >= 0 && i <= 9);
                             }
                             );
-                    possibleMove(xlist, ylist, Table);
+                    possibleMove(xlist, ylist);
                     break;
 
                 case "Black":
@@ -444,21 +383,21 @@ namespace KING_OF_XIANGQI
                     {
                         Console.WriteLine("x:" + xlist[i]);
                     }
-                    possibleMove(xlist, ylist, Table);
+                    possibleMove(xlist, ylist);
                     break;
             }
 
         }
-        public void PossibleMoveBan_Rook(List<int> xlist, List<int> ylist, int judge, int x, int y, Piece[,] arrPieces, Table Table)
+        public void PossibleMoveBan_Rook(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
 
             List<int> templist = new List<int> { };
             templist = xlist.FindAll(delegate (int i) { return (i == judge); });
             for (int i = judge - 1; i > -1; i--)
             {
-                if (arrPieces[xlist[i], ylist[i]] != null)
+                if (refArrTable[xlist[i], ylist[i]] != null)
                 {
-                    if (arrPieces[x, y].GetType() == typeof(Cannon))
+                    if (refArrTable[x, y].GetType() == typeof(Cannon))
                     {
                         ylist.RemoveRange(0, i + 1);
                         xlist.RemoveRange(0, i + 1);
@@ -485,9 +424,9 @@ namespace KING_OF_XIANGQI
             }
             for (int i = k + 1; i < xlist.Count; i++)
             {
-                if (arrPieces[xlist[i], ylist[i]] != null)
+                if (refArrTable[xlist[i], ylist[i]] != null)
                 {
-                    if (arrPieces[x, y].GetType() == typeof(Cannon))
+                    if (refArrTable[x, y].GetType() == typeof(Cannon))
                     {
                         ylist.RemoveRange(i, ylist.Count - i);
                         xlist.RemoveRange(i, xlist.Count - i);
@@ -500,9 +439,9 @@ namespace KING_OF_XIANGQI
                     break;
                 }
             }
-            possibleMove(xlist, ylist, Table);
+            possibleMove(xlist, ylist);
         }//车和炮的行走规则
-        public void PossibleMoveBan_canon(List<int> xlist, List<int> ylist, int judge, int x, int y, Piece[,] arrPieces, Table Table)
+        public void PossibleMoveBan_canon(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
 
             List<int> templist = new List<int> { };
@@ -510,13 +449,13 @@ namespace KING_OF_XIANGQI
             templist = xlist.FindAll(delegate (int i) { return (i == judge); });
             for (int i = judge - 1; i > -1; i--)
             {
-                if (arrPieces[xlist[i], ylist[i]] != null)
+                if (refArrTable[xlist[i], ylist[i]] != null)
                 {
                     for (int j = i - 1; j > -1; j--)
                     {
-                        if (arrPieces[xlist[j], ylist[j]] != null)
+                        if (refArrTable[xlist[j], ylist[j]] != null)
                         {
-                            possibleMove(xlist[j], ylist[j], Table);
+                            possibleMove(xlist[j], ylist[j]);
                             break;
                         }
                     }
@@ -526,13 +465,13 @@ namespace KING_OF_XIANGQI
             }
             for (int i = judge + 1; i < xlist.Count; i++)
             {
-                if (arrPieces[xlist[i], ylist[i]] != null)
+                if (refArrTable[xlist[i], ylist[i]] != null)
                 {
                     for (int j = i + 1; j < xlist.Count; j++)
                     {
-                        if (arrPieces[xlist[j], ylist[j]] != null)
+                        if (refArrTable[xlist[j], ylist[j]] != null)
                         {
-                            possibleMove(xlist[j], ylist[j], Table);
+                            possibleMove(xlist[j], ylist[j]);
                             break;
                         }
                     }
@@ -541,14 +480,12 @@ namespace KING_OF_XIANGQI
 
             }
         }//如何打炮
-        public void PossibleMove_Rook(int x, int y, Table Table)//车的可移动方式
+        public void PossibleMove_Rook(int x, int y)//车的可移动方式
         {
             List<int> xlist = new List<int> { };
             List<int> blist = new List<int> { };
             List<int> ylist = new List<int> { };
             List<int> alist = new List<int> { };
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = Table.getArr();
 
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
@@ -562,17 +499,15 @@ namespace KING_OF_XIANGQI
                 blist.Add(i);
 
             }
-            PossibleMoveBan_Rook(xlist, ylist, x, x, y, arrPieces, Table);
-            PossibleMoveBan_Rook(alist, blist, y, x, y, arrPieces, Table);
+            PossibleMoveBan_Rook(xlist, ylist, x, x, y);
+            PossibleMoveBan_Rook(alist, blist, y, x, y);
         }
-        public void PossibleMove_Canon(int x, int y, Table Table)//炮的可移动方式
+        public void PossibleMove_Canon(int x, int y)//炮的可移动方式
         {
             List<int> xlist = new List<int> { };
             List<int> blist = new List<int> { };
             List<int> ylist = new List<int> { };
             List<int> alist = new List<int> { };
-            Piece[,] arrPieces = new Piece[9, 10];
-            arrPieces = Table.getArr();
 
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
@@ -586,14 +521,14 @@ namespace KING_OF_XIANGQI
                 blist.Add(i);
 
             }
-            PossibleMoveBan_canon(xlist, ylist, x, x, y, arrPieces, Table);
-            PossibleMoveBan_canon(alist, blist, y, x, y, arrPieces, Table);
+            PossibleMoveBan_canon(xlist, ylist, x, x, y);
+            PossibleMoveBan_canon(alist, blist, y, x, y);
         }
-        public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move, Piece[,] arrPieces)
+        public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move)
         {
-            arrPieces[location_move.Item1, location_move.Item2] = arrPieces[location_select.Item1, location_select.Item2];
-            arrPieces[location_select.Item1, location_select.Item2] = null;//空棋子或者空
-            return arrPieces;
+            refArrTable[location_move.Item1, location_move.Item2] = refArrTable[location_select.Item1, location_select.Item2];
+            refArrTable[location_select.Item1, location_select.Item2] = null;//空棋子或者空
+            return refArrTable;
         }//移动棋子
         public void moveandCheckWin()
         {

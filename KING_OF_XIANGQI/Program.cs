@@ -8,11 +8,11 @@ namespace KING_OF_XIANGQI
         {
             string red = "Red";
 
-            View a = new View();
+            View view = new View();
             Table dataTable = new Table();
-            Controller control = new Controller();
+            Controller control = new Controller(dataTable);
             //Console.WriteLine("111展示棋盘（带棋子）");
-            a.InitialBoardForDisplay();
+            view.InitialBoardForDisplay();
             dataTable.initColor();
             int[] num = new int[2];
             //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
@@ -31,7 +31,7 @@ namespace KING_OF_XIANGQI
                 var red1 = new Tuple<int, int>(redx, redy);
                 //接收坐标。
                 Console.WriteLine(redx + redy);//test
-                control.chooseP(redx, redy, dataTable, red); //运行Controller.chooseP（）方法 
+                control.chooseP(redx, redy, red); //运行Controller.chooseP（）方法 
                 int[,] intarr = dataTable.getColor();
                 foreach (int i in intarr)
                 {
@@ -40,7 +40,7 @@ namespace KING_OF_XIANGQI
                 Console.WriteLine();
 
 
-                a.PossibleMovementPoint(dataTable);//Console.WriteLine("222选择棋子 以 及 展示可以行走的棋子的possible movement（变色）");
+                view.PossibleMovementPoint(dataTable);//Console.WriteLine("222选择棋子 以 及 展示可以行走的棋子的possible movement（变色）");
 
                 Console.WriteLine("Please enter the coordinate that you want to go");
                 num = getRead();
@@ -51,15 +51,15 @@ namespace KING_OF_XIANGQI
                 choosePiece = dataTable.getPiece(redx1, redy1);
                 if (choosePiece is General)
                 {
-                    control.MoveP(red1, red2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
-                    a.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
+                    control.MoveP(red1, red2);//调用View的possiblemove方法 //运行Controller-Move方法
+                    view.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
                     Console.WriteLine("game is over!");
                     break;//检测是否游戏结束
                 }
                 else
                 {
-                    control.MoveP(red1, red2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
-                    a.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
+                    control.MoveP(red1, red2);//调用View的possiblemove方法 //运行Controller-Move方法
+                    view.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
                 }    //刷新View的刷新方法
 
 
@@ -74,14 +74,14 @@ namespace KING_OF_XIANGQI
                 var black1 = new Tuple<int, int>(blackx, blacky);
                 //接收坐标。
                 Console.WriteLine(blackx + blacky);//test
-                control.chooseP(blackx, blacky, dataTable, "Black"); //运行Controller.chooseP（）方法 
+                control.chooseP(blackx, blacky, "Black"); //运行Controller.chooseP（）方法 
                 int[,] intbalckarr = dataTable.getColor();
                 foreach (int i in intbalckarr)
                 {
                     Console.Write(i);
                 }
                 Console.WriteLine();
-                a.PossibleMovementPoint(dataTable);//Console.WriteLine("222选择棋子 以 及 展示可以行走的棋子的possible movement（变色）");
+                view.PossibleMovementPoint(dataTable);//Console.WriteLine("222选择棋子 以 及 展示可以行走的棋子的possible movement（变色）");
 
                 Console.WriteLine("Please enter the coordinate that you want to go");
                 num = getRead();
@@ -93,15 +93,15 @@ namespace KING_OF_XIANGQI
                 if (choosePiece is General)
                 {
                     
-                    control.MoveP(black1, black2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
-                    a.PositionChangingDisplay(dataTable);
+                    control.MoveP(black1, black2);//调用View的possiblemove方法 //运行Controller-Move方法
+                    view.PositionChangingDisplay(dataTable);
                     Console.WriteLine("game is over!");
                     break;//Console.WriteLine("333棋子走动的位置改变"); //检测是否游戏结束
                 }
                 else
                 {
-                    control.MoveP(black1, black2, dataTable.getArr());//调用View的possiblemove方法 //运行Controller-Move方法
-                    a.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
+                    control.MoveP(black1, black2);//调用View的possiblemove方法 //运行Controller-Move方法
+                    view.PositionChangingDisplay(dataTable);//Console.WriteLine("333棋子走动的位置改变"); 
                 }
             }
             
