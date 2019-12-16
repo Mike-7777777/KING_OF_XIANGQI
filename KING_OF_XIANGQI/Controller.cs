@@ -32,14 +32,8 @@ namespace KING_OF_XIANGQI
             this.myColor = myColor;
             //define a Piece object chosePiece to store the Piece pass by database.
             Piece chosePiece;
-            int[] xarr;
-            int[] yarr;
-
-            List<int> xTemplist = new List<int>(); //x坐标list 临时
-            List<int> yTemplist = new List<int>(); //y坐标list 临时
             List<int> xBan;
             List<int> yBan;
-
             //use getPiece method and pass two variables as     
             //the location to get the object we need.
             chosePiece = refDataTable.getPiece(x, y);
