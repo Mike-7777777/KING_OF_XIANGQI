@@ -361,6 +361,21 @@ namespace KING_OF_XIANGQI
             }
             Console.ResetColor();
         }
+        public int[] GetRead()
+        {
+            string spot = Console.ReadLine();
+
+            //用标点分开
+            string[] spotarr = spot.Split(',');
+
+            //输出并转化为int数组
+            int[] num = new int[spotarr.Length];
+            for (int i = 0; i < spotarr.Length; i++)
+            {
+                num[i] = int.Parse(spotarr[i]);
+            }
+            return num;
+        }
     }
 }
 
