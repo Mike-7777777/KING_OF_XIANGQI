@@ -14,7 +14,7 @@ namespace KING_OF_XIANGQI
         {
             this.color = color;
         }
-        public string getColor()
+        public string GetColor()
         {
             return color;
         }

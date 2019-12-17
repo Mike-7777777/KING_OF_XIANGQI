@@ -13,17 +13,17 @@ namespace KING_OF_XIANGQI
             Controller control = new Controller(dataTable);
             //Console.WriteLine("111展示棋盘（带棋子）");
             view.InitialBoardForDisplay();
-            dataTable.initColor();
+            dataTable.InitColor();
             int[] num = new int[2];
             //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
             // datatable 为 table 类型的初始棋盘
 
             //棋子走动的位置改变
 
-            dataTable.initArr();
+            dataTable.InitArr();
             while (true)
             {
-                dataTable.initColor();
+                dataTable.InitColor();
                 Console.WriteLine("Red first. Please Choose a piece in coordinate");   //你好，红先黑后，请红方选择棋子。
                 num = getRead();
                 int redx = num[0];
@@ -31,8 +31,8 @@ namespace KING_OF_XIANGQI
                 var red1 = new Tuple<int, int>(redx, redy);
                 //接收坐标。
                 Console.WriteLine(redx + redy);//test
-                control.chooseP(redx, redy, red); //运行Controller.chooseP（）方法 
-                int[,] intarr = dataTable.getColor();
+                control.ChooseP(redx, redy, red); //运行Controller.chooseP（）方法 
+                int[,] intarr = dataTable.GetColor();
                 foreach (int i in intarr)
                 {
                     Console.Write(i);
@@ -48,7 +48,7 @@ namespace KING_OF_XIANGQI
                 int redy1 = num[1];
                 var red2 = new Tuple<int, int>(redx1, redy1);//接收棋子目的地的坐标
                 Piece choosePiece;
-                choosePiece = dataTable.getPiece(redx1, redy1);
+                choosePiece = dataTable.GetPiece(redx1, redy1);
                 if (choosePiece is General)
                 {
                     control.MoveP(red1, red2);//调用View的possiblemove方法 //运行Controller-Move方法
@@ -66,7 +66,7 @@ namespace KING_OF_XIANGQI
 
 
                 //black
-                dataTable.initColor();
+                dataTable.InitColor();
                 Console.WriteLine("Black now. Please Choose a piece in coordinate");   //黑方选择棋子。
                 num = getRead();
                 int blackx = num[0];
@@ -74,8 +74,8 @@ namespace KING_OF_XIANGQI
                 var black1 = new Tuple<int, int>(blackx, blacky);
                 //接收坐标。
                 Console.WriteLine(blackx + blacky);//test
-                control.chooseP(blackx, blacky, "Black"); //运行Controller.chooseP（）方法 
-                int[,] intbalckarr = dataTable.getColor();
+                control.ChooseP(blackx, blacky, "Black"); //运行Controller.chooseP（）方法 
+                int[,] intbalckarr = dataTable.GetColor();
                 foreach (int i in intbalckarr)
                 {
                     Console.Write(i);
@@ -89,7 +89,7 @@ namespace KING_OF_XIANGQI
                 int blacky1 = num[1];
                 var black2 = new Tuple<int, int>(blackx1, blacky1);//接收棋子目的地的坐标
                 Piece choosePiece2;
-                choosePiece2 = dataTable.getPiece(blackx1, blacky1);
+                choosePiece2 = dataTable.GetPiece(blackx1, blacky1);
                 if (choosePiece is General)
                 {
                     

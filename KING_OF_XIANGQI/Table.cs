@@ -11,22 +11,22 @@ namespace KING_OF_XIANGQI
         ////版本改动(view1)
         private int[] chosePiece = new int[2];
 
-        public void setChosePiece(int x, int y)
+        public void SetChosePiece(int x, int y)
         {
             chosePiece[0] = x;
             chosePiece[1] = y;
 
         }
-        public int[] getChosePiece()
+        public int[] GetChosePiece()
         {
             return chosePiece;
         }
         ////版本改动(view1)
-        public void setArr(int a, int b) // set the length and height of the 2d array.
+        public void SetArr(int a, int b) // set the length and height of the 2d array.
         {
             this.arr = new Piece[a, b];
         }
-        public void initArr()
+        public void InitArr()
         {
             General general1 = new General("Black"); //jiang
             General general2 = new General("Red");
@@ -93,24 +93,24 @@ namespace KING_OF_XIANGQI
             arr[1, 2] = cannon3;
             arr[7, 2] = cannon4;
         }
-        public Piece[,] getArr() //get the 2d array of the chessboard.
+        public Piece[,] GetArr() //get the 2d array of the chessboard.
         {
             return this.arr;
         }
-        public Piece getPiece(int c, int d) //get the piece in the  (c,d) coordinate
+        public Piece GetPiece(int c, int d) //get the piece in the  (c,d) coordinate
         {
             return arr[c, d];
         }
-        public void tableChangeColorActive(int x, int y) //list the coordinate which have changed color.
+        public void TableChangeColorActive(int x, int y) //list the coordinate which have changed color.
         {
             Color[x, y] = 1;
 
         }
-        public int[,] getColor()
+        public int[,] GetColor()
         {
             return Color;
         }
-        public void initColor()
+        public void InitColor()
         {
             for (int i = 0; i < Color.GetLength(0); i++)
             {

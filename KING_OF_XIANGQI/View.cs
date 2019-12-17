@@ -76,11 +76,11 @@ namespace KING_OF_XIANGQI
         public void PossibleMovementPoint(Table dataTable)
         {
             // 获取getcolor 数组
-            int[,] colorTable = dataTable.getColor();
-            Piece[,] arrTable = dataTable.getArr();
+            int[,] colorTable = dataTable.GetColor();
+            Piece[,] arrTable = dataTable.GetArr();
             ////新版本改动位置（view1)
-            int mX = dataTable.getChosePiece()[0];////chosen pieces
-            int mY = dataTable.getChosePiece()[1];////chosen pieces
+            int mX = dataTable.GetChosePiece()[0];////chosen pieces
+            int mY = dataTable.GetChosePiece()[1];////chosen pieces
             ////版本改动(view1)
 
             // 重新打印带有possible movement 的棋盘
@@ -121,7 +121,7 @@ namespace KING_OF_XIANGQI
                     else if (bX == 0 && bY == 0 && arrTable[tX, tY] != null ) 
                     {
                         string color;
-                        color = arrTable[tX, tY].getColor();
+                        color = arrTable[tX, tY].GetColor();
                         arrGamingBorad[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
 
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
@@ -204,7 +204,7 @@ namespace KING_OF_XIANGQI
         public void PositionChangingDisplay(Table dataTable)
         {
             // 获取getArr() 数组
-            Piece[,] arrTable = dataTable.getArr();
+            Piece[,] arrTable = dataTable.GetArr();
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)
@@ -216,7 +216,7 @@ namespace KING_OF_XIANGQI
                     if (bX == 0 && bY == 0 && arrTable[tX, tY] != null)
                     {
                         string color;
-                        color = arrTable[tX, tY].getColor();
+                        color = arrTable[tX, tY].GetColor();
                         arrGamingBorad[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
 
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
