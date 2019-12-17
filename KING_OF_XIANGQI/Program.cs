@@ -11,9 +11,11 @@ namespace KING_OF_XIANGQI
             View view = new View();
             Table dataTable = new Table();
             Controller controller = new Controller(dataTable);
+
             view.InitialBoardForDisplay();
             dataTable.InitColor();
             dataTable.InitArr();
+
             while (Play(controller, dataTable, view, red) == false && Play(controller,dataTable, view, black) == false)
             {
                 dataTable.InitColor();
@@ -27,23 +29,21 @@ namespace KING_OF_XIANGQI
             bool checkwin = false;
             if (checkwin == false)
             {
-                Console.WriteLine("It's " + color + "'s round, please Choose a piece in coordinate");
-                int[] number = view.GetRead();
-                int x = number[0];
-                int y = number[1];
-                var position1 = new Tuple<int, int>(x, y);
-                controller.ChooseP(x, y, color);
-                view.PossibleMovementPoint(table); //选择棋子 以及展示可以行走的棋子的possible movement（变色）.
+                Console.WriteLine("It's " + color + "'s round, please Choose a piece in coordinate（ex. 1,2 for left cornor horse）");
+                int[] locationNum = view.GetRead(); //store location in int[2].
+                int x = locationNum[0];
+                int y = locationNum[1];
+                var departure = new Tuple<int, int>(x, y); //store x,y together into a tuple.
+                controller.ChooseP(x, y, color);    //controller choose one pice to move.
+                view.PossibleMovementPoint(table);  //view make the color change.
                 Console.WriteLine("Please enter the coordinate that you want to go");
-                int[] num = view.GetRead();
-                int x1 = num[0];
-                int y1 = num[1];
-                var position2 = new Tuple<int, int>(x1, y1);//接收棋子目的地的坐标
-                Piece choosePiece;
-                choosePiece = table.GetPiece(x1, y1);
-                controller.MoveP(position1, position2);//调用View的possiblemove方法 //运行Controller-Move方法
+                locationNum = view.GetRead();
+                x = locationNum[0];
+                y = locationNum[1];
+                var destination = new Tuple<int, int>(x, y);  //store destination coordintes with Tuple.
+                controller.MoveP(departure, destination);//调用View的possiblemove方法 //运行Controller-Move方法
                 view.PositionChangingDisplay(table); //Console.WriteLine("333棋子走动的位置改变"); 
-                if (choosePiece is General)
+                if (table.GetPiece(x, y) is General)
                 {
                     Console.WriteLine("game is over!");
                     checkwin = true;
