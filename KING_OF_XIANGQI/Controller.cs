@@ -462,5 +462,49 @@ namespace KING_OF_XIANGQI
 
             }
         }//Eat rules of Canon.
+        public bool SelectandMove(Table table, View view, string color)
+        {
+            bool checkwin = false;
+            if (checkwin == false)
+            {
+                Console.WriteLine("It's " + color + " time, please Choose a piece in coordinate");
+                int[] number = getRead();
+                int x = number[0];
+                int y = number[1];
+                var position1 = new Tuple<int, int>(x, y);
+                ChooseP(x, y, color);
+                view.PossibleMovementPoint(table); //选择棋子 以及展示可以行走的棋子的possible movement（变色）.
+                Console.WriteLine("Please enter the coordinate that you want to go");
+                int[] num = getRead();
+                int x1 = num[0];
+                int y1 = num[1];
+                var position2 = new Tuple<int, int>(x1, y1);//接收棋子目的地的坐标
+                Piece choosePiece;
+                choosePiece = table.GetPiece(x1, y1);
+                MoveP(position1, position2);//调用View的possiblemove方法 //运行Controller-Move方法
+                view.PositionChangingDisplay(table); //Console.WriteLine("333棋子走动的位置改变"); 
+                if (choosePiece is General)
+                {
+                    Console.WriteLine("game is over!");
+                    checkwin = true;
+                }
+            }
+            return checkwin;
+        }
+        public static int[] getRead()
+        {
+            string spot = Console.ReadLine();
+
+            //用标点分开
+            string[] spotarr = spot.Split(',');
+
+            //输出并转化为int数组
+            int[] num = new int[spotarr.Length];
+            for (int i = 0; i < spotarr.Length; i++)
+            {
+                num[i] = int.Parse(spotarr[i]);
+            }
+            return num;
+        }
     }
 }
