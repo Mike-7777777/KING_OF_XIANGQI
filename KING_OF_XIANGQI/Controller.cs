@@ -75,7 +75,7 @@ namespace KING_OF_XIANGQI
                     {
                         removeOut(3);// ... out of the lower half of board.
                     }
-                    Ban(xBan,yBan);
+                    Ban(xBan,yBan,1);
                     possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Horse":
@@ -88,21 +88,8 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
+                    Ban(xBan, yBan, 0);
                     removeOut(1);   // delete the points out of board.
-                    if (x + 1 < 10 && refArrTable[x + 1, y] != null)
-                    {
-                        removeBan(x + 2, "x");
-                    }//右边马脚
-
-                    if (y + 1 < 10 && refArrTable[x, y + 1] != null)
-                    {
-                        removeBan(y + 2, "y");
-                    }//上马脚
-
-                    if (y - 1 >= 0 && refArrTable[x, y - 1] != null)
-                    {
-                        removeBan(y - 2, "y");
-                    }//下马脚
                     possibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
@@ -116,7 +103,7 @@ namespace KING_OF_XIANGQI
                     break;
             }
         }
-        public void Ban(List<int> xBan, List<int> yBan)
+        public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
         {
             int k = 0;
             Console.WriteLine("in ban");
@@ -127,13 +114,27 @@ namespace KING_OF_XIANGQI
                 if (inRange && refArrTable[xBan[i], yBan[i]] != null)
                 {
                     Console.WriteLine("in 1 if");
-                        Console.WriteLine("in ele if");
+                    if(mode == 1)
+                    {
                         xlist.RemoveAt(k);// four round: ↗, ↘, ↙, ↖.
                         ylist.RemoveAt(k);
+                    }
+                    else
+                    {
+                        Console.WriteLine(k);
+                        Console.WriteLine(xlist[0]);
+                        xlist.RemoveAt(k);
+                        ylist.RemoveAt(k);
+                        xlist.RemoveAt(k);
+                        ylist.RemoveAt(k);
+                    }
                 }
                 else
                 {
-                    k++;
+                    if (mode == 1)
+                        k++;
+                    else
+                        k += 2;
                 }
             }
         }
