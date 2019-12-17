@@ -93,15 +93,26 @@ namespace KING_OF_XIANGQI
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
-                    PossibleMove_pawn(x, y);
+                    PossibleMove_Pawn(x, y);
                     break;
                 case "KING_OF_XIANGQI.Cannon":
-                    PossibleMove_Canon(x, y);
+                    PossibleMove_Cannon(x, y);
                     break;
                 case "KING_OF_XIANGQI.Rook":
                     PossibleMove_Rook(x, y);
                     break;
             }
+        }
+        public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move)
+        {
+            refArrTable[location_move.Item1, location_move.Item2] = refArrTable[location_select.Item1, location_select.Item2];
+            refArrTable[location_select.Item1, location_select.Item2] = null;//空棋子或者空
+            return refArrTable;
+        }// To move pieces.
+        public void MoveandCheckWin()
+        {
+
+
         }
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
         {
@@ -133,7 +144,7 @@ namespace KING_OF_XIANGQI
                 }
             }
         }
-        public void PossibleMove(List<int> x, List<int> y) //用来确认空子+确认不是己方棋子，改变颜色
+        public void PossibleMove(List<int> x, List<int> y) // To check the location is 'null' or not the friend piece, and change their color in database.
         {
             Console.WriteLine("in possible move");
             for (int i = 0; i < x.Count(); i++)
@@ -239,7 +250,7 @@ namespace KING_OF_XIANGQI
 
             }
         } // delete the locations out of board in the xlist and ylist.
-        public void PossibleMove_pawn(int x, int y)//小兵的可移动方式
+        public void PossibleMove_Pawn(int x, int y)//Pawn walk rules
         {
             List<int> xlist = new List<int> { x + 1, x - 1, x, x };
             List<int> ylist = new List<int> { y, y, y + 1, y - 1 };
@@ -318,11 +329,54 @@ namespace KING_OF_XIANGQI
             }
 
         }
+        public void PossibleMove_Rook(int x, int y)//Rook walk.
+        {
+            List<int> xlist = new List<int> { };
+            List<int> blist = new List<int> { };
+            List<int> ylist = new List<int> { };
+            List<int> alist = new List<int> { };
+
+            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
+            {
+                xlist.Add(i);
+                ylist.Add(y);
+
+            }
+            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
+            {
+                alist.Add(x);
+                blist.Add(i);
+
+            }
+            PossibleMoveBan_Rook(xlist, ylist, x, x, y);
+            PossibleMoveBan_Rook(alist, blist, y, x, y);
+        }
+        public void PossibleMove_Cannon(int x, int y)//Canon walk.
+        {
+            List<int> blist = new List<int> { };
+            List<int> alist = new List<int> { };
+
+            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
+            {
+                xlist.Add(i);
+                blist.Add(y);
+
+            }
+            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
+            {
+                alist.Add(x);
+                ylist.Add(i);
+            }
+            PossibleMoveBan_Cannon(xlist, blist, x, x, y); // Mike 修改过 把alist变成了xlsit，blist变成了ylist。
+            PossibleMoveBan_Cannon(alist, ylist, y, x, y);
+        }
         public void PossibleMoveBan_Rook(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
-
             List<int> templist = new List<int> { };
-            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
+            templist = xlist.FindAll(delegate (int i)
+            {
+                return (i == judge);
+            });
             for (int i = judge - 1; i > -1; i--)
             {
                 if (refArrTable[xlist[i], ylist[i]] != null)
@@ -370,10 +424,9 @@ namespace KING_OF_XIANGQI
                 }
             }
             PossibleMove(xlist, ylist);
-        }//车和炮的行走规则
-        public void PossibleMoveBan_canon(List<int> xlist, List<int> ylist, int judge, int x, int y)
+        }//Ban rules of Rook and Cannon.
+        public void PossibleMoveBan_Cannon(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
-
             List<int> templist = new List<int> { };
             List<int> xtemplist = new List<int> { };
             templist = xlist.FindAll(delegate (int i) { return (i == judge); });
@@ -391,7 +444,6 @@ namespace KING_OF_XIANGQI
                     }
                     break;
                 }
-
             }
             for (int i = judge + 1; i < xlist.Count; i++)
             {
@@ -409,61 +461,6 @@ namespace KING_OF_XIANGQI
                 }
 
             }
-        }//如何打炮
-        public void PossibleMove_Rook(int x, int y)//车的可移动方式
-        {
-            List<int> xlist = new List<int> { };
-            List<int> blist = new List<int> { };
-            List<int> ylist = new List<int> { };
-            List<int> alist = new List<int> { };
-
-            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
-            {
-                xlist.Add(i);
-                ylist.Add(y);
-
-            }
-            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
-            {
-                alist.Add(x);
-                blist.Add(i);
-
-            }
-            PossibleMoveBan_Rook(xlist, ylist, x, x, y);
-            PossibleMoveBan_Rook(alist, blist, y, x, y);
-        }
-        public void PossibleMove_Canon(int x, int y)//炮的可移动方式
-        {
-            List<int> xlist = new List<int> { };
-            List<int> blist = new List<int> { };
-            List<int> ylist = new List<int> { };
-            List<int> alist = new List<int> { };
-
-            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
-            {
-                xlist.Add(i);
-                ylist.Add(y);
-
-            }
-            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
-            {
-                alist.Add(x);
-                blist.Add(i);
-
-            }
-            PossibleMoveBan_canon(xlist, ylist, x, x, y);
-            PossibleMoveBan_canon(alist, blist, y, x, y);
-        }
-        public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move)
-        {
-            refArrTable[location_move.Item1, location_move.Item2] = refArrTable[location_select.Item1, location_select.Item2];
-            refArrTable[location_select.Item1, location_select.Item2] = null;//空棋子或者空
-            return refArrTable;
-        }//移动棋子
-        public void MoveandCheckWin()
-        {
-
-
-        }
+        }//Eat rules of Canon.
     }
 }
