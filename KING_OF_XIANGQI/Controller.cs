@@ -238,34 +238,7 @@ namespace KING_OF_XIANGQI
                     break;
 
             }
-        }
-        public void RemoveBan(int objective, string mode)
-        {
-            int xindex = 0;
-            Predicate<int> match = xi =>
-            {
-                return xi == objective;
-            };
-            if (mode == "x")
-            {
-                while (xlist.Contains(objective))
-                {
-                    xindex = xlist.FindIndex(match);
-                    xlist.RemoveAt(xindex);
-                    ylist.RemoveAt(xindex);
-                }
-            }
-            else
-            {
-                while (ylist.Contains(objective))
-                {
-                    xindex = ylist.FindIndex(match);
-                    xlist.RemoveAt(xindex);
-                    ylist.RemoveAt(xindex);
-                }
-            }
-
-        }
+        } // delete the locations out of board in the xlist and ylist.
         public void PossibleMove_pawn(int x, int y)//小兵的可移动方式
         {
             List<int> xlist = new List<int> { x + 1, x - 1, x, x };
