@@ -84,10 +84,11 @@ namespace KING_OF_XIANGQI
                     break;
                 case "KING_OF_XIANGQI.Horse":
                     Console.WriteLine("in horse");
-                    //y↗ y↗ y↖ y↙, Y↗ Y↗ Y↖ Y↙
-                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x + 1, x - 1, x - 1 };
-                    ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y - 2, y + 2, y - 2 };
+                    //y↗ y↘ y↖ y↙, Y↗ Y↘ Y↖ Y↙
+                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x - 1, x + 1, x - 1 };
+                    ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y + 2, y - 2, y - 2 };
                     //init two list, make it adapt it to the way the elephant walks.
+                    //→ ← ↑ ↓
                     xBan = new List<int> { x + 1, x - 1, x    , x    };
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
                     //The following deletes the elements in the List 
