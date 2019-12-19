@@ -10,6 +10,8 @@ namespace KING_OF_XIANGQI
         private string myColor; //define the player this round.
         private List<int> xlist;
         private List<int> ylist;
+        private List<int> alist;
+        private List<int> blist;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
                                         //so that other methods can use it without input it everytime.
         private Piece[,] refArrTable; //To get the reference of the property(the array made by pieces) 
@@ -22,6 +24,8 @@ namespace KING_OF_XIANGQI
             this.refArrTable = dataTable.GetArr();  //recieve the arrObject from database.
             this.xlist = new List<int>();
             this.ylist = new List<int>();
+            this.alist = new List<int>();
+            this.blist = new List<int>();
         }
         public void ChooseP(int x, int y, string myColor)   //x,y is the location of piece that user chose. 
                                                             //This method is used to active one piece  
@@ -331,11 +335,23 @@ namespace KING_OF_XIANGQI
         }
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
-            List<int> xlist = new List<int> { };
-            List<int> blist = new List<int> { };
-            List<int> ylist = new List<int> { };
-            List<int> alist = new List<int> { };
+            Reset(x, y);
+            WalkStraight(xlist, ylist, x, x, y);
+            WalkStraight(alist, blist, y, x, y);
+        }
+        public void PossibleMove_Cannon(int x, int y)//Canon walk.
+        {
 
+            Reset(x, y);
+            CanonEat(xlist, ylist, x, x, y);
+            CanonEat(alist, blist, y, x, y);
+        }
+        public void Reset(int x, int y)
+        {
+            xlist.Clear();
+            ylist.Clear();
+            alist.Clear();
+            blist.Clear();
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
                 xlist.Add(i);
@@ -348,35 +364,11 @@ namespace KING_OF_XIANGQI
                 blist.Add(i);
 
             }
-            PossibleMoveBan_Rook(xlist, ylist, x, x, y);
-            PossibleMoveBan_Rook(alist, blist, y, x, y);
-        }
-        public void PossibleMove_Cannon(int x, int y)//Canon walk.
-        {
-            List<int> blist = new List<int> { };
-            List<int> alist = new List<int> { };
-
-            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
-            {
-                xlist.Add(i);
-                blist.Add(y);
-
-            }
-            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
-            {
-                alist.Add(x);
-                ylist.Add(i);
-            }
-            PossibleMoveBan_Cannon(xlist, blist, x, x, y); // Mike 修改过 把alist变成了xlsit，blist变成了ylist。
-            PossibleMoveBan_Cannon(alist, ylist, y, x, y);
-        }
-        public void PossibleMoveBan_Rook(List<int> xlist, List<int> ylist, int judge, int x, int y)
+        }//Reset the rook and canon list
+        public void WalkStraight(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
             List<int> templist = new List<int> { };
-            templist = xlist.FindAll(delegate (int i)
-            {
-                return (i == judge);
-            });
+            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
             for (int i = judge - 1; i > -1; i--)
             {
                 if (refArrTable[xlist[i], ylist[i]] != null)
@@ -424,8 +416,9 @@ namespace KING_OF_XIANGQI
                 }
             }
             PossibleMove(xlist, ylist);
+            Reset(x, y);
         }//Ban rules of Rook and Cannon.
-        public void PossibleMoveBan_Cannon(List<int> xlist, List<int> ylist, int judge, int x, int y)
+        public void CanonEat(List<int> xlist, List<int> ylist, int judge, int x, int y)
         {
             List<int> templist = new List<int> { };
             List<int> xtemplist = new List<int> { };
@@ -461,7 +454,8 @@ namespace KING_OF_XIANGQI
                 }
 
             }
+            Reset(x, y);
+
         }//Eat rules of Canon.
-        
     }
 }
