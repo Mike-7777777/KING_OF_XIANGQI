@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +6,21 @@ namespace KING_OF_XIANGQI
 {
     public class Table
     {
-        private Piece[,] arr = new Piece[9,10];
-        private int[,] Color = new int[9, 10];
+        public Piece[,] arr;
+        private int[,] Color;
         ////版本改动(view1)
-        private int[] chosePiece = new int[2];
+        private int[] chosePiece;
 
+        public Table()
+        {
+            this.arr = new Piece[9, 10];
+            this.Color = new int[9, 10];
+            this.chosePiece = new int[2];
+        }
         public void SetChosePiece(int x, int y)
         {
             chosePiece[0] = x;
             chosePiece[1] = y;
-
         }
         public int[] GetChosePiece()
         {
@@ -28,70 +33,39 @@ namespace KING_OF_XIANGQI
         }
         public void InitArr()
         {
-            General general1 = new General("Black"); //jiang
-            General general2 = new General("Red");
-            Rook rook1 = new Rook("Black"); //che
-            Rook rook2 = new Rook("Black");
-            Rook rook3 = new Rook("Red");
-            Rook rook4 = new Rook("Red");
-            Horse horse1 = new Horse("Black");//ma
-            Horse horse2 = new Horse("Black");
-            Horse horse3 = new Horse("Red");
-            Horse horse4 = new Horse("Red");
-            Elephant elephant1 = new Elephant("Black");//xiang
-            Elephant elephant2 = new Elephant("Black");
-            Elephant elephant3 = new Elephant("Red");
-            Elephant elephant4 = new Elephant("Red");
-            Mandarin mandarin1 = new Mandarin("Black");//shi
-            Mandarin mandarin2 = new Mandarin("Black");
-            Mandarin mandarin3 = new Mandarin("Red");
-            Mandarin mandarin4 = new Mandarin("Red");
-            Cannon cannon1 = new Cannon("Black");//pao
-            Cannon cannon2 = new Cannon("Black");
-            Cannon cannon3 = new Cannon("Red");
-            Cannon cannon4 = new Cannon("Red");
-            Pawn pawn1 = new Pawn("Black");//zu
-            Pawn pawn2 = new Pawn("Black");
-            Pawn pawn3 = new Pawn("Black");
-            Pawn pawn4 = new Pawn("Black");
-            Pawn pawn5 = new Pawn("Black");
-            Pawn pawn6 = new Pawn("Red");
-            Pawn pawn7 = new Pawn("Red");
-            Pawn pawn8 = new Pawn("Red");
-            Pawn pawn9 = new Pawn("Red");
-            Pawn pawn10 = new Pawn("Red");
-            arr[4, 9] = general1;
-            arr[4, 0] = general2;
-            arr[0, 9] = rook1;
-            arr[8, 9] = rook2;
-            arr[0, 0] = rook3;
-            arr[8, 0] = rook4;
-            arr[1, 9] = horse1;
-            arr[7, 9] = horse2;
-            arr[1, 0] = horse3;
-            arr[7, 0] = horse4;
-            arr[2, 9] = elephant1;
-            arr[6, 9] = elephant2;
-            arr[2, 0] = elephant3;
-            arr[6, 0] = elephant4;
-            arr[3, 9] = mandarin1;
-            arr[5, 9] = mandarin2;
-            arr[3, 0] = mandarin3;
-            arr[5, 0] = mandarin4;
-            arr[0, 6] = pawn1;
-            arr[2, 6] = pawn2;
-            arr[4, 6] = pawn3;
-            arr[6, 6] = pawn4;
-            arr[8, 6] = pawn5;
-            arr[0, 3] = pawn6;
-            arr[2, 3] = pawn7;
-            arr[4, 3] = pawn8;
-            arr[6, 3] = pawn9;
-            arr[8, 3] = pawn10;
-            arr[1, 7] = cannon1;
-            arr[7, 7] = cannon2;
-            arr[1, 2] = cannon3;
-            arr[7, 2] = cannon4;
+
+            arr[4, 9] = new General("Black");
+            arr[4, 0] = new General("Red");
+            arr[0, 9] = new Rook("Black");
+            arr[8, 9] = new Rook("Black");
+            arr[0, 0] = new Rook("Red");
+            arr[8, 0] = new Rook("Red");
+            arr[1, 9] = new Horse("Black");
+            arr[7, 9] = new Horse("Black");
+            arr[1, 0] = new Horse("Red");
+            arr[7, 0] = new Horse("Red");
+            arr[2, 9] = new Elephant("Black");
+            arr[6, 9] = new Elephant("Black");
+            arr[2, 0] = new Elephant("Red");
+            arr[6, 0] = new Elephant("Red");
+            arr[3, 9] = new Mandarin("Black");
+            arr[5, 9] = new Mandarin("Black");
+            arr[3, 0] = new Mandarin("Red");
+            arr[5, 0] = new Mandarin("Red");
+            arr[0, 6] = new Pawn("Black");
+            arr[2, 6] = new Pawn("Black");
+            arr[4, 6] = new Pawn("Black");
+            arr[6, 6] = new Pawn("Black");
+            arr[8, 6] = new Pawn("Black");
+            arr[0, 3] = new Pawn("Red");
+            arr[2, 3] = new Pawn("Red");
+            arr[4, 3] = new Pawn("Red");
+            arr[6, 3] = new Pawn("Red");
+            arr[8, 3] = new Pawn("Red");
+            arr[1, 7] = new Cannon("Black");
+            arr[7, 7] = new Cannon("Black");
+            arr[1, 2] = new Cannon("Red");
+            arr[7, 2] = new Cannon("Red");
         }
         public Piece[,] GetArr() //get the 2d array of the chessboard.
         {
