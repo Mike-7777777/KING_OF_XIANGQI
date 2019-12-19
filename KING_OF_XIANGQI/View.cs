@@ -94,14 +94,6 @@ namespace KING_OF_XIANGQI
                     bX = (j + 1) % 2; //(j - 1) % 2; 
                     tY = 9 - (i - 1) / 2; //(19 - i) / 2;
                     bY = (i - 1) % 2; //(19 - i) % 2;
-                    /*string t1 = Convert.ToString(tX);
-                    string t2 = Convert.ToString(tY);
-                    string b1 = Convert.ToString(bX);
-                    string b2 = Convert.ToString(bY);
-                    Console.WriteLine(t1);
-                    Console.WriteLine(t2);
-                    */
-                    ////版本改动(view1)
                     if (i == 19 - 2*mY && j == 2*mX + 1) //chose point
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
@@ -115,7 +107,7 @@ namespace KING_OF_XIANGQI
                         //arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
-                        Console.Write(arrForBoard[i, j]);
+                        Console.Write(arrGamingBorad[i, j]);
                         Console.ResetColor();                    
                     }
                     else if (bX == 0 && bY == 0 && arrTable[tX, tY] != null ) 

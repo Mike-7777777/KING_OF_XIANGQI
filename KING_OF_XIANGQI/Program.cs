@@ -13,12 +13,10 @@ namespace KING_OF_XIANGQI
             Controller controller = new Controller(dataTable);
 
             view.InitialBoardForDisplay();
-            dataTable.InitColor();
             dataTable.InitArr();
 
             while (Play(controller, dataTable, view, red) == false && Play(controller,dataTable, view, black) == false)
             {
-                dataTable.InitColor();
                 Play(controller,dataTable, view, red);
                 Play(controller,dataTable, view, black);
             }
@@ -29,6 +27,7 @@ namespace KING_OF_XIANGQI
             bool checkwin = false;
             if (checkwin == false)
             {
+                table.InitColor();
                 Console.WriteLine("It's " + color + "'s round, please Choose a piece in coordinate（ex. 1,2 for left cornor horse）");
                 int[] locationNum = view.GetRead(); //store location in int[2].
                 int x = locationNum[0];
