@@ -199,7 +199,7 @@ namespace KING_OF_XIANGQI
             };
             Predicate<int> yInTNine = yi => //y-axis out of the Jiugongge(T9).
             {
-                return yi > 2;
+                return yi > 2 || yi < 0;
             };
             switch (mode)
             {// 1 default, 2 elephant up, 3 ele down(y<5, 4 general & mandarin 9 space)
