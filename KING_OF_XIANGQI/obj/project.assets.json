@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\benben\\source\\repos\\version6\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+      "projectUniqueName": "C:\\Users\\benben\\source\\repos\\version5\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
       "projectName": "KING_OF_XIANGQI",
-      "projectPath": "C:\\Users\\benben\\source\\repos\\version6\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
+      "projectPath": "C:\\Users\\benben\\source\\repos\\version5\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\KING_OF_XIANGQI.csproj",
       "packagesPath": "C:\\Users\\benben\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\benben\\source\\repos\\version6\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
+      "outputPath": "C:\\Users\\benben\\source\\repos\\version5\\KING_OF_XIANGQI\\KING_OF_XIANGQI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\benben\\AppData\\Roaming\\NuGet\\NuGet.Config",
