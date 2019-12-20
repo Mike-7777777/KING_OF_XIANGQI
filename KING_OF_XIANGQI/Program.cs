@@ -45,11 +45,11 @@ namespace KING_OF_XIANGQI
                 view.PossibleMovementPoint(table);  //view make the color change.
                 Console.WriteLine("Please enter the coordinate that you want to go");
                 locationNum = view.GetRead();
-                x = locationNum[0];
-                y = locationNum[1];
-                var destination = new Tuple<int, int>(x, y);  //store destination coordintes with Tuple.
+                int x1 = locationNum[0];
+                int y1 = locationNum[1];
+                var destination = new Tuple<int, int>(x1, y1);  //store destination coordintes with Tuple.
                 int[,] colorTable = table.GetColor();
-                    if (colorTable[x, y] == 0)
+                    if (colorTable[x1, y1] == 0)
                     {
                          Console.WriteLine("wrong place");
                     
@@ -59,7 +59,7 @@ namespace KING_OF_XIANGQI
                     {
                         controller.MoveP(departure, destination);//调用View的possiblemove方法 //运行Controller-Move方法
                         view.PositionChangingDisplay(table); //Console.WriteLine("333棋子走动的位置改变"); 
-                        if (table.GetPiece(x, y) is General)
+                        if ((table.GetPiece(x, y) is General && table.GetPiece(x1, y1) is General))
                         {
                         Console.WriteLine("game is over!");
                         checkwin = true;
