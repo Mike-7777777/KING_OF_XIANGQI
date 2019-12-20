@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace KING_OF_XIANGQI
 {
@@ -37,7 +37,7 @@ namespace KING_OF_XIANGQI
                 {
                     Console.WriteLine("no piece in the position");
                     
-                    SelectandMove(table, view, color);
+                    Play(controller,table, view, color);
                 }                
                 else
                 {
@@ -48,12 +48,12 @@ namespace KING_OF_XIANGQI
                 x = locationNum[0];
                 y = locationNum[1];
                 var destination = new Tuple<int, int>(x, y);  //store destination coordintes with Tuple.
-                int[,] colorTable = refDataTable.GetColor();
-                    if (colorTable[x1, y1] == 0)
+                int[,] colorTable = table.GetColor();
+                    if (colorTable[x, y] == 0)
                     {
                          Console.WriteLine("wrong place");
                     
-                         SelectandMove(table,view,color);
+                         Play(controller,table,view,color);
                     }                
                     else
                     {
