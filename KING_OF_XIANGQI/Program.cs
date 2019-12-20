@@ -33,6 +33,14 @@ namespace KING_OF_XIANGQI
                 int x = locationNum[0];
                 int y = locationNum[1];
                 var departure = new Tuple<int, int>(x, y); //store x,y together into a tuple.
+                if (table.arr[x, y] == null)
+                {
+                    Console.WriteLine("no piece in the position");
+                    
+                    SelectandMove(table, view, color);
+                }                
+                else
+                {
                 controller.ChooseP(x, y, color);    //controller choose one pice to move.
                 view.PossibleMovementPoint(table);  //view make the color change.
                 Console.WriteLine("Please enter the coordinate that you want to go");
@@ -40,12 +48,23 @@ namespace KING_OF_XIANGQI
                 x = locationNum[0];
                 y = locationNum[1];
                 var destination = new Tuple<int, int>(x, y);  //store destination coordintes with Tuple.
-                controller.MoveP(departure, destination);//调用View的possiblemove方法 //运行Controller-Move方法
-                view.PositionChangingDisplay(table); //Console.WriteLine("333棋子走动的位置改变"); 
-                if (table.GetPiece(x, y) is General)
-                {
-                    Console.WriteLine("game is over!");
-                    checkwin = true;
+                int[,] colorTable = refDataTable.GetColor();
+                    if (colorTable[x1, y1] == 0)
+                    {
+                         Console.WriteLine("wrong place");
+                    
+                         SelectandMove(table,view,color);
+                    }                
+                    else
+                    {
+                        controller.MoveP(departure, destination);//调用View的possiblemove方法 //运行Controller-Move方法
+                        view.PositionChangingDisplay(table); //Console.WriteLine("333棋子走动的位置改变"); 
+                        if (table.GetPiece(x, y) is General)
+                        {
+                        Console.WriteLine("game is over!");
+                        checkwin = true;
+                        }
+                    }
                 }
             }
             return checkwin;
