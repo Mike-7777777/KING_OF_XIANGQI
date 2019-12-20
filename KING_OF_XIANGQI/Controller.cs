@@ -338,15 +338,132 @@ namespace KING_OF_XIANGQI
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
             Reset(x, y);
-            WalkStraight(xlist, ylist, x, x, y);
-            WalkStraight(alist, blist, y, x, y);
+            for (int l = 0; l < 2; l++)
+            {
+                List<int> xtemplist = new List<int> { };
+                List<int> ytemplist = new List<int> { };
+                int judge = new int();
+                if (l == 0)
+                {
+                    xtemplist = xlist;
+                    ytemplist = ylist;
+                    judge = x;
+                }
+                else
+                {
+                    xtemplist = alist;
+                    ytemplist = blist;
+                    judge = y;
+                }
+                List<int> templist = new List<int> { };
+                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
+                for (int i = judge - 1; i > -1; i--)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        {
+                            ytemplist.RemoveRange(0, i + 1);
+                            xtemplist.RemoveRange(0, i + 1);
+                        }
+                        else
+                        {
+                            ytemplist.RemoveRange(0, i);
+                            xtemplist.RemoveRange(0, i);
+                        }
+                        break;
+                    }
+                }
+                Predicate<int> match = xi =>
+                {
+                    return xi == judge;
+                };
+                int j;
+                int k;
+                j = xtemplist.FindIndex(match);
+                k = ytemplist.FindIndex(match);
+                if (templist.Count == 1)
+                {
+                    k = j;
+                }
+                for (int i = k + 1; i < xtemplist.Count; i++)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        {
+                            ytemplist.RemoveRange(i, ytemplist.Count - i);
+                            xtemplist.RemoveRange(i, xtemplist.Count - i);
+                        }
+                        else
+                        {
+                            ytemplist.RemoveRange(i + 1, ytemplist.Count - i - 1);
+                            xtemplist.RemoveRange(i + 1, xtemplist.Count - i - 1);
+                        }
+                        break;
+                    }
+                }
+                PossibleMove(xtemplist, ytemplist);
+                Reset(x, y);
+            }
         }
         public void PossibleMove_Cannon(int x, int y)//Canon walk.
         {
 
             Reset(x, y);
-            CanonEat(xlist, ylist, x, x, y);
-            CanonEat(alist, blist, y, x, y);
+            PossibleMove_Rook(x, y);
+            for (int l = 0; l < 2; l++)
+            {
+                List<int> xtemplist = new List<int> { };
+                List<int> ytemplist = new List<int> { };
+                int judge = new int();
+                if (l == 0)
+                {
+                    xtemplist = xlist;
+                    ytemplist = ylist;
+                    judge = x;
+                }
+                else
+                {
+                    xtemplist = alist;
+                    ytemplist = blist;
+                    judge = y;
+                }
+                List<int> templist = new List<int> { };
+                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
+                for (int i = judge - 1; i > -1; i--)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        for (int j = i - 1; j > -1; j--)
+                        {
+                            if (refArrTable[xtemplist[j], ytemplist[j]] != null)
+                            {
+                                PossibleMove(xtemplist[j], ytemplist[j]);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                for (int i = judge + 1; i < xtemplist.Count; i++)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        for (int j = i + 1; j < xtemplist.Count; j++)
+                        {
+                            if (refArrTable[xtemplist[j], ytemplist[j]] != null)
+                            {
+                                PossibleMove(xtemplist[j], ytemplist[j]);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
+                }
+                Reset(x, y);
+            }
         }
         public void Reset(int x, int y)
         {
@@ -367,97 +484,5 @@ namespace KING_OF_XIANGQI
 
             }
         }//Reset the rook and canon list
-        public void WalkStraight(List<int> xlist, List<int> ylist, int judge, int x, int y)
-        {
-            List<int> templist = new List<int> { };
-            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
-            for (int i = judge - 1; i > -1; i--)
-            {
-                if (refArrTable[xlist[i], ylist[i]] != null)
-                {
-                    if (refArrTable[x, y].GetType() == typeof(Cannon))
-                    {
-                        ylist.RemoveRange(0, i + 1);
-                        xlist.RemoveRange(0, i + 1);
-                    }
-                    else
-                    {
-                        ylist.RemoveRange(0, i);
-                        xlist.RemoveRange(0, i);
-                    }
-                    break;
-                }
-            }
-            Predicate<int> match = xi =>
-            {
-                return xi == judge;
-            };
-            int j;
-            int k;
-            j = xlist.FindIndex(match);
-            k = ylist.FindIndex(match);
-            if (templist.Count == 1)
-            {
-                k = j;
-            }
-            for (int i = k + 1; i < xlist.Count; i++)
-            {
-                if (refArrTable[xlist[i], ylist[i]] != null)
-                {
-                    if (refArrTable[x, y].GetType() == typeof(Cannon))
-                    {
-                        ylist.RemoveRange(i, ylist.Count - i);
-                        xlist.RemoveRange(i, xlist.Count - i);
-                    }
-                    else
-                    {
-                        ylist.RemoveRange(i + 1, ylist.Count - i - 1);
-                        xlist.RemoveRange(i + 1, xlist.Count - i - 1);
-                    }
-                    break;
-                }
-            }
-            PossibleMove(xlist, ylist);
-            Reset(x, y);
-        }//Ban rules of Rook and Cannon.
-        public void CanonEat(List<int> xlist, List<int> ylist, int judge, int x, int y)
-        {
-            List<int> templist = new List<int> { };
-            List<int> xtemplist = new List<int> { };
-            templist = xlist.FindAll(delegate (int i) { return (i == judge); });
-            for (int i = judge - 1; i > -1; i--)
-            {
-                if (refArrTable[xlist[i], ylist[i]] != null)
-                {
-                    for (int j = i - 1; j > -1; j--)
-                    {
-                        if (refArrTable[xlist[j], ylist[j]] != null)
-                        {
-                            PossibleMove(xlist[j], ylist[j]);
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            for (int i = judge + 1; i < xlist.Count; i++)
-            {
-                if (refArrTable[xlist[i], ylist[i]] != null)
-                {
-                    for (int j = i + 1; j < xlist.Count; j++)
-                    {
-                        if (refArrTable[xlist[j], ylist[j]] != null)
-                        {
-                            PossibleMove(xlist[j], ylist[j]);
-                            break;
-                        }
-                    }
-                    break;
-                }
-
-            }
-            Reset(x, y);
-
-        }//Eat rules of Canon.
     }
 }
