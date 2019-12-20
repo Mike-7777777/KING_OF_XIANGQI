@@ -75,6 +75,7 @@ namespace KING_OF_XIANGQI
 
         public void PossibleMovementPoint(Table dataTable)
         {
+            Console.Clear();//刷新console
             // 获取getcolor 数组
             int[,] colorTable = dataTable.GetColor();
             Piece[,] arrTable = dataTable.GetArr();
@@ -202,6 +203,7 @@ namespace KING_OF_XIANGQI
 
         public void PositionChangingDisplay(Table dataTable)
         {
+            Console.Clear();//刷新console
             // 获取getArr() 数组
             Piece[,] arrTable = dataTable.GetArr();
             for (int i = 0; i < 20; i++)
