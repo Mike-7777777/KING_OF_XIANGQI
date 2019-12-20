@@ -108,11 +108,12 @@ namespace KING_OF_XIANGQI
                     break;
             }
         }
-        public Piece[,] MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move)
+        public void MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move) //12.20 1：12 修改
         {
-            refArrTable[location_move.Item1, location_move.Item2] = refArrTable[location_select.Item1, location_select.Item2];
-            refArrTable[location_select.Item1, location_select.Item2] = null;//空棋子或者空
-            return refArrTable;
+            refDataTable.SetArr(location_move.Item1, location_move.Item2,refArrTable[location_select.Item1, location_select.Item2]);    //由修改本地成员变量refArray
+                                                                                                                                        //改为调用远端方法修改数据库
+            refDataTable.NullArr(location_select.Item1, location_select.Item2);//空棋子或者空
+            //return refArrTable;
         }// To move pieces.
         public void MoveandCheckWin()
         {

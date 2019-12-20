@@ -27,9 +27,13 @@ namespace KING_OF_XIANGQI
             return chosePiece;
         }
         ////版本改动(view1)
-        public void SetArr(int a, int b) // set the length and height of the 2d array.
+        public void SetArr(int a, int b, Piece piece) // set the length and height of the 2d array.
         {
-            this.arr = new Piece[a, b];
+            arr[a, b] = piece;
+        }
+        public void NullArr(int a, int b)
+        {
+            arr[a, b] = null;
         }
         public void InitArr()
         {

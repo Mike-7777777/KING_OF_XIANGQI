@@ -94,7 +94,7 @@ namespace KING_OF_XIANGQI
                     bX = (j + 1) % 2; //(j - 1) % 2; 
                     tY = 9 - (i - 1) / 2; //(19 - i) / 2;
                     bY = (i - 1) % 2; //(19 - i) % 2;
-                    if (i == 19 - 2*mY && j == 2*mX + 1) //chose point
+                    if (i == 19 - 2*mY && j == 2*mX + 1) //chose point 
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Green;//选中的棋子变成绿色
@@ -102,12 +102,19 @@ namespace KING_OF_XIANGQI
                         Console.ResetColor();
                     }
                     ////版本改动(view1)
-                    else if (bX == 0 && bY == 0 && tX>=0 && tY>=0 && colorTable[tX, tY] == 1) // possible move
+                    else if (bX == 0 && bY == 0 && tX>=0 && tY>=0 && arrTable[tX, tY] != null && colorTable[tX, tY] == 1) // possible move
                     {
-                        //arrForBoard[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
+                        //arrGamingBorad[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
                         Console.Write(arrGamingBorad[i, j]);
+                        Console.ResetColor();
+                    }
+                    else if (bX == 0 && bY == 0 && tX>=0 && tY>=0 && arrTable[tX, tY] == null && colorTable[tX, tY] == 1) // possible move
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
+                        Console.Write(arrForBoard[i, j]);
                         Console.ResetColor();                    
                     }
                     else if (bX == 0 && bY == 0 && arrTable[tX, tY] != null ) 
