@@ -130,11 +130,7 @@ namespace KING_OF_XIANGQI
             refDataTable.NullArr(location_select.Item1, location_select.Item2);//空棋子或者空
             //return refArrTable;
         }// To move pieces.
-        public void MoveandCheckWin()
-        {
 
-
-        }
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
         {
             int k = 0;

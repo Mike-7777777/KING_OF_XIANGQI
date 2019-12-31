@@ -103,7 +103,7 @@ namespace KING_OF_XIANGQI
                         Console.ResetColor();
                     }
                     ////版本改动(view1)
-                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0 && arrTable[tX, tY] != null && colorTable[tX, tY] == 1) // possible move
+                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0  && colorTable[tX, tY] == 1) // possible move
                     {
                         //arrGamingBorad[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
@@ -111,13 +111,7 @@ namespace KING_OF_XIANGQI
                         Console.Write(arrGamingBoard[18 * i + j]);
                         Console.ResetColor();
                     }
-                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0 && arrTable[tX, tY] == null && colorTable[tX, tY] == 1) // possible move
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
-                        Console.Write(arrForBoard[18 * i + j]);
-                        Console.ResetColor();
-                    }
+
                     else if (bX == 0 && bY == 0 && arrTable[tX, tY] != null)
                     {
                         string color;
