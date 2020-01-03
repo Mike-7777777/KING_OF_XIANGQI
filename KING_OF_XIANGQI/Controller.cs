@@ -49,13 +49,28 @@ namespace KING_OF_XIANGQI
                 case "KING_OF_XIANGQI.General":
                     Console.WriteLine("In switch general"); //test
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
-                    ylist = new List<int> { y + 1, y + 1, y + 0, y + 0 };
-                    RemoveOut(4); //remove all points out of small 9 space.
+                    ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 };
+                    if (y < 5) 
+                    {
+                        RemoveOut(5); //remove all points out of small 9 space up.
+                    }
+                    else
+                    {
+                        RemoveOut(6); //remove all points out of small 9 space down.
+                    }
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
                     xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
                     ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
+                    if (y < 5)
+                    {
+                        RemoveOut(5); //remove all points out of small 9 space up.
+                    }
+                    else
+                    {
+                        RemoveOut(6); //remove all points out of small 9 space down.
+                    }
                     RemoveOut(4); //remove all points out of small 9 space.
                     PossibleMove(xlist, ylist);
                     break;
@@ -115,11 +130,7 @@ namespace KING_OF_XIANGQI
             refDataTable.NullArr(location_select.Item1, location_select.Item2);//空棋子或者空
             //return refArrTable;
         }// To move pieces.
-        public void MoveandCheckWin()
-        {
 
-
-        }
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
         {
             int k = 0;
@@ -177,30 +188,34 @@ namespace KING_OF_XIANGQI
         public void RemoveOut(int mode)
         {
             int xindex = 0;
-            Predicate<int> xInBoard = xi => //x-axis out of the board.
+            static bool xInBoard(int xi)
             {
                 return xi < 0 || xi > 8;
-            };
-            Predicate<int> yInBoard = yi => //y-axis out of the board.
+            }
+            static bool yInBoard(int yi)
             {
                 return yi < 0 || yi > 9;
-            };
-            Predicate<int> bottomHalfBoard = yi => //y-axis out of the bottom half-board.
+            }
+            static bool bottomHalfBoard(int yi)
             {
                 return yi > 5;
-            };
-            Predicate<int> topHalfBoard = yi => //y-axis out of the top half-board.
+            }
+            static bool topHalfBoard(int yi)
             {
                 return yi < 4;
-            };
-            Predicate<int> xInTNine = xi => //x-axis out of the Jiugongge(T9).
+            }
+            static bool xInTNine(int xi)
             {
                 return xi < 3 || xi > 5;
-            };
-            Predicate<int> yInTNine = yi => //y-axis out of the Jiugongge(T9).
+            }
+            static bool yInTNineDown(int yi)
             {
                 return yi > 2 || yi < 0;
-            };
+            }
+            static bool yInTNineUp(int yi)
+            {
+                return yi > 9 || yi < 7;
+            }
             switch (mode)
             {// 1 default, 2 elephant up, 3 ele down(y<5, 4 general & mandarin 9 space)
              //
@@ -240,15 +255,27 @@ namespace KING_OF_XIANGQI
                     }
                     break;
                 case 4:
-                    while ((this.ylist.FindIndex(yInTNine) != -1))
-                    {
-                        xindex = this.ylist.FindIndex(yInTNine);
-                        this.xlist.RemoveAt(xindex);
-                        this.ylist.RemoveAt(xindex);
-                    }
                     while ((this.xlist.FindIndex(xInTNine) != -1))
                     {
                         xindex = this.xlist.FindIndex(xInTNine);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
+                case 5:
+                    RemoveOut(4);
+                    while ((this.ylist.FindIndex(yInTNineDown) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(yInTNineDown);
+                        this.xlist.RemoveAt(xindex);
+                        this.ylist.RemoveAt(xindex);
+                    }
+                    break;
+                case 6:
+                    RemoveOut(4);
+                    while ((this.ylist.FindIndex(yInTNineUp) != -1))
+                    {
+                        xindex = this.ylist.FindIndex(yInTNineUp);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
