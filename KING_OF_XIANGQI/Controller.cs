@@ -70,7 +70,7 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
-                    if (y > 5)
+                    if (y > 4)
                     {
                         RemoveOut(2);   // delete (make it null) 
                                         //the elements out of the upper half of board.
