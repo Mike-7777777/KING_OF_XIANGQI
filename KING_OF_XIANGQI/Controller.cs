@@ -12,6 +12,8 @@ namespace KING_OF_XIANGQI
         private List<int> ylist; //define a series of y coordinates used to store the possible moves of piece.
         private List<int> alist;
         private List<int> blist;
+        private List<int> xBan;
+        private List<int> yBan;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
                                         //so that other methods can use it without input it everytime.
         private Piece[,] refArrTable; //To get the reference of the property(the array made by pieces) 
@@ -36,8 +38,6 @@ namespace KING_OF_XIANGQI
             this.myColor = myColor; //Store the player;
 
             Piece chosePiece; //define a Piece object chosePiece to store the Piece pass by database.
-            List<int> xBan;
-            List<int> yBan;
             
             chosePiece = refDataTable.GetPiece(x, y); //use getPiece method and pass two variables as     
                                                       //the location to get the object we need.
@@ -49,12 +49,12 @@ namespace KING_OF_XIANGQI
                 case "KING_OF_XIANGQI.General":
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
                     ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 };
-                    UpNDown(y);
+                    PieceRule(y, 5, 0, 1, 0);
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
                     xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
                     ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
-                    UpNDown(y);
+                    PieceRule(y, 5, 0, 1, 0);
                     break;
                 case "KING_OF_XIANGQI.Elephant":
                     // ↗, ↘, ↙, ↖.
@@ -66,18 +66,7 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
-                    if (y < 5) //与将和士不一样在于 remove的模式是3和2不是5和6，并且结束if后还有一个Ban操作
-                                //共同点可以通过 i， i+1 修改，如 i = 5是将和士， i = 2 是象。
-                    {
-                        RemoveOut(2);// ... out of the lower half of board.
-                    }
-                    else
-                    {
-                        RemoveOut(3);   // delete (make it null) 
-                                        //the elements out of the upper half of board.
-                    }
-                    Ban(xBan,yBan,1); //把绊象退的删掉
-                    PossibleMove(xlist, ylist);
+                    PieceRule(y, 2, 1, 1, 1);
                     break;
                 case "KING_OF_XIANGQI.Horse":
                     //y↗ y↘ y↖ y↙, Y↗ Y↘ Y↖ Y↙
@@ -89,10 +78,7 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
-                    //由于 马 的行走不受上下半场的限制，所以没有y<5的判断，取而代之的是Remove1，然后直接到Ban方法。
-                    Ban(xBan, yBan, 0);
-                    RemoveOut(1);   // delete the points out of board.
-                    PossibleMove(xlist, ylist);
+                    PieceRule(y, 0, 0, 0, 1);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
                     xlist = new List<int> { x + 1, x - 1, x, x };
@@ -161,22 +147,33 @@ namespace KING_OF_XIANGQI
             //return refArrTable;
         }// To move pieces.
 
-        public void UpNDown(int y)
+        public void PieceRule(int y, int upDownMode, int banMode, int updown, int ban)
         {
-            if (y < 5) // separate the black and red general. 
-                       //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
-                       //共同点是if(y<5) remove5, remove 6; possible();
+            if (updown == 1)
             {
-                RemoveOut(5); //remove all points out of small 9 space up. 
-                              //'5' means a mode of RemoveOut method
-                              //(remove all points out of bottom board).
+                if (y < 5) // separate the black and red general. 
+                           //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
+                           //共同点是if(y<5) remove5, remove 6; possible();
+                {
+                    RemoveOut(upDownMode); //remove all points out of small 9 space up. 
+                                     //'5' means a mode of RemoveOut method
+                                     //(remove all points out of bottom board).
+                }
+                else
+                {
+                    RemoveOut(upDownMode + 1); //remove all points out of small 9 space down.
+                                         //'6' means a mode of RemoveOut method.
+                                         //(remove all points out of upper board)
+                }
             }
             else
             {
-                RemoveOut(6); //remove all points out of small 9 space down.
-                              //'6' means a mode of RemoveOut method.
-                              //(remove all points out of upper board)
+                RemoveOut(1); // delete all points out of board.
             }
+            if (ban == 1) 
+            {
+                Ban(xBan, yBan, banMode);
+            } 
             PossibleMove(xlist, ylist); //可能没必要放里面，可以放switch的后（外）面。
         } //包括了possible move（）方法
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
