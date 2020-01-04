@@ -8,9 +8,9 @@ namespace KING_OF_XIANGQI
     class Controller
     {
         private string myColor; //define the player this round.
-        private List<int> xlist;
-        private List<int> ylist;
-        private List<int> alist;
+        private List<int> xlist; //define a series of x coordinates used to store the possible moves of piece.
+        private List<int> ylist; //define a series of y coordinates used to store the possible moves of piece.
+        private List<int> alist; 
         private List<int> blist;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
                                         //so that other methods can use it without input it everytime.
@@ -22,7 +22,7 @@ namespace KING_OF_XIANGQI
         {
             this.refDataTable = dataTable;  //recieve the data of board.
             this.refArrTable = dataTable.GetArr();  //recieve the arrObject from database.
-            this.xlist = new List<int>();
+            this.xlist = new List<int>(); //init all the member variables.
             this.ylist = new List<int>();
             this.alist = new List<int>();
             this.blist = new List<int>();
