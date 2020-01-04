@@ -304,23 +304,7 @@ namespace KING_OF_XIANGQI
                     {
                         ylist.RemoveAt(0);
                     }
-                    xlist = xlist.FindAll(
-
-                            delegate (int i)
-                            {
-                                return (i >= 0 && i <= 8);
-                            }
-                            );
-                    ylist = ylist.FindAll(
-
-                            delegate (int i)
-                            {
-                                return (i >= 0 && i <= 9);
-                            }
-                            );
-                    PossibleMove(xlist, ylist);
                     break;
-
                 case "Black":
                     xlist.RemoveAt(2);
                     ylist.RemoveAt(2);
@@ -333,34 +317,23 @@ namespace KING_OF_XIANGQI
                     {
                         ylist.RemoveAt(0);
                     }
-
-                    xlist = xlist.FindAll(
+                    break;
+            }
+            xlist = xlist.FindAll(
 
                             delegate (int i)
                             {
                                 return (i >= 0 && i <= 8);
                             }
                             );
-                    ylist = ylist.FindAll(
+            ylist = ylist.FindAll(
 
-                             delegate (int i)
-                             {
-                                 return (i >= 0 && i <= 9);
-                             }
-                             );
-                    for (int i = 0; i < ylist.Count; i++)
+                    delegate (int i)
                     {
-
-                        Console.WriteLine("y:" + ylist[i]);
+                        return (i >= 0 && i <= 9);
                     }
-                    for (int i = 0; i < xlist.Count; i++)
-                    {
-                        Console.WriteLine("x:" + xlist[i]);
-                    }
-                    PossibleMove(xlist, ylist);
-                    break;
-            }
-
+                    );
+            PossibleMove(xlist, ylist);
         }
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
