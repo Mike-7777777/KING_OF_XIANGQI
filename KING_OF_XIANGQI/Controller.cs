@@ -49,34 +49,12 @@ namespace KING_OF_XIANGQI
                 case "KING_OF_XIANGQI.General":
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
                     ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 };
-                    if (y < 5) // separate the black and red general. 
-                        //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
-                        //共同点是if(y<5) remove5, remove 6; possible();
-                    {
-                        RemoveOut(5); //remove all points out of small 9 space up. 
-                                      //'5' means a mode of RemoveOut method
-                                      //(remove all points out of bottom board).
-                    }
-                    else
-                    {
-                        RemoveOut(6); //remove all points out of small 9 space down.
-                                      //'6' means a mode of RemoveOut method.
-                                      //(remove all points out of upper board)
-                    }
-                    PossibleMove(xlist, ylist);
+                    UpNDown(y);
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
                     xlist = new List<int> { x + 1, x + 1, x - 1, x - 1 }; // ↗, ↘, ↙, ↖.
                     ylist = new List<int> { y + 1, y - 1, y - 1, y + 1 };
-                    if (y < 5)
-                    {
-                        RemoveOut(5); //remove all points out of small 9 space up.
-                    }
-                    else
-                    {
-                        RemoveOut(6); //remove all points out of small 9 space down.
-                    }
-                    PossibleMove(xlist, ylist);
+                    UpNDown(y);
                     break;
                 case "KING_OF_XIANGQI.Elephant":
                     // ↗, ↘, ↙, ↖.
@@ -91,11 +69,11 @@ namespace KING_OF_XIANGQI
                     if (y < 5) //与将和士不一样在于 remove的模式是3和2不是5和6，并且结束if后还有一个Ban操作
                                 //共同点可以通过 i， i+1 修改，如 i = 5是将和士， i = 2 是象。
                     {
-                        RemoveOut(3);// ... out of the lower half of board.
+                        RemoveOut(2);// ... out of the lower half of board.
                     }
                     else
                     {
-                        RemoveOut(2);   // delete (make it null) 
+                        RemoveOut(3);   // delete (make it null) 
                                         //the elements out of the upper half of board.
                     }
                     Ban(xBan,yBan,1); //把绊象退的删掉
@@ -117,7 +95,55 @@ namespace KING_OF_XIANGQI
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
-                    PossibleMove_Pawn(x, y);
+                    xlist = new List<int> { x + 1, x - 1, x, x };
+                    ylist = new List<int> { y, y, y + 1, y - 1 };
+                    switch (refArrTable[x, y].GetColor())
+                    {
+                        case "Red":
+                            xlist.RemoveAt(3);
+                            ylist.RemoveAt(3);
+
+                            if (y <= 4)
+                            {
+
+                                xlist.RemoveRange(0, 2);
+                                ylist.RemoveRange(0, 2);
+
+                            }
+                            else if (y >= 5 && (x == 8 || x == 0))
+                            {
+                                ylist.RemoveAt(0);
+                            }
+                            break;
+                        case "Black":
+                            xlist.RemoveAt(2);
+                            ylist.RemoveAt(2);
+                            if (y >= 5)
+                            {
+                                xlist.RemoveRange(0, 2);
+                                ylist.RemoveRange(0, 2);
+                            }
+                            else if (y <= 4 && (x == 8 || x == 0))
+                            {
+                                ylist.RemoveAt(0);
+                            }
+                            break;
+                    }
+                    xlist = xlist.FindAll(
+
+                                    delegate (int i)
+                                    {
+                                        return (i >= 0 && i <= 8);
+                                    }
+                                    );
+                    ylist = ylist.FindAll(
+
+                            delegate (int i)
+                            {
+                                return (i >= 0 && i <= 9);
+                            }
+                            );
+                    PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Cannon":
                     PossibleMove_Cannon(x, y);
@@ -135,6 +161,24 @@ namespace KING_OF_XIANGQI
             //return refArrTable;
         }// To move pieces.
 
+        public void UpNDown(int y)
+        {
+            if (y < 5) // separate the black and red general. 
+                       //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
+                       //共同点是if(y<5) remove5, remove 6; possible();
+            {
+                RemoveOut(5); //remove all points out of small 9 space up. 
+                              //'5' means a mode of RemoveOut method
+                              //(remove all points out of bottom board).
+            }
+            else
+            {
+                RemoveOut(6); //remove all points out of small 9 space down.
+                              //'6' means a mode of RemoveOut method.
+                              //(remove all points out of upper board)
+            }
+            PossibleMove(xlist, ylist); //可能没必要放里面，可以放switch的后（外）面。
+        } //包括了possible move（）方法
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
         {
             int k = 0;
@@ -230,7 +274,6 @@ namespace KING_OF_XIANGQI
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
-                    Console.WriteLine(ylist.FindIndex(yInBoard));
                     while ((ylist.FindIndex(yInBoard) != -1))
                     {
                         xindex = ylist.FindIndex(yInBoard);
@@ -241,19 +284,18 @@ namespace KING_OF_XIANGQI
 
                 case 2:
                     RemoveOut(1);
-                    while ((this.ylist.FindIndex(topHalfBoard) != -1))
+                    while ((this.ylist.FindIndex(bottomHalfBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(topHalfBoard);
+                        xindex = this.ylist.FindIndex(bottomHalfBoard);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
                     break;
-
                 case 3:
                     RemoveOut(1);
-                    while ((this.ylist.FindIndex(bottomHalfBoard) != -1))
+                    while ((this.ylist.FindIndex(topHalfBoard) != -1))
                     {
-                        xindex = this.ylist.FindIndex(bottomHalfBoard);
+                        xindex = this.ylist.FindIndex(topHalfBoard);
                         this.xlist.RemoveAt(xindex);
                         this.ylist.RemoveAt(xindex);
                     }
@@ -287,129 +329,9 @@ namespace KING_OF_XIANGQI
 
             }
         } // delete the locations out of board in the xlist and ylist.
-        public void PossibleMove_Pawn(int x, int y)//Pawn walk rules
-        {
-            List<int> xlist = new List<int> { x + 1, x - 1, x, x };
-            List<int> ylist = new List<int> { y, y, y + 1, y - 1 };
-            switch (refArrTable[x, y].GetColor())
-            {
-                case "Red":
-                    xlist.RemoveAt(3);
-                    ylist.RemoveAt(3);
-
-                    if (y <= 4)
-                    {
-
-                        xlist.RemoveRange(0, 2);
-                        ylist.RemoveRange(0, 2);
-
-                    }
-                    else if (y >= 5 && (x == 8 || x == 0))
-                    {
-                        ylist.RemoveAt(0);
-                    }
-                    break;
-                case "Black":
-                    xlist.RemoveAt(2);
-                    ylist.RemoveAt(2);
-                    if (y >= 5)
-                    {
-                        xlist.RemoveRange(0, 2);
-                        ylist.RemoveRange(0, 2);
-                    }
-                    else if (y <= 4 && (x == 8 || x == 0))
-                    {
-                        ylist.RemoveAt(0);
-                    }
-                    break;
-            }
-            xlist = xlist.FindAll(
-
-                            delegate (int i)
-                            {
-                                return (i >= 0 && i <= 8);
-                            }
-                            );
-            ylist = ylist.FindAll(
-
-                    delegate (int i)
-                    {
-                        return (i >= 0 && i <= 9);
-                    }
-                    );
-            PossibleMove(xlist, ylist);
-        }
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
-            Reset(x, y);
-            for (int l = 0; l < 2; l++)
-            {
-                List<int> xtemplist = new List<int> { };
-                List<int> ytemplist = new List<int> { };
-                int judge = new int();
-                if (l == 0)
-                {
-                    xtemplist = xlist;
-                    ytemplist = ylist;
-                    judge = x;
-                }
-                else
-                {
-                    xtemplist = alist;
-                    ytemplist = blist;
-                    judge = y;
-                }
-                List<int> templist = new List<int> { };
-                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
-                for (int i = judge - 1; i > -1; i--)
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
-                    {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))
-                        {
-                            ytemplist.RemoveRange(0, i + 1);
-                            xtemplist.RemoveRange(0, i + 1);
-                        }
-                        else
-                        {
-                            ytemplist.RemoveRange(0, i);
-                            xtemplist.RemoveRange(0, i);
-                        }
-                        break;
-                    }
-                }
-                Predicate<int> match = xi =>
-                {
-                    return xi == judge;
-                };
-                int j;
-                int k;
-                j = xtemplist.FindIndex(match);
-                k = ytemplist.FindIndex(match);
-                if (templist.Count == 1)
-                {
-                    k = j;
-                }
-                for (int i = k + 1; i < xtemplist.Count; i++)
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
-                    {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))
-                        {
-                            ytemplist.RemoveRange(i, ytemplist.Count - i);
-                            xtemplist.RemoveRange(i, xtemplist.Count - i);
-                        }
-                        else
-                        {
-                            ytemplist.RemoveRange(i + 1, ytemplist.Count - i - 1);
-                            xtemplist.RemoveRange(i + 1, xtemplist.Count - i - 1);
-                        }
-                        break;
-                    }
-                }
-                PossibleMove(xtemplist, ytemplist);
-                Reset(x, y);
-            }
+            
         }
         public void PossibleMove_Cannon(int x, int y)//Canon walk.
         {
