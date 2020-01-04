@@ -32,31 +32,36 @@ namespace KING_OF_XIANGQI
                                                             //and predict the point it could get.
                                                             //myColor string defined the rounding color, black & red.
         {
-            //Store the player;
-            this.myColor = myColor;
-            //define a Piece object chosePiece to store the Piece pass by database.
-            Piece chosePiece;
+            
+            this.myColor = myColor; //Store the player;
+
+            Piece chosePiece; //define a Piece object chosePiece to store the Piece pass by database.
             List<int> xBan;
             List<int> yBan;
-            //use getPiece method and pass two variables as     
-            //the location to get the object we need.
-            chosePiece = refDataTable.GetPiece(x, y);
+            
+            chosePiece = refDataTable.GetPiece(x, y); //use getPiece method and pass two variables as     
+                                                      //the location to get the object we need.
+
             //Distinguish pieces types
             refDataTable.SetChosePiece(x, y);
-
             switch(chosePiece.GetType().ToString())
             {
                 case "KING_OF_XIANGQI.General":
-                    Console.WriteLine("In switch general"); //test
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
                     ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 };
-                    if (y < 5) 
+                    if (y < 5) // separate the black and red general. 
+                        //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
+                        //共同点是if(y<5) remove5, remove 6; possible();
                     {
-                        RemoveOut(5); //remove all points out of small 9 space up.
+                        RemoveOut(5); //remove all points out of small 9 space up. 
+                                      //'5' means a mode of RemoveOut method
+                                      //(remove all points out of bottom board).
                     }
                     else
                     {
                         RemoveOut(6); //remove all points out of small 9 space down.
+                                      //'6' means a mode of RemoveOut method.
+                                      //(remove all points out of upper board)
                     }
                     PossibleMove(xlist, ylist);
                     break;
@@ -71,11 +76,9 @@ namespace KING_OF_XIANGQI
                     {
                         RemoveOut(6); //remove all points out of small 9 space down.
                     }
-                    RemoveOut(4); //remove all points out of small 9 space.
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Elephant":
-                    Console.WriteLine("in Elephant");
                     // ↗, ↘, ↙, ↖.
                     //init two list, make it adapt it to the way the elephant walks.
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
@@ -85,20 +88,20 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
-                    if (y > 4)
+                    if (y < 5) //与将和士不一样在于 remove的模式是3和2不是5和6，并且结束if后还有一个Ban操作
+                                //共同点可以通过 i， i+1 修改，如 i = 5是将和士， i = 2 是象。
+                    {
+                        RemoveOut(3);// ... out of the lower half of board.
+                    }
+                    else
                     {
                         RemoveOut(2);   // delete (make it null) 
                                         //the elements out of the upper half of board.
                     }
-                    else
-                    {
-                        RemoveOut(3);// ... out of the lower half of board.
-                    }
-                    Ban(xBan,yBan,1);
+                    Ban(xBan,yBan,1); //把绊象退的删掉
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Horse":
-                    Console.WriteLine("in horse");
                     //y↗ y↘ y↖ y↙, Y↗ Y↘ Y↖ Y↙
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x - 1, x + 1, x - 1 };
                     ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y + 2, y - 2, y - 2 };
@@ -108,6 +111,7 @@ namespace KING_OF_XIANGQI
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
                     //The following deletes the elements in the List 
                     //to meet the walking restrictions of the elephant.
+                    //由于 马 的行走不受上下半场的限制，所以没有y<5的判断，取而代之的是Remove1，然后直接到Ban方法。
                     Ban(xBan, yBan, 0);
                     RemoveOut(1);   // delete the points out of board.
                     PossibleMove(xlist, ylist);
@@ -217,8 +221,8 @@ namespace KING_OF_XIANGQI
                 return yi > 9 || yi < 7;
             }
             switch (mode)
-            {// 1 default, 2 elephant up, 3 ele down(y<5, 4 general & mandarin 9 space)
-             //
+            {// 1 default, 2 elephant up, 3 ele down, 
+             //4 nine space(x) 5 nine space(y down) 6 nine space(y up))
                 case 1:
                     while ((this.xlist.FindIndex(xInBoard) != -1))
                     {
