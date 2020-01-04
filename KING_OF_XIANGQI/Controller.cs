@@ -10,7 +10,7 @@ namespace KING_OF_XIANGQI
         private string myColor; //define the player this round.
         private List<int> xlist; //define a series of x coordinates used to store the possible moves of piece.
         private List<int> ylist; //define a series of y coordinates used to store the possible moves of piece.
-        private List<int> alist; 
+        private List<int> alist;
         private List<int> blist;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
                                         //so that other methods can use it without input it everytime.
@@ -198,11 +198,11 @@ namespace KING_OF_XIANGQI
             }
             static bool bottomHalfBoard(int yi)
             {
-                return yi > 5;
+                return yi > 4;
             }
             static bool topHalfBoard(int yi)
             {
-                return yi < 4;
+                return yi < 5;
             }
             static bool xInTNine(int xi)
             {
