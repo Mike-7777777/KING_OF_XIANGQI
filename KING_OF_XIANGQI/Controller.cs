@@ -10,12 +10,14 @@ namespace KING_OF_XIANGQI
         private string myColor; //define the player this round.
         private List<int> xlist; //define a series of x coordinates used to store the possible moves of piece.
         private List<int> ylist; //define a series of y coordinates used to store the possible moves of piece.
-        private List<int> alist;
-        private List<int> blist;
+        private List<int> rowlist;
+        private List<int> conlist;
+        private List<int> rowlist1;
+        private List<int> conlist1;
         private List<int> xBan;
         private List<int> yBan;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
-                                        //so that other methods can use it without input it everytime.
+                                      //so that other methods can use it without input it everytime.
         private Piece[,] refArrTable; //To get the reference of the property(the array made by pieces) 
         //of input variable 'dataTable', 
         //so that other methods can use it without input it everytime.
@@ -26,25 +28,27 @@ namespace KING_OF_XIANGQI
             this.refArrTable = dataTable.GetArr();  //recieve the arrObject from database.
             this.xlist = new List<int>(); //init all the member variables.
             this.ylist = new List<int>();
-            this.alist = new List<int>();
-            this.blist = new List<int>();
+            this.rowlist = new List<int>();
+            this.conlist = new List<int>();
+            this.rowlist1 = new List<int>();
+            this.conlist1 = new List<int>();
         }
         public void ChooseP(int x, int y, string myColor)   //x,y is the location of piece that user chose. 
                                                             //This method is used to active one piece  
                                                             //and predict the point it could get.
                                                             //myColor string defined the rounding color, black & red.
         {
-            
+
             this.myColor = myColor; //Store the player;
 
             Piece chosePiece; //define a Piece object chosePiece to store the Piece pass by database.
-            
+
             chosePiece = refDataTable.GetPiece(x, y); //use getPiece method and pass two variables as     
                                                       //the location to get the object we need.
 
             //Distinguish pieces types
             refDataTable.SetChosePiece(x, y);
-            switch(chosePiece.GetType().ToString())
+            switch (chosePiece.GetType().ToString())
             {
                 case "KING_OF_XIANGQI.General":
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
@@ -62,65 +66,53 @@ namespace KING_OF_XIANGQI
                     xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };//init two ban list used later to deletes the non-compliantelements.
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     PieceRule(y, 2, 1, 1, 1);//Deletes the elements in the List 
-                                            //to meet the walking restrictions of the elephant.
+                                             //to meet the walking restrictions of the elephant.
                     break;
                 case "KING_OF_XIANGQI.Horse":
                     //y↗ y↘ y↖ y↙, Y↗ Y↘ Y↖ Y↙
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x - 1, x + 1, x - 1 };
                     ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y + 2, y - 2, y - 2 };
-                    xBan = new List<int> { x + 1, x - 1, x    , x    };//→ ← ↑ ↓
-                    yBan = new List<int> { y    , y    , y + 1, y - 1 };
+                    xBan = new List<int> { x + 1, x - 1, x, x };//→ ← ↑ ↓
+                    yBan = new List<int> { y, y, y + 1, y - 1 };
                     PieceRule(y, 0, 0, 0, 1);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
-                    xlist = new List<int> { x + 1, x - 1, x, x };
-                    ylist = new List<int> { y, y, y + 1, y - 1 };
+                    xlist = new List<int> { x + 1, x - 1 };//Add possible paths for the pawn
+                    ylist = new List<int> { y, y ,};
                     switch (refArrTable[x, y].GetColor())
                     {
                         case "Red":
-                            xlist.RemoveAt(3);
-                            ylist.RemoveAt(3);
+                            xlist.Add(x);//Add the path forward
+                            ylist.Add(y + 1);
 
-                            if (y <= 4)
+                            if (y <= 4)//If the piece doesn't go over the edge removes the left and right possible paths
                             {
-
                                 xlist.RemoveRange(0, 2);
                                 ylist.RemoveRange(0, 2);
-
-                            }
-                            else if (y >= 5 && (x == 8 || x == 0))
-                            {
-                                ylist.RemoveAt(0);
                             }
                             break;
                         case "Black":
-                            xlist.RemoveAt(2);
-                            ylist.RemoveAt(2);
-                            if (y >= 5)
+                            xlist.Add(x);//Add the path forward
+                            ylist.Add(y - 1);
+                            if (y >= 5)//If the piece doesn't go over the edge removes the left and right possible paths
                             {
                                 xlist.RemoveRange(0, 2);
                                 ylist.RemoveRange(0, 2);
                             }
-                            else if (y <= 4 && (x == 8 || x == 0))
-                            {
-                                ylist.RemoveAt(0);
-                            }
                             break;
                     }
-                    xlist = xlist.FindAll(
-
-                                    delegate (int i)
-                                    {
-                                        return (i >= 0 && i <= 8);
-                                    }
-                                    );
-                    ylist = ylist.FindAll(
-
-                            delegate (int i)
-                            {
-                                return (i >= 0 && i <= 9);
-                            }
-                            );
+                    xlist = xlist.FindAll(delegate (int i)//Remove coordinates beyond the board
+                    { return (i >= 0 && i <= 8); });
+                    if (ylist.Count != xlist.Count)//If there is a case where the abscissa is out of the checkerboard and removed, remove the corresponding ordinate as well
+                    {
+                        ylist.RemoveAt(0);
+                    }
+                    ylist = ylist.FindAll(delegate (int i)
+                    { return (i >= 0 && i <= 9); });
+                    if (ylist.Count != xlist.Count)//If there is a case where the ordinate is out of the checkerboard and removed, remove the corresponding abscissa as well
+                    {
+                        xlist.RemoveAt(2);
+                    }
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Cannon":
@@ -133,8 +125,8 @@ namespace KING_OF_XIANGQI
         }
         public void MoveP(Tuple<int, int> location_select, Tuple<int, int> location_move) //12.20 1：12 修改
         {
-            refDataTable.SetArr(location_move.Item1, location_move.Item2,refArrTable[location_select.Item1, location_select.Item2]);    //由修改本地成员变量refArray
-                                                                                                                                        //改为调用远端方法修改数据库
+            refDataTable.SetArr(location_move.Item1, location_move.Item2, refArrTable[location_select.Item1, location_select.Item2]);    //由修改本地成员变量refArray
+                                                                                                                                         //改为调用远端方法修改数据库
             refDataTable.NullArr(location_select.Item1, location_select.Item2);//空棋子或者空
             //return refArrTable;
         }// To move pieces.
@@ -152,14 +144,14 @@ namespace KING_OF_XIANGQI
                            //共同点是if(y<5) remove5, remove 6; possible();
                 {
                     RemoveOut(upDownMode); //remove all points out of small 9 space up. 
-                                     //'5' means a mode of RemoveOut method
-                                     //(remove all points out of bottom board).
+                                           //'5' means a mode of RemoveOut method
+                                           //(remove all points out of bottom board).
                 }
                 else
                 {
                     RemoveOut(upDownMode + 1); //remove all points out of small 9 space down.
-                                         //'6' means a mode of RemoveOut method.
-                                         //(remove all points out of upper board)
+                                               //'6' means a mode of RemoveOut method.
+                                               //(remove all points out of upper board)
                 }
             }
             else
@@ -176,7 +168,7 @@ namespace KING_OF_XIANGQI
                 Boolean inRange = (xBan[i] < 10 && xBan[i] >= 0 && yBan[i] < 10 && yBan[i] >= 0);
                 if (inRange && refArrTable[xBan[i], yBan[i]] != null)
                 {
-                    if(mode == 1)
+                    if (mode == 1)
                     {
                         xlist.RemoveAt(k);// four round: ↗, ↘, ↙, ↖.
                         ylist.RemoveAt(k);
@@ -207,7 +199,7 @@ namespace KING_OF_XIANGQI
                 Console.WriteLine(x[i]);
                 Console.WriteLine(y[i]);
                 if (refArrTable[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
-                if (refArrTable[x[i], y[i]] == null 
+                if (refArrTable[x[i], y[i]] == null
                     || refArrTable[x[i], y[i]].GetColor() != myColor)//原来是!= 但是改了就对了,不知道为什么
                 {
                     refDataTable.TableChangeColorActive(x[i], y[i]);
@@ -218,7 +210,7 @@ namespace KING_OF_XIANGQI
         }
         public void PossibleMove(int x, int y) // if the list(not a list actually) only has one element.
         {
-            List<int> xtempList = new List<int>{ x };
+            List<int> xtempList = new List<int> { x };
             List<int> ytempList = new List<int> { y };
             PossibleMove(xtempList, ytempList);
         }
@@ -321,7 +313,7 @@ namespace KING_OF_XIANGQI
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
             Reset(x, y);
-            for (int l = 0; l < 2; l++)
+            for (int l = 0; l < 2; l++)//Check the row and column of cannon
             {
                 List<int> xtemplist = new List<int> { };
                 List<int> ytemplist = new List<int> { };
@@ -334,17 +326,17 @@ namespace KING_OF_XIANGQI
                 }
                 else
                 {
-                    xtemplist = alist;
-                    ytemplist = blist;
+                    xtemplist = rowlist;
+                    ytemplist = conlist;
                     judge = y;
                 }
                 List<int> templist = new List<int> { };
                 templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
-                for (int i = judge - 1; i > -1; i--)
+                for (int i = judge - 1; i > -1; i--) //Check for whether exists a piece on the left or lower side of the rook
                 {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)//If a piece exists, remove the path behind the piece
                     {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))//If it's the cannon case, delete one more path,Cannon can't just take the pieces like rook
                         {
                             ytemplist.RemoveRange(0, i + 1);
                             xtemplist.RemoveRange(0, i + 1);
@@ -357,23 +349,23 @@ namespace KING_OF_XIANGQI
                         break;
                     }
                 }
-                Predicate<int> match = xi =>
+                Predicate<int> match = xi =>//Reposition x and y in the list
                 {
                     return xi == judge;
                 };
-                int j;
-                int k;
-                j = xtemplist.FindIndex(match);
-                k = ytemplist.FindIndex(match);
-                if (templist.Count == 1)
+                int tempy;
+                int tempx;
+                tempx = xtemplist.FindIndex(match);
+                tempy = ytemplist.FindIndex(match);
+                if (templist.Count == 1)//Check if this turn is checking the line or column paths of the pieces
                 {
-                    k = j;
+                    tempy = tempx;//If this turn is checking the column path, use y as the starting point
                 }
-                for (int i = k + 1; i < xtemplist.Count; i++)
+                for (int i = tempy + 1; i < xtemplist.Count; i++)//Check for whether exists a piece on the right or unpper side of the rook
                 {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)//If a piece exists, remove the path behind the piece
                     {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))//If it's the cannon case, delete one more path,Cannon can't just take the pieces like rook
                         {
                             ytemplist.RemoveRange(i, ytemplist.Count - i);
                             xtemplist.RemoveRange(i, xtemplist.Count - i);
@@ -394,27 +386,25 @@ namespace KING_OF_XIANGQI
         {
 
             Reset(x, y);
-            PossibleMove_Rook(x, y);
-            for (int l = 0; l < 2; l++)
+            PossibleMove_Rook(x, y);//Take the rule of rook and get the path of cannon
+            for (int l = 0; l < 2; l++)//Check the row and column of cannon twice
             {
                 List<int> xtemplist = new List<int> { };
                 List<int> ytemplist = new List<int> { };
                 int judge = new int();
                 if (l == 0)
                 {
-                    xtemplist = xlist;
-                    ytemplist = ylist;
+                    xtemplist = rowlist1;
+                    ytemplist = conlist1;
                     judge = x;
                 }
                 else
                 {
-                    xtemplist = alist;
-                    ytemplist = blist;
+                    xtemplist = rowlist;
+                    ytemplist = conlist;
                     judge = y;
                 }
-                List<int> templist = new List<int> { };
-                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
-                for (int i = judge - 1; i > -1; i--)
+                for (int i = judge - 1; i > -1; i--)//Check if there are two pieces to the left or under cannon
                 {
                     if (refArrTable[xtemplist[i], ytemplist[i]] != null)
                     {
@@ -422,14 +412,14 @@ namespace KING_OF_XIANGQI
                         {
                             if (refArrTable[xtemplist[j], ytemplist[j]] != null)
                             {
-                                PossibleMove(xtemplist[j], ytemplist[j]);
+                                PossibleMove(xtemplist[j], ytemplist[j]);//Displays the position of the second piece
                                 break;
                             }
                         }
                         break;
                     }
                 }
-                for (int i = judge + 1; i < xtemplist.Count; i++)
+                for (int i = judge + 1; i < xtemplist.Count; i++)//Check if there are two pieces to the right or upper cannon
                 {
                     if (refArrTable[xtemplist[i], ytemplist[i]] != null)
                     {
@@ -437,7 +427,7 @@ namespace KING_OF_XIANGQI
                         {
                             if (refArrTable[xtemplist[j], ytemplist[j]] != null)
                             {
-                                PossibleMove(xtemplist[j], ytemplist[j]);
+                                PossibleMove(xtemplist[j], ytemplist[j]);//Displays the position of the second piece
                                 break;
                             }
                         }
@@ -452,18 +442,22 @@ namespace KING_OF_XIANGQI
         {
             xlist.Clear();
             ylist.Clear();
-            alist.Clear();
-            blist.Clear();
+            rowlist.Clear();
+            conlist.Clear();
+            rowlist1.Clear();
+            conlist1.Clear();
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
                 xlist.Add(i);
                 ylist.Add(y);
+                rowlist1.Add(i);
+                conlist1.Add(y);
 
             }
             for (int i = 0; i < 10; i++)//车可能所在的y轴位置
             {
-                alist.Add(x);
-                blist.Add(i);
+                rowlist.Add(x);
+                conlist.Add(i);
 
             }
         }//Reset the rook and canon list
