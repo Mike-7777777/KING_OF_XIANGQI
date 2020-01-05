@@ -95,20 +95,18 @@ namespace KING_OF_XIANGQI
                     bX = (j + 1) % 2; //(j - 1) % 2; 
                     tY = 9 - (i - 1) / 2; //(19 - i) / 2;
                     bY = (i - 1) % 2; //(19 - i) % 2;
-                    if (i == 19 - 2 * mY && j == 2 * mX + 1) //chose point 
+                    if (i == 19 - 2 * mY && j == 2 * mX + 1) //choose point 
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.ForegroundColor = ConsoleColor.Green;//选中的棋子变成绿色
+                        Console.ForegroundColor = ConsoleColor.Green;//the choosed piece become green.
                         Console.Write(arrGamingBoard[18 * i + j]);
                         Console.ResetColor();
                     }
-                    ////版本改动(view1)
-                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0  && colorTable[tX, tY] == 1) // possible move
+                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0 && colorTable[tX, tY] == 1) // possible move
                     {
-                        //arrGamingBorad[i, j] = ArrTableGetType(arrTable[tX, tY].GetType().ToString());
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
-                        Console.Write(arrGamingBoard[18 * i + j]);
+                        Console.Write(arrForBoard[18 * i + j]);
                         Console.ResetColor();
                     }
 
@@ -116,13 +114,9 @@ namespace KING_OF_XIANGQI
                     {
                         string color;
                         color = arrTable[tX, tY].GetColor();
-
-                        ///版本改动（view2)  
                         string PiecesPos = ArrTableGetType(arrTable[tX, tY].GetType().ToString()); /// get the position for pieces
                         arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1); ///remove the element previous
                         arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, PiecesPos);///insert the element(piece we need)in it 
-                                                                                        ///版本改动（view2) 
-
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
                         {
 
