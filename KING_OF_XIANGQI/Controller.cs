@@ -48,7 +48,7 @@ namespace KING_OF_XIANGQI
             {
                 case "KING_OF_XIANGQI.General":
                     xlist = new List<int> { x + 0, x + 0, x - 1, x + 1 }; // up, down, left, right.
-                    ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 };
+                    ylist = new List<int> { y + 1, y - 1, y + 0, y + 0 }; //init two list, make it adapt it to the way the elephant walks.(following pieces is the same)
                     PieceRule(y, 5, 0, 1, 0);
                     break;
                 case "KING_OF_XIANGQI.Mandarin":
@@ -57,27 +57,19 @@ namespace KING_OF_XIANGQI
                     PieceRule(y, 5, 0, 1, 0);
                     break;
                 case "KING_OF_XIANGQI.Elephant":
-                    // ↗, ↘, ↙, ↖.
-                    //init two list, make it adapt it to the way the elephant walks.
-                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };
+                    xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };// ↗, ↘, ↙, ↖.
                     ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
-                    //init two ban list used later to deletes the non-compliantelements.
-                    xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };
+                    xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };//init two ban list used later to deletes the non-compliantelements.
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
-                    //The following deletes the elements in the List 
-                    //to meet the walking restrictions of the elephant.
-                    PieceRule(y, 2, 1, 1, 1);
+                    PieceRule(y, 2, 1, 1, 1);//Deletes the elements in the List 
+                                            //to meet the walking restrictions of the elephant.
                     break;
                 case "KING_OF_XIANGQI.Horse":
                     //y↗ y↘ y↖ y↙, Y↗ Y↘ Y↖ Y↙
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2, x + 1, x - 1, x + 1, x - 1 };
                     ylist = new List<int> { y + 1, y - 1, y + 1, y - 1, y + 2, y + 2, y - 2, y - 2 };
-                    //init two list, make it adapt it to the way the elephant walks.
-                    //→ ← ↑ ↓
-                    xBan = new List<int> { x + 1, x - 1, x    , x    };
+                    xBan = new List<int> { x + 1, x - 1, x    , x    };//→ ← ↑ ↓
                     yBan = new List<int> { y    , y    , y + 1, y - 1 };
-                    //The following deletes the elements in the List 
-                    //to meet the walking restrictions of the elephant.
                     PieceRule(y, 0, 0, 0, 1);
                     break;
                 case "KING_OF_XIANGQI.Pawn":
@@ -149,6 +141,10 @@ namespace KING_OF_XIANGQI
 
         public void PieceRule(int y, int upDownMode, int banMode, int updown, int ban)
         {
+            if (ban == 1)
+            {
+                Ban(xBan, yBan, banMode);
+            }
             if (updown == 1)
             {
                 if (y < 5) // separate the black and red general. 
@@ -170,10 +166,6 @@ namespace KING_OF_XIANGQI
             {
                 RemoveOut(1); // delete all points out of board.
             }
-            if (ban == 1) 
-            {
-                Ban(xBan, yBan, banMode);
-            } 
             PossibleMove(xlist, ylist); //可能没必要放里面，可以放switch的后（外）面。
         } //包括了possible move（）方法
         public void Ban(List<int> xBan, List<int> yBan, int mode) // mode 1 = ele, mode 0 = horse
@@ -328,7 +320,75 @@ namespace KING_OF_XIANGQI
         } // delete the locations out of board in the xlist and ylist.
         public void PossibleMove_Rook(int x, int y)//Rook walk.
         {
-            
+            Reset(x, y);
+            for (int l = 0; l < 2; l++)
+            {
+                List<int> xtemplist = new List<int> { };
+                List<int> ytemplist = new List<int> { };
+                int judge = new int();
+                if (l == 0)
+                {
+                    xtemplist = xlist;
+                    ytemplist = ylist;
+                    judge = x;
+                }
+                else
+                {
+                    xtemplist = alist;
+                    ytemplist = blist;
+                    judge = y;
+                }
+                List<int> templist = new List<int> { };
+                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
+                for (int i = judge - 1; i > -1; i--)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        {
+                            ytemplist.RemoveRange(0, i + 1);
+                            xtemplist.RemoveRange(0, i + 1);
+                        }
+                        else
+                        {
+                            ytemplist.RemoveRange(0, i);
+                            xtemplist.RemoveRange(0, i);
+                        }
+                        break;
+                    }
+                }
+                Predicate<int> match = xi =>
+                {
+                    return xi == judge;
+                };
+                int j;
+                int k;
+                j = xtemplist.FindIndex(match);
+                k = ytemplist.FindIndex(match);
+                if (templist.Count == 1)
+                {
+                    k = j;
+                }
+                for (int i = k + 1; i < xtemplist.Count; i++)
+                {
+                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    {
+                        if (refArrTable[x, y].GetType() == typeof(Cannon))
+                        {
+                            ytemplist.RemoveRange(i, ytemplist.Count - i);
+                            xtemplist.RemoveRange(i, xtemplist.Count - i);
+                        }
+                        else
+                        {
+                            ytemplist.RemoveRange(i + 1, ytemplist.Count - i - 1);
+                            xtemplist.RemoveRange(i + 1, xtemplist.Count - i - 1);
+                        }
+                        break;
+                    }
+                }
+                PossibleMove(xtemplist, ytemplist);
+                Reset(x, y);
+            }
         }
         public void PossibleMove_Cannon(int x, int y)//Canon walk.
         {
