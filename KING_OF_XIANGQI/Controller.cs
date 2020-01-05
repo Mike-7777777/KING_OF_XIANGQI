@@ -12,8 +12,6 @@ namespace KING_OF_XIANGQI
         private List<int> ylist; //define a series of y coordinates used to store the possible moves of piece.
         private List<int> rowlist;
         private List<int> conlist;
-        private List<int> rowlist1;
-        private List<int> conlist1;
         private List<int> xBan;
         private List<int> yBan;
         private Table refDataTable;   //To get the reference of input variable 'dataTable', 
@@ -30,8 +28,6 @@ namespace KING_OF_XIANGQI
             this.ylist = new List<int>();
             this.rowlist = new List<int>();
             this.conlist = new List<int>();
-            this.rowlist1 = new List<int>();
-            this.conlist1 = new List<int>();
         }
         public void ChooseP(int x, int y, string myColor)   //x,y is the location of piece that user chose. 
                                                             //This method is used to active one piece  
@@ -101,18 +97,7 @@ namespace KING_OF_XIANGQI
                             }
                             break;
                     }
-                    xlist = xlist.FindAll(delegate (int i)//Remove coordinates beyond the board
-                    { return (i >= 0 && i <= 8); });
-                    if (ylist.Count != xlist.Count)//If there is a case where the abscissa is out of the checkerboard and removed, remove the corresponding ordinate as well
-                    {
-                        ylist.RemoveAt(0);
-                    }
-                    ylist = ylist.FindAll(delegate (int i)
-                    { return (i >= 0 && i <= 9); });
-                    if (ylist.Count != xlist.Count)//If there is a case where the ordinate is out of the checkerboard and removed, remove the corresponding abscissa as well
-                    {
-                        xlist.RemoveAt(2);
-                    }
+                    RemoveOut(1);
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Cannon":
@@ -385,17 +370,17 @@ namespace KING_OF_XIANGQI
         public void PossibleMove_Cannon(int x, int y)//Canon walk.
         {
 
-            Reset(x, y);
+            Reset(x,y);
             PossibleMove_Rook(x, y);//Take the rule of rook and get the path of cannon
             for (int l = 0; l < 2; l++)//Check the row and column of cannon twice
             {
-                List<int> xtemplist = new List<int> { };
-                List<int> ytemplist = new List<int> { };
-                int judge = new int();
+                List<int> xtemplist;
+                List<int> ytemplist;
+                int judge;
                 if (l == 0)
                 {
-                    xtemplist = rowlist1;
-                    ytemplist = conlist1;
+                    xtemplist = xlist;
+                    ytemplist = ylist;
                     judge = x;
                 }
                 else
@@ -413,6 +398,7 @@ namespace KING_OF_XIANGQI
                             if (refArrTable[xtemplist[j], ytemplist[j]] != null)
                             {
                                 PossibleMove(xtemplist[j], ytemplist[j]);//Displays the position of the second piece
+                                Reset(x, y);
                                 break;
                             }
                         }
@@ -444,21 +430,15 @@ namespace KING_OF_XIANGQI
             ylist.Clear();
             rowlist.Clear();
             conlist.Clear();
-            rowlist1.Clear();
-            conlist1.Clear();
             for (int i = 0; i < 9; i++)//车可能所在的x轴位置
             {
                 xlist.Add(i);
                 ylist.Add(y);
-                rowlist1.Add(i);
-                conlist1.Add(y);
-
             }
             for (int i = 0; i < 10; i++)//车可能所在的y轴位置
             {
                 rowlist.Add(x);
                 conlist.Add(i);
-
             }
         }//Reset the rook and canon list
     }
