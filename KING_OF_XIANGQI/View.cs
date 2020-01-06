@@ -7,7 +7,7 @@ namespace KING_OF_XIANGQI
     using System;
     public class View
     {
-        private string arrForPieces = "车马象士将炮兵"; //储存棋子的一维数组
+        private string arrForPieces = "车马象士将炮兵"; //储存棋子的一维数组 //Array for storing pieces
         private readonly string arrForBoard =
 
  "　零　一　二　三　四　五　六　七　八" +
@@ -31,6 +31,7 @@ namespace KING_OF_XIANGQI
  "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
  "零┗─┻─┻─┻─┻─┻─┻─┻─┛";
         // 棋盘二维数组
+        // Checkerboard two-dimensional array
         private string arrGamingBoard =
 
  "　零　一　二　三　四　五　六　七　八" +
@@ -52,7 +53,9 @@ namespace KING_OF_XIANGQI
  "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
  "一┣─╋─╋─╋─╋─╋─╋─╋─┫" +
  "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
- "零┗─┻─┻─┻─┻─┻─┻─┻─┛"; // 棋盘二维数组
+ "零┗─┻─┻─┻─┻─┻─┻─┻─┛";
+        // 棋盘二维数组
+        // Checkerboard two-dimensional array
 
 
         /*static void Main(string[] args)   //for test
@@ -79,10 +82,10 @@ namespace KING_OF_XIANGQI
             // 获取getcolor 数组
             int[,] colorTable = dataTable.GetColor();
             Piece[,] arrTable = dataTable.GetArr();
-            ////新版本改动位置（view1)
-            int mX = dataTable.GetChosePiece()[0];////chosen pieces
-            int mY = dataTable.GetChosePiece()[1];////chosen pieces
-            ////版本改动(view1)
+
+            int ChoosenX = dataTable.GetChosePiece()[0];////chosen pieces OF coordinate X;
+            int ChoosenY = dataTable.GetChosePiece()[1];////chosen pieces OF coordinate X
+
 
             // 重新打印带有possible movement 的棋盘
             for (int i = 0; i < 20; i++)
@@ -90,45 +93,46 @@ namespace KING_OF_XIANGQI
                 for (int j = 0; j < 18; j++)
                 {
 
-                    int tX, bX, tY, bY;
-                    tX = (j + 1) / 2 - 1;// (j - 1) / 2;
-                    bX = (j + 1) % 2; //(j - 1) % 2; 
-                    tY = 9 - (i - 1) / 2; //(19 - i) / 2;
-                    bY = (i - 1) % 2; //(19 - i) % 2;
-                    if (i == 19 - 2 * mY && j == 2 * mX + 1) //choose point 
+                    int CoordX, CoordXJudge, CoordY, CoordYJudge;
+                    CoordX = (j + 1) / 2 - 1;// Coordinate X transform 
+                    CoordXJudge = (j + 1) % 2; //Coordinate X transform for judge in the loop
+                    CoordY = 9 - (i - 1) / 2; //Coordinate Y transform 
+                    CoordYJudge = (i - 1) % 2; //Coordinate Y transform for judge in the loop
+                    if (i == 19 - 2 * ChoosenY && j == 2 * ChoosenX + 1) //choose point 
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Green;//the choosed piece become green.
                         Console.Write(arrGamingBoard[18 * i + j]);
                         Console.ResetColor();
                     }
-                    else if (bX == 0 && bY == 0 && tX >= 0 && tY >= 0 && colorTable[tX, tY] == 1) // possible move
+                              //Exclude decimals from algorithm   //Exclude negatives from algorithm   //Get the position need to be colored
+                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1) // possible move
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow;
-                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色
+                        Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
+                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
                         Console.Write(arrForBoard[18 * i + j]);
                         Console.ResetColor();
                     }
 
-                    else if (bX == 0 && bY == 0 && arrTable[tX, tY] != null)
+                    else if (CoordXJudge == 0 && CoordYJudge == 0 && arrTable[CoordX, CoordY] != null)
                     {
                         string color;
-                        color = arrTable[tX, tY].GetColor();
-                        string PiecesPos = ArrTableGetType(arrTable[tX, tY].GetType().ToString()); /// get the position for pieces
+                        color = arrTable[CoordX, CoordY].GetColor();// get color (Red or Black)
+                        string PiecesPos = ArrTableGetType(arrTable[CoordX, CoordY].GetType().ToString()); /// get the position for pieces
                         arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1); ///remove the element previous
                         arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, PiecesPos);///insert the element(piece we need)in it 
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
                         {
 
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.ForegroundColor = ConsoleColor.Black;//the  pieces become black.
                             Console.Write(arrGamingBoard[(18 * i) + j]);
                             Console.ResetColor();
                         }
                         else if (color == "Red") // 红方棋子
                         {
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
-                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.Red;//the  pieces become black.
                             Console.Write(arrGamingBoard[(18 * i) + j]);
                             Console.ResetColor();
                         }
@@ -141,7 +145,7 @@ namespace KING_OF_XIANGQI
                     }
                     while (j == 17)
                     {
-                        Console.WriteLine("");
+                        Console.WriteLine("");//Newline
 
                         break;
                     }
@@ -203,20 +207,19 @@ namespace KING_OF_XIANGQI
             {
                 for (int j = 0; j < 18; j++)
                 {
-                    int tX = (j + 1) / 2 - 1;// (j - 1) / 2;
-                    int bX = (j + 1) % 2; //(j - 1) % 2; 
-                    int tY = 9 - (i - 1) / 2; //(19 - i) / 2;
-                    int bY = (i - 1) % 2; //(19 - i) % 2                    // color 获取color为黑或红的棋子
-                    if (bX == 0 && bY == 0 && arrTable[tX, tY] != null)
+                    int CoordX = (j + 1) / 2 - 1;// (j - 1) / 2;
+                    int CoordXJudge = (j + 1) % 2; //(j - 1) % 2; 
+                    int CoordY = 9 - (i - 1) / 2; //(19 - i) / 2;
+                    int CoordYJudge = (i - 1) % 2; //(19 - i) % 2                    // color 获取color为黑或红的棋子
+                    if (CoordXJudge == 0 && CoordYJudge == 0 && arrTable[CoordX, CoordY] != null)
                     {
                         string color;
-                        color = arrTable[tX, tY].GetColor();
-
-                        ///版本改动（view2)  
-                        string PiecesPos = ArrTableGetType(arrTable[tX, tY].GetType().ToString());/// get the position for pieces
+                        color = arrTable[CoordX, CoordY].GetColor();
+  
+                        string PiecesPos = ArrTableGetType(arrTable[CoordX, CoordY].GetType().ToString());/// get the position for pieces
                         arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);///remove the element previous
                         arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, PiecesPos);///insert the element(piece we need)in it 
-                                                                                        ///版本改动（view2) 
+                                                                                         
 
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
                         {
@@ -272,88 +275,92 @@ namespace KING_OF_XIANGQI
           1 " ┗━┻━┻━┻━┻━┻━┻━┻━┛\n"
           0 " 1 2 3 4 5 6 7 8 9 1011121314151617);*/
         // 初始棋盘 （有棋子）展示
+
         public void InitialBoardForDisplay()
         {
+            // for 循环用于插入棋子 ；//for loop For inserting pieces 
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 18; j++)
                 {
-                    ///版本改动（view2)  
-                    if ((i == 1 && j == 1) || (i == 1 && j == 17)) // 蓝方车
+                    int caseSwitch = (18 * i) + j;
+                    switch (caseSwitch)
                     {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "车");
-                    }
-                    if ((i == 1 && j == 3) || (i == 1 && j == 15)) // 蓝方马
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "马");
-                    }
-                    if ((i == 1 && j == 5) || (i == 1 && j == 13))// 蓝方象
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "象");
-                    }
-                    if ((i == 1 && j == 7) || (i == 1 && j == 11))// 蓝方士                 
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "士");
-                    }
-                    if (i == 1 && j == 9)// 蓝方将      
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "将");
-                    }
+                        ///黑方车坐标 coordinate of Black square car
+                        case 19:
+                        case 35:
+                        ///红方车坐标  coordinate of Red square car
+                        case 343:
+                        case 359:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "车");
+                            break;
 
-                    if ((i == 5 && j == 3) || (i == 5 && j == 15))// 蓝方炮              
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "炮");
-                    }
+                        ///黑方🐎坐标 coordinate of Black square horse
+                        case 21:
+                        case 33:
+                        ///红方🐎坐标 coordinate of Red square horse
+                        case 345:
+                        case 357:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "马");
+                            break;
 
-                    if ((i == 7 && j == 1) || (i == 7 && j == 5) || (i == 7 && j == 9) || (i == 7 && j == 13) || (i == 7 && j == 17))// 蓝方兵              
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "兵");
-                    }
-                    if ((i == 13 && j == 1) || (i == 13 && j == 5) || (i == 13 && j == 9) || (i == 13 && j == 13) || (i == 13 && j == 17))// 红方兵              
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "兵");
-                    }
+                        ///黑方象坐标 coordinate of Black square elephant
+                        case 23:
+                        case 31:
+                        ///红方象坐标 coordinate of Red square elephant
+                        case 347:
+                        case 355:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "象");
+                            break;
 
-                    if ((i == 15 && j == 3) || (i == 15 && j == 15))// 红方炮                  
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "炮");
-                    }
-                    if ((i == 19 && j == 7) || (i == 19 && j == 11))// 红方士      
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "士");
-                    }
+                        ///黑方士坐标 coordinate of Black square mandarin
+                        case 25:
+                        case 29:
+                        ///红方士坐标 coordinate of Red square mandarin
+                        case 349:
+                        case 353:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "士");
+                            break;
 
-                    if ((i == 19 && j == 5) || (i == 19 && j == 13))// 红方象    
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "象");
-                    }
-                    if ((i == 19 && j == 3) || (i == 19 && j == 15)) // 红方马
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "马");
-                    }
-                    if ((i == 19 && j == 1) || (i == 19 && j == 17)) // 红方车
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "车");
-                    }
+                        ///黑方将坐标 coordinate of Black square general
+                        case 27:
+                        ///红方将坐标 coordinate of Black square general
+                        case 351:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "将");
+                            break;
 
-                    if (i == 19 && j == 9) // 红方将
-                    {
-                        arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
-                        arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "将");
-                    } ///版本改动（view2)  
+                        ///黑方炮坐标 coordinate of Black square cannon
+                        case 93:
+                        case 105:
+                        ///红方炮坐标 coordinate of Red square cannon
+                        case 273:
+                        case 285:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "炮");
+                            break;
+
+                        ///黑方兵坐标 coordinate of Black square pawn
+                        case 127:
+                        case 131:
+                        case 135:
+                        case 139:
+                        case 143:
+                        ///红方兵坐标 coordinate of Red square pawn
+                        case 235:
+                        case 239:
+                        case 243:
+                        case 247:
+                        case 251:
+                            arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
+                            arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "兵");
+                            break;                            
+
+                    }
                 }
             }
             for (int i = 0; i < 20; i++)
@@ -361,8 +368,8 @@ namespace KING_OF_XIANGQI
                 for (int j = 0; j < 18; j++)
                 {
 
-
-                    if (i <= 10)
+                    // divide into black or red square
+                    if (i <= 10) // black square
                     {
                         if (arrGamingBoard[(18 * i) + j] == arrForPieces[0] || arrGamingBoard[(18 * i) + j] == arrForPieces[1] ||
                             arrGamingBoard[(18 * i) + j] == arrForPieces[2] || arrGamingBoard[(18 * i) + j] == arrForPieces[3] ||
@@ -379,7 +386,7 @@ namespace KING_OF_XIANGQI
                             Console.Write(arrGamingBoard[(18 * i) + j]);
                         }
                     }
-                    else
+                    else // red square
                     {
                         if (arrGamingBoard[(18 * i) + j] == arrForPieces[0] || arrGamingBoard[(18 * i) + j] == arrForPieces[1] ||
                             arrGamingBoard[(18 * i) + j] == arrForPieces[2] || arrGamingBoard[(18 * i) + j] == arrForPieces[3] ||
@@ -412,10 +419,11 @@ namespace KING_OF_XIANGQI
         {
             string spot = Console.ReadLine();
 
-            //用标点分开
+            //用标点分开 //Separate with punctuation
             string[] spotarr = spot.Split(',');
 
-            //输出并转化为int数组
+            //输出并转化为int数组 
+            //Output and convert to int array
             int[] num = new int[spotarr.Length];
             for (int i = 0; i < spotarr.Length; i++)
             {
