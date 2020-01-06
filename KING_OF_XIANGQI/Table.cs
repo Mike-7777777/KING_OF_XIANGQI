@@ -6,10 +6,9 @@ namespace KING_OF_XIANGQI
 {
     public class Table
     {
-        public Piece[,] arr;
-        private int[,] Color;
-        ////版本改动(view1)
-        private int[] chosePiece;
+        public Piece[,] arr; // array used to store pieces on the board (It is simply a game board).
+        private int[,] Color; // store the color of each piece showed in board.
+        private int[] chosePiece; // store the (x,y) of the selected piece.
 
         public Table()
         {
@@ -17,12 +16,12 @@ namespace KING_OF_XIANGQI
             this.Color = new int[9, 10];
             this.chosePiece = new int[2];
         }
-        public void SetChosePiece(int x, int y)
+        public void SetChosePiece(int x, int y) // set the x,y of selected piece.
         {
             chosePiece[0] = x;
             chosePiece[1] = y;
         }
-        public int[] GetChosePiece()
+        public int[] GetChosePiece() // get the x,y of selected piece.
         {
             return chosePiece;
         }
