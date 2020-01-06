@@ -106,7 +106,14 @@ namespace KING_OF_XIANGQI
                         Console.ResetColor();
                     }
                               //Exclude decimals from algorithm   //Exclude negatives from algorithm   //Get the position need to be colored
-                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1) // possible move
+                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1 && arrTable[CoordX, CoordY] == null) // possible move
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
+                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
+                        Console.Write(arrForBoard[18 * i + j]);
+                        Console.ResetColor();
+                    }
+                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1 && arrTable[CoordX, CoordY] != null) // possible move
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
                         Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
