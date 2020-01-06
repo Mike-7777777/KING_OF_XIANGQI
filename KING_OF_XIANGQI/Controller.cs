@@ -77,7 +77,7 @@ namespace KING_OF_XIANGQI
                     ylist = new List<int> { y, y ,};
                     switch (refArrTable[x, y].GetColor())
                     {
-                        case "Red":
+                        case "Black":
                             xlist.Add(x);//Add the path forward
                             ylist.Add(y + 1);
 
@@ -87,7 +87,7 @@ namespace KING_OF_XIANGQI
                                 ylist.RemoveRange(0, 2);
                             }
                             break;
-                        case "Black":
+                        case "Red":
                             xlist.Add(x);//Add the path forward
                             ylist.Add(y - 1);
                             if (y >= 5)//If the piece doesn't go over the edge removes the left and right possible paths
