@@ -88,6 +88,10 @@ namespace KING_OF_XIANGQI
         {
             return Color;
         }
+        public int GetPieceColor(int x, int y)
+        {
+            return Color[x, y];
+        }
         public void InitColor()
         {
             for (int i = 0; i < Color.GetLength(0); i++)
