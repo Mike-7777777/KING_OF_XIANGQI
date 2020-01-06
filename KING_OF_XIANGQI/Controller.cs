@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -101,10 +101,17 @@ namespace KING_OF_XIANGQI
                     PossibleMove(xlist, ylist);
                     break;
                 case "KING_OF_XIANGQI.Cannon":
-                    PossibleMove_Cannon(x, y);
+                    Reset(x, y);
+                    GoStraight(x, x, y, xlist, ylist);
+                    GoStraight(y, x, y, rowlist, conlist);
+                    Reset(x, y);
+                    CanonEat(x, x, y, xlist, ylist);
+                    CanonEat(y, x, y, rowlist, conlist);
                     break;
                 case "KING_OF_XIANGQI.Rook":
-                    PossibleMove_Rook(x, y);
+                    Reset(x, y);
+                    GoStraight(x, x, y, xlist, ylist);
+                    GoStraight(y, x, y, rowlist, conlist);
                     break;
             }
         }
@@ -125,7 +132,7 @@ namespace KING_OF_XIANGQI
             if (updown == 1)
             {
                 if (y < 5) // separate the black and red general. 
-                           //这里开始和下面士的方法其实完全一样，可以写在loop外面，或者单独写方法调用。
+                           //这里开始和下面士的方法其实完全一样，可以写在GoStraight外面，或者单独写方法调用。
                            //共同点是if(y<5) remove5, remove 6; possible();
                 {
                     RemoveOut(upDownMode); //remove all points out of small 9 space up. 
@@ -295,147 +302,95 @@ namespace KING_OF_XIANGQI
 
             }
         } // delete the locations out of board in the xlist and ylist.
-        public void PossibleMove_Rook(int x, int y)//Rook walk.
+        
+        public void GoStraight(int start, int x, int y, List<int> xlist, List<int> ylist)
         {
-            Reset(x, y);
-            for (int l = 0; l < 2; l++)//Check the row and column of cannon
+            int left = new int();
+            int right = new int();
+            List<int> templist = new List<int>();
+            right = 9;
+            for (int i = start - 1; i > -1; i--)//Check if there are any pieces on the left or under side of Rook or Cannon
             {
-                List<int> xtemplist = new List<int> { };
-                List<int> ytemplist = new List<int> { };
-                int judge = new int();
-                if (l == 0)
+                if (refArrTable[xlist[i], ylist[i]] != null)//If a piece exists, save the position of the piece
                 {
-                    xtemplist = xlist;
-                    ytemplist = ylist;
-                    judge = x;
-                }
-                else
-                {
-                    xtemplist = rowlist;
-                    ytemplist = conlist;
-                    judge = y;
-                }
-                List<int> templist = new List<int> { };
-                templist = xtemplist.FindAll(delegate (int i) { return (i == judge); });
-                for (int i = judge - 1; i > -1; i--) //Check for whether exists a piece on the left or lower side of the rook
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)//If a piece exists, remove the path behind the piece
+                    if (refArrTable[x, y].GetType() == typeof(Cannon))//If the chess piece that the user chooses is not a rook but a cannon, move the saved position back one bit
                     {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))//If it's the cannon case, delete one more path,Cannon can't just take the pieces like rook
-                        {
-                            ytemplist.RemoveRange(0, i + 1);
-                            xtemplist.RemoveRange(0, i + 1);
-                        }
-                        else
-                        {
-                            ytemplist.RemoveRange(0, i);
-                            xtemplist.RemoveRange(0, i);
-                        }
-                        break;
+                        i = i + 1;
                     }
+                    left = i;
+                    break;
                 }
-                Predicate<int> match = xi =>//Reposition x and y in the list
-                {
-                    return xi == judge;
-                };
-                int tempy;
-                int tempx;
-                tempx = xtemplist.FindIndex(match);
-                tempy = ytemplist.FindIndex(match);
-                if (templist.Count == 1)//Check if this turn is checking the line or column paths of the pieces
-                {
-                    tempy = tempx;//If this turn is checking the column path, use y as the starting point
-                }
-                for (int i = tempy + 1; i < xtemplist.Count; i++)//Check for whether exists a piece on the right or unpper side of the rook
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)//If a piece exists, remove the path behind the piece
-                    {
-                        if (refArrTable[x, y].GetType() == typeof(Cannon))//If it's the cannon case, delete one more path,Cannon can't just take the pieces like rook
-                        {
-                            ytemplist.RemoveRange(i, ytemplist.Count - i);
-                            xtemplist.RemoveRange(i, xtemplist.Count - i);
-                        }
-                        else
-                        {
-                            ytemplist.RemoveRange(i + 1, ytemplist.Count - i - 1);
-                            xtemplist.RemoveRange(i + 1, xtemplist.Count - i - 1);
-                        }
-                        break;
-                    }
-                }
-                PossibleMove(xtemplist, ytemplist);
-                Reset(x, y);
             }
-        }
-        public void PossibleMove_Cannon(int x, int y)//Canon walk.
+            for (int i = start + 1; i < xlist.Count; i++)//Check if there are any pieces on the left or under side of Rook or Cannon
+            {
+                if (refArrTable[xlist[i], ylist[i]] != null)//If a piece exists, save the position of the piece
+                {
+                    if (refArrTable[x, y].GetType() == typeof(Cannon))//If the chess piece that the user chooses is not a rook but a cannon, move the saved position back one bit
+                    {
+                        i = i - 1;
+                    }
+                    right = i;
+                    break;
+                }
+            }
+            if (xlist.Count == 9)
+            {
+                xlist = xlist.FindAll(delegate (int i) { return (i >= left && i <= right); });//Save the path between two pieces
+                ylist.RemoveRange(0, ylist.Count - xlist.Count);
+            }
+            else
+            {
+                ylist = ylist.FindAll(delegate (int i) { return (i >= left && i <= right); });//Save the path between two pieces
+                xlist.RemoveRange(0, xlist.Count - ylist.Count);
+            }
+            PossibleMove(xlist, ylist);
+        }//Rule of go straightly of rook and cannon
+        public void CanonEat(int judge,int x,int y,List<int> xlist, List<int> ylist)
         {
-
-            Reset(x,y);
-            PossibleMove_Rook(x, y);//Take the rule of rook and get the path of cannon
-            for (int l = 0; l < 2; l++)//Check the row and column of cannon twice
+            for (int i = judge - 1; i > -1; i--)//Check if there are two pieces to the left or under cannon
             {
-                List<int> xtemplist;
-                List<int> ytemplist;
-                int judge;
-                if (l == 0)
+                if (refArrTable[xlist[i], ylist[i]] != null)
                 {
-                    xtemplist = xlist;
-                    ytemplist = ylist;
-                    judge = x;
-                }
-                else
-                {
-                    xtemplist = rowlist;
-                    ytemplist = conlist;
-                    judge = y;
-                }
-                for (int i = judge - 1; i > -1; i--)//Check if there are two pieces to the left or under cannon
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
+                    for (int j = i - 1; j > -1; j--)
                     {
-                        for (int j = i - 1; j > -1; j--)
+                        if (refArrTable[xlist[j], ylist[j]] != null)//Displays the position of the second piece
                         {
-                            if (refArrTable[xtemplist[j], ytemplist[j]] != null)
-                            {
-                                PossibleMove(xtemplist[j], ytemplist[j]);//Displays the position of the second piece
-                                Reset(x, y);
-                                break;
-                            }
+                            PossibleMove(xlist[j], ylist[j]);
+                            Reset(x, y);
+                            break;
                         }
-                        break;
                     }
+                    break;
                 }
-                for (int i = judge + 1; i < xtemplist.Count; i++)//Check if there are two pieces to the right or upper cannon
-                {
-                    if (refArrTable[xtemplist[i], ytemplist[i]] != null)
-                    {
-                        for (int j = i + 1; j < xtemplist.Count; j++)
-                        {
-                            if (refArrTable[xtemplist[j], ytemplist[j]] != null)
-                            {
-                                PossibleMove(xtemplist[j], ytemplist[j]);//Displays the position of the second piece
-                                break;
-                            }
-                        }
-                        break;
-                    }
-
-                }
-                Reset(x, y);
             }
-        }
+            for (int i = judge + 1; i < xlist.Count; i++)//Check if there are two pieces to the right or upper cannon
+            {
+                if (refArrTable[xlist[i], ylist[i]] != null)
+                {
+                    for (int j = i + 1; j < xlist.Count; j++)
+                    {
+                        if (refArrTable[xlist[j], ylist[j]] != null)//Displays the position of the second piece
+                        {
+                            PossibleMove(xlist[j], ylist[j]);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }//Eat rules of Canon.
         public void Reset(int x, int y)
         {
             xlist.Clear();
             ylist.Clear();
             rowlist.Clear();
             conlist.Clear();
-            for (int i = 0; i < 9; i++)//车可能所在的x轴位置
+            for (int i = 0; i < 9; i++)//The row coordinates that either Rook or cannon might be in
             {
                 xlist.Add(i);
                 ylist.Add(y);
             }
-            for (int i = 0; i < 10; i++)//车可能所在的y轴位置
+            for (int i = 0; i < 10; i++)//The column coordinates that either Rook or cannon might be in
             {
                 rowlist.Add(x);
                 conlist.Add(i);
