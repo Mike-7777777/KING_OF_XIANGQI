@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,49 +11,49 @@ namespace KING_OF_XIANGQI
         private readonly string arrForBoard =
 
  "　零　一　二　三　四　五　六　七　八" +
- "九┏─┳─┳─┳─┳─┳─┳─┳─┓" +
- "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
- "八┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
- "七┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "六┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "五┣─┻─┻─┻─┻─┻─┻─┻─┫" +
- "　┃　　　楚河　　┃　　汉界　　　┃" +
- "四┣─┳─┳─┳─┳─┳─┳─┳─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "三┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "二┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "零┏─┳─┳─┳─┳─┳─┳─┳─┓" +
  "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
  "一┣─╋─╋─╋─╋─╋─╋─╋─┫" +
  "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
- "零┗─┻─┻─┻─┻─┻─┻─┻─┛";
+ "二┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "三┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "四┣─┻─┻─┻─┻─┻─┻─┻─┫" +
+ "　┃　　　楚河　　┃　　汉界　　　┃" +
+ "五┣─┳─┳─┳─┳─┳─┳─┳─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "六┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "七┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
+ "八┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
+ "九┗─┻─┻─┻─┻─┻─┻─┻─┛";
         // 棋盘二维数组
         // Checkerboard two-dimensional array
         private string arrGamingBoard =
 
  "　零　一　二　三　四　五　六　七　八" +
- "九┏─┳─┳─┳─┳─┳─┳─┳─┓" +
- "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
- "八┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
- "七┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "六┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "五┣─┻─┻─┻─┻─┻─┻─┻─┫" +
- "　┃　　　楚河　　┃　　汉界　　　┃" +
- "四┣─┳─┳─┳─┳─┳─┳─┳─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "三┣─╋─╋─╋─╋─╋─╋─╋─┫" +
- "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
- "二┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "零┏─┳─┳─┳─┳─┳─┳─┳─┓" +
  "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
  "一┣─╋─╋─╋─╋─╋─╋─╋─┫" +
  "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
- "零┗─┻─┻─┻─┻─┻─┻─┻─┛";
+ "二┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "三┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "四┣─┻─┻─┻─┻─┻─┻─┻─┫" +
+ "　┃　　　楚河　　┃　　汉界　　　┃" +
+ "五┣─┳─┳─┳─┳─┳─┳─┳─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "六┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃　┃　┃　┃　┃　┃" +
+ "七┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃╲┃╱┃　┃　┃　┃" +
+ "八┣─╋─╋─╋─╋─╋─╋─╋─┫" +
+ "　┃　┃　┃　┃╱┃╲┃　┃　┃　┃" +
+ "九┗─┻─┻─┻─┻─┻─┻─┻─┛";
         // 棋盘二维数组
         // Checkerboard two-dimensional array
 
@@ -96,16 +96,16 @@ namespace KING_OF_XIANGQI
                     int CoordX, CoordXJudge, CoordY, CoordYJudge;
                     CoordX = (j + 1) / 2 - 1;// Coordinate X transform 
                     CoordXJudge = (j + 1) % 2; //Coordinate X transform for judge in the loop
-                    CoordY = 9 - (i - 1) / 2; //Coordinate Y transform 
+                    CoordY =  (i - 1) / 2; //Coordinate Y transform 
                     CoordYJudge = (i - 1) % 2; //Coordinate Y transform for judge in the loop
-                    if (i == 19 - 2 * ChoosenY && j == 2 * ChoosenX + 1) //choose point 
+                    if (i == 2 * ChoosenY + 1 && j == 2 * ChoosenX + 1) //choose point 
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow;
                         Console.ForegroundColor = ConsoleColor.Green;//the choosed piece become green.
                         Console.Write(arrGamingBoard[18 * i + j]);
                         Console.ResetColor();
                     }
-                              //Exclude decimals from algorithm   //Exclude negatives from algorithm   //Get the position need to be colored
+                    //Exclude decimals from algorithm   //Exclude negatives from algorithm   //Get the position need to be colored
                     else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1 && arrTable[CoordX, CoordY] == null) // possible move
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
@@ -216,17 +216,17 @@ namespace KING_OF_XIANGQI
                 {
                     int CoordX = (j + 1) / 2 - 1;// (j - 1) / 2;
                     int CoordXJudge = (j + 1) % 2; //(j - 1) % 2; 
-                    int CoordY = 9 - (i - 1) / 2; //(19 - i) / 2;
+                    int CoordY = (i - 1) / 2; //(19 - i) / 2;
                     int CoordYJudge = (i - 1) % 2; //(19 - i) % 2                    // color 获取color为黑或红的棋子
                     if (CoordXJudge == 0 && CoordYJudge == 0 && arrTable[CoordX, CoordY] != null)
                     {
                         string color;
                         color = arrTable[CoordX, CoordY].GetColor();
-  
+
                         string PiecesPos = ArrTableGetType(arrTable[CoordX, CoordY].GetType().ToString());/// get the position for pieces
                         arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);///remove the element previous
                         arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, PiecesPos);///insert the element(piece we need)in it 
-                                                                                         
+
 
                         if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
                         {
@@ -365,7 +365,7 @@ namespace KING_OF_XIANGQI
                         case 251:
                             arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1);
                             arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, "兵");
-                            break;                            
+                            break;
 
                     }
                 }
