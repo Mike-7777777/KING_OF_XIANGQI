@@ -57,29 +57,11 @@ namespace KING_OF_XIANGQI
         // 棋盘二维数组
         // Checkerboard two-dimensional array
 
-
-        /*static void Main(string[] args)   //for test
-            {
-                View a = new View();
-
-                // 棋盘开始 输入1开始棋局
-                a.GameReady("1");
-
-                //展示棋盘（带棋子）
-                a.InitialBoardForDisplay();               
-
-                //选择棋子 以 及 展示可以行走的棋子的possible movement（变色）
-                //a.PossibleMovementPoint(dataTable);  // datatable 为 table 类型的初始棋盘
-
-               //棋子走动的位置改变
-                // a.PositionChangingDisplay(dataTable);
-            }
-            */
-
         public void PossibleMovementPoint(Table dataTable)
         {
-            Console.Clear();//刷新console
-            // 获取getcolor 数组
+            Console.Clear();//刷新console //Refresh console
+            // 获取getcolor 数组 
+            // Get the getcolor array
             int[,] colorTable = dataTable.GetColor();
             Piece[,] arrTable = dataTable.GetArr();
 
@@ -106,19 +88,22 @@ namespace KING_OF_XIANGQI
                         Console.ResetColor();
                     }
                     //Exclude decimals from algorithm   //Exclude negatives from algorithm   //Get the position need to be colored
-                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1 && arrTable[CoordX, CoordY] == null) // possible move
+                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1) // possible move
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
-                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
-                        Console.Write(arrForBoard[18 * i + j]);
-                        Console.ResetColor();
-                    }
-                    else if (CoordXJudge == 0 && CoordYJudge == 0 && CoordX >= 0 && CoordY >= 0 && colorTable[CoordX, CoordY] == 1 && arrTable[CoordX, CoordY] != null) // possible move
-                    {
-                        Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
-                        Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
-                        Console.Write(arrGamingBoard[18 * i + j]);
-                        Console.ResetColor();
+                        if (arrTable[CoordX, CoordY] != null)
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
+                            Console.ForegroundColor = ConsoleColor.Blue;//可移动棋子显示为blue色 //the possible move pieces become blue.
+                            Console.Write(arrGamingBoard[18 * i + j]);
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
+                            Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the possible move path become blue.
+                            Console.Write(arrForBoard[18 * i + j]);
+                            Console.ResetColor();
+                        }
                     }
 
                     else if (CoordXJudge == 0 && CoordYJudge == 0 && arrTable[CoordX, CoordY] != null)
@@ -128,7 +113,7 @@ namespace KING_OF_XIANGQI
                         string PiecesPos = ArrTableGetType(arrTable[CoordX, CoordY].GetType().ToString()); /// get the position for pieces
                         arrGamingBoard = arrGamingBoard.Remove((18 * i) + j, 1); ///remove the element previous
                         arrGamingBoard = arrGamingBoard.Insert((18 * i) + j, PiecesPos);///insert the element(piece we need)in it 
-                        if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标
+                        if (color == "Black")//  获取数组getArr() 数组里面元素为1 的坐标 //Get the array getArr () embeds the coordinates of element 1 inside
                         {
 
                             Console.BackgroundColor = ConsoleColor.DarkYellow;
