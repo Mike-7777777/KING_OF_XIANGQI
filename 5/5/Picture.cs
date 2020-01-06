@@ -94,7 +94,7 @@ namespace _5
         };
         public static ImageBrush Cannon1 = new ImageBrush
         {
-            ImageSource = new BitmapImage(new Uri("https://github.com/Mike-7777777/KING_OF_XIANGQI/blob/master/KING_OF_XIANGQI/src/eatable/pieces-black-pao.png?raw=true"))
+            ImageSource = new BitmapImage(new Uri("https://github.com/Mike-7777777/KING_OF_XIANGQI/blob/master/KING_OF_XIANGQI/src/eatable/pieces-red-pao.png?raw=true"))
         };
         public static ImageBrush General_Red1 = new ImageBrush
         {
