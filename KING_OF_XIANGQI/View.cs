@@ -110,7 +110,7 @@ namespace KING_OF_XIANGQI
                     {
                         Console.BackgroundColor = ConsoleColor.DarkYellow; // background color 
                         Console.ForegroundColor = ConsoleColor.Blue;//可移动路径显示为blue色 //the choosed path become blue.
-                        Console.Write(arrForBoard[18 * i + j]);
+                        Console.Write(arrGamingBoard[18 * i + j]);
                         Console.ResetColor();
                     }
 
