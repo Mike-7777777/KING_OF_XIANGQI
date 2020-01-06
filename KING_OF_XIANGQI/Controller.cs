@@ -58,7 +58,7 @@ namespace KING_OF_XIANGQI
                     break;
                 case "KING_OF_XIANGQI.Elephant":
                     xlist = new List<int> { x + 2, x + 2, x - 2, x - 2 };// ↗, ↘, ↙, ↖.
-                    ylist = new List<int> { y + 2, y - 2, y + 2, y - 2 };
+                    ylist = new List<int> { y + 2, y - 2, y - 2, y + 2 };
                     xBan = new List<int> { x + 1, x + 1, x - 1, x - 1 };//init two ban list used later to deletes the non-compliantelements.
                     yBan = new List<int> { y + 1, y - 1, y - 1, y + 1 };
                     PieceRule(y, 2, 1, 1, 1);//Deletes the elements in the List 
@@ -157,7 +157,7 @@ namespace KING_OF_XIANGQI
             int k = 0;
             for (int i = 0; i < 4; i++)//remove the points that cannot reach by piece elephant.
             {
-                Boolean inRange = (xBan[i] < 10 && xBan[i] >= 0 && yBan[i] < 10 && yBan[i] >= 0);
+                Boolean inRange = (xBan[i] < 9 && xBan[i] >= 0 && yBan[i] < 10 && yBan[i] >= 0);
                 if (inRange && refArrTable[xBan[i], yBan[i]] != null)
                 {
                     if (mode == 1)
@@ -184,15 +184,11 @@ namespace KING_OF_XIANGQI
         }
         public void PossibleMove(List<int> x, List<int> y) // To check the location is 'null' or not the friend piece, and change their color in database.
         {
-            Console.WriteLine("in possible move");
             for (int i = 0; i < x.Count(); i++)
             {
-                //如果目标点为空，或者为对方棋子，则变色。否则不变色。
-                Console.WriteLine(x[i]);
-                Console.WriteLine(y[i]);
-                if (refArrTable[x[i], y[i]] == null) { Console.WriteLine("xi,yi == null"); }
+                //if the destination is null, or the other player's piece, it will change color.
                 if (refArrTable[x[i], y[i]] == null
-                    || refArrTable[x[i], y[i]].GetColor() != myColor)//原来是!= 但是改了就对了,不知道为什么
+                    || refArrTable[x[i], y[i]].GetColor() != myColor)
                 {
                     refDataTable.TableChangeColorActive(x[i], y[i]);
                 }
